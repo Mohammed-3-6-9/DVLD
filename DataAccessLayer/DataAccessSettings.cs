@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Configuration;
 
 namespace DataAccessLayer
 {
     static class clsDataAccessSettings
     {
-        public static string ConnectionString = "Server=.;Database=DVLD;User Id=sa;Password=123456;";
+        public static string ConnectionString = ConfigurationManager.ConnectionStrings["DVLD_Connection"].ConnectionString;
     }
 }
