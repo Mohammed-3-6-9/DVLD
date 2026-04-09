@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using DataAccessLayer;
 using System.Runtime.CompilerServices;
+using static System.Net.Mime.MediaTypeNames;
+using System.IO;
 
 namespace Business_Logic
 {
@@ -28,10 +30,11 @@ namespace Business_Logic
         public string Email { get; set; }
         public int NationalCountryID { get; set; }
         public string ImagePath { get; set; }
-
         private string _OldImagePath { get; set; }
-        //private string _DestinationFolder = "D:\\projects\\Course 19\\Project\\PeopleImages";
-        private string _DestinationFolder = "..\\..\\..\\..\\PeopleImages";
+        // private string _DestinationFolder = "D:\\projects\\Course 19\\Project\\PeopleImages";
+        // private string _DestinationFolder = "..\\..\\..\\..\\PeopleImages";
+        private string _DestinationFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PeopleImages");
+
         public clsPerson()
         {
             PersonID = -1;
