@@ -31,8 +31,7 @@ namespace Business_Logic
         public int NationalCountryID { get; set; }
         public string ImagePath { get; set; }
         private string _OldImagePath { get; set; }
-        // private string _DestinationFolder = "D:\\projects\\Course 19\\Project\\PeopleImages";
-        // private string _DestinationFolder = "..\\..\\..\\..\\PeopleImages";
+
         private string _DestinationFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PeopleImages");
 
         public clsPerson()

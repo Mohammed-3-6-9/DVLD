@@ -123,12 +123,12 @@ namespace DVLD
                 string Line = File.ReadAllText(_DestinationFile);
                 string[] Fields = Line.Split('#');
                 tbUserName.Text = Fields[0];
-                tbPassword.Text = Fields[1];
+                tbPassword.Text = clsUser.DecryptPassword(Fields[1]);
                 chkRememberMe.Checked = true;
             }
             else if(Mode == enMode.Write && chkRememberMe.Checked)
             {
-                string Line = $"{tbUserName.Text.Trim()}#{tbPassword.Text.Trim()}";
+                string Line = $"{tbUserName.Text.Trim()}#{clsUser.EncryptPassword(tbPassword.Text.Trim())}";
                 File.WriteAllText(_DestinationFile, Line);
                 chkRememberMe.Checked = true;
             }

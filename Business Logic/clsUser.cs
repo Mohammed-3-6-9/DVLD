@@ -49,7 +49,7 @@ namespace Business_Logic
 
             this.PersonID =PersonID;
             this.UserID = UserID;
-            this.Password = Password;
+            this.Password = DecryptPassword(Password);
             this.IsActive = IsActive;
             this.UserName = UserName;
             _Mode = enMode.Update;
@@ -57,6 +57,8 @@ namespace Business_Logic
 
         private bool _AddNew()
         {
+            this.Password=EncryptPassword(this.Password);
+
             this.UserID = clsUsersData.AddNewUser(PersonID,UserName,Password,IsActive);
 
             return (this.UserID != -1);
@@ -64,6 +66,8 @@ namespace Business_Logic
 
         private bool _Update()
         {
+            this.Password = EncryptPassword(this.Password);
+
             return clsUsersData.UpdateUser(this.UserID, this.PersonID, this.UserName,
                 this.Password, this.IsActive);
         }
@@ -87,6 +91,7 @@ namespace Business_Logic
         {
             int PersonID = -1, UserID = -1;
             bool IsActive = false;
+            Password = EncryptPassword(Password);
 
             if (clsUsersData.FindUserByUserNameAndPassword(ref UserID, ref PersonID, ref UserName, ref Password,
                 ref IsActive))
@@ -193,6 +198,36 @@ namespace Business_Logic
             }
 
             return false;
+        }
+
+        public static string DecryptPassword(string encyrpitedPassword)
+        {
+            if (string.IsNullOrWhiteSpace(encyrpitedPassword))
+                return "";
+
+            StringBuilder Password = new StringBuilder();
+
+            for (int i = 0; i < encyrpitedPassword.Length; i++)
+            {
+                Password.Append((char)((int)encyrpitedPassword[i] - 5));
+            }
+
+             return Password.ToString();
+        }
+
+        public static string EncryptPassword(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+                return "";
+
+            StringBuilder EncyrpitedPassword = new StringBuilder();
+
+            for (int i = 0; i < password.Length; i++)
+            {
+                EncyrpitedPassword.Append((char)((int)password[i] + 5));
+            }
+
+            return EncyrpitedPassword.ToString();
         }
     }
 }
