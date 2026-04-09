@@ -31,22 +31,28 @@ namespace DVLD
             frm.ShowDialog();
         }
 
-        private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmChangePassword frm = new frmChangePassword(clsSessionInfo.CurrentUser.UserID);
-            frm.ShowDialog();
-        }
-
-        private void currentUserInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void currentUserInfoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmUserDetails frm = new frmUserDetails(clsSessionInfo.CurrentUser.UserID);
             frm.ShowDialog();
         }
 
-        private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void changePasswordToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmChangePassword frm = new frmChangePassword(clsSessionInfo.CurrentUser.UserID);
+            frm.ShowDialog();
+        }
+
+        private void signOutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void manageApplicationsTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmManageApplicationTypes frm = new frmManageApplicationTypes();
+            frm.ShowDialog();
         }
     }
 }
