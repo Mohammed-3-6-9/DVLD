@@ -5,56 +5,57 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DVLD.ApplicationTypes
+namespace DVLD.Test_Types
 {
-    public partial class frmUpdateApplicationTypes : Form
+    public partial class frmUpdateTestType : Form
     {
-        private int _ApplicationTypeID { get; set; }
+        private int _TestTypeID { get; set; }
 
-        private clsApplicationType _ApplicationType;
+        private clsTestType _TestType;
 
         public delegate void DataUpdated();
         public event DataUpdated DataUpdatedEvent;
 
-        public frmUpdateApplicationTypes(int ApplicationTypeID)
+        public frmUpdateTestType(int TestTypeID)
         {
             InitializeComponent();
 
-            _ApplicationTypeID = ApplicationTypeID;
+            _TestTypeID = TestTypeID;
         }
 
         private void FillFieldsWithData()
         {
-            _ApplicationType = clsApplicationType.Find(_ApplicationTypeID);
+            _TestType = clsTestType.Find(_TestTypeID);
 
-            if (_ApplicationType == null)
+            if (_TestType == null)
             {
-                MessageBox.Show($"Application [{_ApplicationTypeID}] Not Found", "Not Found",
+                MessageBox.Show($"Test [{_TestTypeID}] Not Found", "Not Found",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                
+
                 this.Close();
                 return;
             }
 
-            lblID.Text = _ApplicationType.ApplicationTypeID.ToString();
-            tbTitle.Text = _ApplicationType.ApplicationTypeTitle;
-            tbFees.Text = _ApplicationType.ApplicationFees.ToString();
+            lblID.Text = _TestType.TestTypeID.ToString();
+            tbTitle.Text = _TestType.TestTypeTitle;
+            tbDescription.Text = _TestType.TestTypeDescription;
+            tbFees.Text = _TestType.TestTypeFees.ToString();
         }
 
-        private void frmUpdateApplicationTypes_Load(object sender, EventArgs e)
+        private void frmUpdateTestTypes_Load(object sender, EventArgs e)
         {
             FillFieldsWithData();
         }
 
-        void _FillApplicationWithData()
+        void _FillTestTypeWithData()
         {
-            _ApplicationType.ApplicationTypeTitle = tbTitle.Text;
-            _ApplicationType.ApplicationFees = Convert.ToDecimal(tbFees.Text);
+            _TestType.TestTypeTitle = tbTitle.Text;
+            _TestType.TestTypeDescription = tbDescription.Text;
+            _TestType.TestTypeFees = Convert.ToDecimal(tbFees.Text);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -62,13 +63,13 @@ namespace DVLD.ApplicationTypes
             if (!this.ValidateChildren())
                 return;
 
-            _FillApplicationWithData();
+            _FillTestTypeWithData();
 
-            if (_ApplicationType.Save())
+            if (_TestType.Save())
             {
-                MessageBox.Show($"Application [{_ApplicationTypeID}] Saved Successfully", "Done",
+                MessageBox.Show($"Test type [{_TestTypeID}] Saved Successfully", "Done",
                                 MessageBoxButtons.OK);
-                
+
                 DataUpdatedEvent?.Invoke();
             }
         }
@@ -85,7 +86,7 @@ namespace DVLD.ApplicationTypes
                 e.Cancel = true;
                 errorProvider1.SetError(tbFees, "Please Insert a Value");
             }
-            else if(!double.TryParse(tbFees.Text,out _))
+            else if (!double.TryParse(tbFees.Text, out _))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(tbFees, "Please Insert a Valid Value");
@@ -97,18 +98,21 @@ namespace DVLD.ApplicationTypes
             }
         }
 
-        private void tbTitle_Validating(object sender, CancelEventArgs e)
+        private void tbTitleAndDescription_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(tbTitle.Text))
+            TextBox tb = (TextBox)sender;
+
+            if (string.IsNullOrWhiteSpace(tb.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbTitle, "Please Insert a Value");
+                errorProvider1.SetError(tb, "Please Insert a Value");
             }
             else
             {
                 e.Cancel = false;
-                errorProvider1.SetError(tbTitle, "");
+                errorProvider1.SetError(tb, "");
             }
         }
     }
+
 }

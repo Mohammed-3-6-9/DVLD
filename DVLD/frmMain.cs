@@ -1,4 +1,5 @@
 ﻿using Business_Logic;
+using DVLD.Test_Types;
 using DVLD.Users;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,12 @@ namespace DVLD
         private void manageApplicationsTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmManageApplicationTypes frm = new frmManageApplicationTypes();
+            frm.ShowDialog();
+        }
+
+        private void manageTestTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmManageTestTypes frm = new frmManageTestTypes();
             frm.ShowDialog();
         }
     }

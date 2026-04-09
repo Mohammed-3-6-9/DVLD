@@ -23,7 +23,7 @@ namespace DVLD
 
         private void _RefreshApplicationTypes()
         {
-            DataTable dt = clsApplicationsTypes.GetAllApplicationTypes();
+            DataTable dt = clsApplicationType.GetAllApplicationTypes();
 
             _DataView = dt.DefaultView;
             dgvApplicationType.DataSource = _DataView;

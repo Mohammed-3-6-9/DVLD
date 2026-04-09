@@ -1,22 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    public class clsApplicationTypesData
+    public class clsTestTypesData
     {
-        public static bool GetApplicationTypeInfo(int ApplicationTypeID, ref string ApplicationTypeTitle, ref decimal ApplicationFees)
+        public static bool GetTestTypeInfo(int TestTypeID, ref string TestTypeTitle,
+            ref string TestTypeDescription, ref decimal TestTypeFees)
         {
             bool IsFound = false;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = "SELECT * FROM ApplicationTypes WHERE ApplicationTypeID = @ApplicationTypeID";
+            string query = "SELECT * FROM TestTypes WHERE TestTypeID = @TestTypeID";
             SqlCommand Command = new SqlCommand(query, Connection);
-            Command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+            Command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
 
             try
             {
@@ -27,9 +28,10 @@ namespace DataAccessLayer
                 {
                     IsFound = true;
 
-                    ApplicationTypeID = (int)reader["ApplicationTypeID"];
-                    ApplicationTypeTitle = reader["ApplicationTypeTitle"].ToString();
-                    ApplicationFees = Convert.ToDecimal(reader["ApplicationFees"]);
+                    TestTypeID = (int)reader["TestTypeID"];
+                    TestTypeTitle = reader["TestTypeTitle"].ToString();
+                    TestTypeDescription = reader["TestTypeDescription"].ToString();
+                    TestTypeFees = Convert.ToDecimal(reader["TestTypeFees"]);
                 }
 
                 reader.Close();
@@ -47,19 +49,22 @@ namespace DataAccessLayer
         }
 
 
-        public static bool UpdateApplicationType(int ApplicationTypeID,string ApplicationTypeTitle, decimal ApplicationFees)
+        public static bool UpdateTestType(int TestTypeID, string TestTypeTitle,
+            string TestTypeDescription, decimal TestTypeFees)
         {
             int RowsEffected = 0;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"UPDATE ApplicationTypes SET
-                            ApplicationTypeTitle = @ApplicationTypeTitle,
-                            ApplicationFees = @ApplicationFees
-                            WHERE ApplicationTypeID = @ApplicationTypeID;";
+            string query = @"UPDATE TestTypes SET
+                            TestTypeTitle = @TestTypeTitle,
+                            TestTypeDescription = @TestTypeDescription,
+                            TestTypeFees = @TestTypeFees
+                            WHERE TestTypeID = @TestTypeID;";
 
             SqlCommand Command = new SqlCommand(query, Connection);
-            Command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
-            Command.Parameters.AddWithValue("@ApplicationTypeTitle", ApplicationTypeTitle);
-            Command.Parameters.AddWithValue("@ApplicationFees", ApplicationFees);
+            Command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
+            Command.Parameters.AddWithValue("@TestTypeTitle", TestTypeTitle);
+            Command.Parameters.AddWithValue("@TestTypeDescription", TestTypeDescription);
+            Command.Parameters.AddWithValue("@TestTypeFees", TestTypeFees);
 
             try
             {
@@ -78,12 +83,11 @@ namespace DataAccessLayer
             return (RowsEffected > 0);
         }
 
-        public static DataTable GetAllApplicationTypes()
+        public static DataTable GetAllTestTypes()
         {
             DataTable dt = new DataTable();
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT ApplicationTypeID, ApplicationTypeTitle,
-                            ApplicationFees FROM ApplicationTypes";
+            string query = @"SELECT TestTypeID, TestTypeTitle, TestTypeDescription, TestTypeFees FROM TestTypes";
             SqlCommand Command = new SqlCommand(query, Connection);
 
             try
@@ -108,4 +112,5 @@ namespace DataAccessLayer
         }
 
     }
+
 }

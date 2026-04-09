@@ -31,16 +31,16 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmManageApplicationTypes));
             this.dgvApplicationType = new System.Windows.Forms.DataGridView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.editApplicationFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnClose = new System.Windows.Forms.Button();
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.editApplicationFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationType)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvApplicationType
@@ -58,6 +58,23 @@
             this.dgvApplicationType.RowTemplate.Height = 28;
             this.dgvApplicationType.Size = new System.Drawing.Size(989, 363);
             this.dgvApplicationType.TabIndex = 15;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editApplicationFToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(322, 42);
+            // 
+            // editApplicationFToolStripMenuItem
+            // 
+            this.editApplicationFToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("editApplicationFToolStripMenuItem.Image")));
+            this.editApplicationFToolStripMenuItem.Name = "editApplicationFToolStripMenuItem";
+            this.editApplicationFToolStripMenuItem.Size = new System.Drawing.Size(321, 38);
+            this.editApplicationFToolStripMenuItem.Text = "Edit Application Type";
+            this.editApplicationFToolStripMenuItem.Click += new System.EventHandler(this.editApplicationFToolStripMenuItem_Click);
             // 
             // label2
             // 
@@ -118,23 +135,6 @@
             this.label1.TabIndex = 18;
             this.label1.Text = "# Records :";
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editApplicationFToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(322, 75);
-            // 
-            // editApplicationFToolStripMenuItem
-            // 
-            this.editApplicationFToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("editApplicationFToolStripMenuItem.Image")));
-            this.editApplicationFToolStripMenuItem.Name = "editApplicationFToolStripMenuItem";
-            this.editApplicationFToolStripMenuItem.Size = new System.Drawing.Size(321, 38);
-            this.editApplicationFToolStripMenuItem.Text = "Edit Application Type";
-            this.editApplicationFToolStripMenuItem.Click += new System.EventHandler(this.editApplicationFToolStripMenuItem_Click);
-            // 
             // frmManageApplicationTypes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -148,11 +148,12 @@
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "frmManageApplicationTypes";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmManageApplicationTypes";
             this.Load += new System.EventHandler(this.frmManageApplicationTypes_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationType)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

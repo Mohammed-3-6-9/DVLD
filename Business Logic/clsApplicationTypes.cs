@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace Business_Logic
 {
-    public class clsApplicationsTypes
+    public class clsApplicationType
     {
         public int ApplicationTypeID { get; set; }
         public string ApplicationTypeTitle { get; set; }
         public decimal ApplicationFees { get; set; }
 
-        public clsApplicationsTypes()
+        public clsApplicationType()
         {
             ApplicationTypeID = -1;
             ApplicationTypeTitle = "";
             ApplicationFees = 0;
         }
 
-        private clsApplicationsTypes(int ApplicationTypeID, string ApplicationTypeTitle, decimal ApplicationFees)
+        private clsApplicationType(int ApplicationTypeID, string ApplicationTypeTitle, decimal ApplicationFees)
         {
             this.ApplicationTypeID = ApplicationTypeID;
             this.ApplicationTypeTitle = ApplicationTypeTitle;
@@ -32,17 +32,17 @@ namespace Business_Logic
 
         private bool _Update()
         {
-            return clsApplicationTypesData.UpdateApplication(this.ApplicationTypeID,this.ApplicationTypeTitle, this.ApplicationFees);
+            return clsApplicationTypesData.UpdateApplicationType(this.ApplicationTypeID,this.ApplicationTypeTitle, this.ApplicationFees);
         }
 
-        public static clsApplicationsTypes Find(int ApplicationTypeID)
+        public static clsApplicationType Find(int ApplicationTypeID)
         {
             string ApplicationTypeTitle = "";
             decimal ApplicationFees = 0;
 
             if (clsApplicationTypesData.GetApplicationTypeInfo(ApplicationTypeID, ref ApplicationTypeTitle, ref ApplicationFees))
             {
-                return new clsApplicationsTypes(ApplicationTypeID, ApplicationTypeTitle, ApplicationFees);
+                return new clsApplicationType(ApplicationTypeID, ApplicationTypeTitle, ApplicationFees);
             }
             else
                 return null;
