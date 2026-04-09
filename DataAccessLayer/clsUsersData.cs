@@ -224,5 +224,45 @@ namespace DataAccessLayer
 
             return Exists;
         }
+
+        public static bool FindUserByUserNameAndPassword(ref int UserID, ref int PersonID, ref string UserName,
+            ref string Password, ref bool IsActive)
+        {
+            bool IsFound = false;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = "SELECT * FROM Users WHERE UserName = @UserName AND Password = @Password";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@UserName", UserName);
+            Command.Parameters.AddWithValue("@Password", Password);
+
+            try
+            {
+                Connection.Open();
+                SqlDataReader reader = Command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    IsFound = true;
+
+                    UserID = (int)reader["UserID"];
+                    PersonID = (int)reader["PersonID"];
+                    UserName = reader["UserName"].ToString();
+                    Password = reader["Password"].ToString();
+                    IsActive = (bool)reader["IsActive"];
+                }
+
+                reader.Close();
+            }
+            catch
+            {
+                IsFound = false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return IsFound;
+        }
     }
 }

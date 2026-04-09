@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace DVLD
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
-        public Form1()
+        public frmMain()
         {
             InitializeComponent();
         }
@@ -31,28 +31,22 @@ namespace DVLD
             frm.ShowDialog();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-        // Not Tested Yet
         private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmChangePassword frm = new frmChangePassword(clsSessionInfo.CurrentUser.UserID);
             frm.ShowDialog();
         }
-        // Not Tested Yet
+
         private void currentUserInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmUserDetails frm = new frmUserDetails(clsSessionInfo.CurrentUser.UserID);
             frm.ShowDialog();
+        }
+
+        private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }

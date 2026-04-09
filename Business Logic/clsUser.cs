@@ -83,6 +83,20 @@ namespace Business_Logic
                 return null;
         }
 
+        public static clsUser FindbyUserNameAndPassword(string UserName, string Password)
+        {
+            int PersonID = -1, UserID = -1;
+            bool IsActive = false;
+
+            if (clsUsersData.FindUserByUserNameAndPassword(ref UserID, ref PersonID, ref UserName, ref Password,
+                ref IsActive))
+            {
+                return new clsUser(UserID, PersonID, UserName, Password, IsActive);
+            }
+            else
+                return null;
+        }
+
         private bool _ValidateProberties()
         {
             if (string.IsNullOrWhiteSpace(this.Password) ||

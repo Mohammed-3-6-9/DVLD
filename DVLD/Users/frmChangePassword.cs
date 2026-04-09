@@ -20,11 +20,6 @@ namespace DVLD.Users
             InitializeComponent();
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void frmChangePasswordForm1_Load(object sender, EventArgs e)
         {
             clsUser User = clsUser.Find(_UserID);
@@ -68,6 +63,13 @@ namespace DVLD.Users
             return true;
         }
 
+        private void _SetFields()
+        {
+            tbCurrentPassword.Text = "";
+            tbNewPassword.Text = "";
+            tbConfirmPassword.Text = "";
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (!this.ValidateChildren())
@@ -78,6 +80,7 @@ namespace DVLD.Users
 
             if (clsUser.ChangePassword(_UserID,tbCurrentPassword.Text, tbNewPassword.Text))
             {
+                _SetFields();
                MessageBox.Show("Password Cahnged Successfully","Done");
             }
             else
@@ -112,6 +115,11 @@ namespace DVLD.Users
             {
                 errorProvider1.SetError(tbConfirmPassword, "");
             }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
