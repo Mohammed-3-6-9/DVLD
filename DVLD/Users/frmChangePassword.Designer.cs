@@ -51,11 +51,11 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 20F);
             this.label1.ForeColor = System.Drawing.Color.DarkRed;
-            this.label1.Location = new System.Drawing.Point(447, 5);
+            this.label1.Location = new System.Drawing.Point(416, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(252, 52);
+            this.label1.Size = new System.Drawing.Size(364, 52);
             this.label1.TabIndex = 18;
-            this.label1.Text = "User Details";
+            this.label1.Text = "Change Password";
             // 
             // button1
             // 
@@ -189,7 +189,7 @@
             this.ctrlPersonCard1.Size = new System.Drawing.Size(1160, 360);
             this.ctrlPersonCard1.TabIndex = 17;
             // 
-            // ChangePassword
+            // frmChangePassword
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;

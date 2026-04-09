@@ -5,6 +5,13 @@ namespace DataAccessLayer
 {
     static class clsDataAccessSettings
     {
-        public static string ConnectionString = ConfigurationManager.ConnectionStrings["DVLD_Connection"].ConnectionString;
+        public static string ConnectionString
+        {
+            get
+            {
+                var connectionSetting = ConfigurationManager.ConnectionStrings["DVLD_Connection"];
+                return connectionSetting != null ? connectionSetting.ConnectionString : "";
+            }
+        }
     }
 }
