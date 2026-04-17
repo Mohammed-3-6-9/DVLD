@@ -63,7 +63,6 @@ namespace DataAccessLayer
                LastStatusDate, PaidFees, CreatedByUserID) VALUES
                (@ApplicationPersonID, @ApplicationDate, @ApplicationTypeID,
                @ApplicationStatus, @LastStatusDate, @PaidFees, @CreatedByUserID)
-                 WHERE ApplicationID = @ApplicationID;
                  SELECT SCOPE_IDENTITY();";
 
             SqlCommand Command = new SqlCommand(query, Connection);
@@ -74,7 +73,6 @@ namespace DataAccessLayer
             Command.Parameters.AddWithValue("@LastStatusDate", LastStatusDate);
             Command.Parameters.AddWithValue("@PaidFees", PaidFees);
             Command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
-            Command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
 
             try
             {
