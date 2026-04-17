@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    internal class clsApplicationsData
+    public class clsApplicationsData
     {
         public static bool GetApplicationInfoByID(int ApplicationID, ref int ApplicationPersonID, ref DateTime ApplicationDate,
             ref int ApplicationTypeID, ref short ApplicationStatus,
-            ref DateTime LastStatusDate, ref int PaidFees, ref int CreatedByUserID)
+            ref DateTime LastStatusDate, ref decimal PaidFees, ref int CreatedByUserID)
         {
             bool IsFound = false;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -29,12 +29,12 @@ namespace DataAccessLayer
                 {
                     IsFound = true;
 
-                    ApplicationPersonID = (int)reader["ApplicationPersonID"];
+                    ApplicationPersonID = (int)reader["ApplicantPersonID"];
                     ApplicationDate = (DateTime)reader["ApplicationDate"];
                     ApplicationTypeID = (int)reader["ApplicationTypeID"];
                     ApplicationStatus = ((short)reader["ApplicationStatus"]);
                     LastStatusDate = (DateTime)reader["LastStatusDate"];
-                    PaidFees = (int)reader["PaidFees"];
+                    PaidFees = (decimal)reader["PaidFees"];
                     CreatedByUserID =(int) reader["CreatedByUserID"];
                 }
 
@@ -52,21 +52,21 @@ namespace DataAccessLayer
             return IsFound;
         }
 
-        public static int AddNewApplication( int ApplicationPersonID,  DateTime ApplicationDate,
+        public static int AddNewApplication( int ApplicantPersonID,  DateTime ApplicationDate,
              int ApplicationTypeID,  short ApplicationStatus,
-             DateTime LastStatusDate,  int PaidFees,  int CreatedByUserID)
+             DateTime LastStatusDate, decimal PaidFees,  int CreatedByUserID)
         {
             int ApplicationID = -1;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"INSERT INTO Applications (ApplicationPersonID,
+            string query = @"INSERT INTO Applications (ApplicantPersonID,
                ApplicationDate, ApplicationTypeID, ApplicationStatus, 
                LastStatusDate, PaidFees, CreatedByUserID) VALUES
-               (@ApplicationPersonID, @ApplicationDate, @ApplicationTypeID,
+               (@ApplicantPersonID, @ApplicationDate, @ApplicationTypeID,
                @ApplicationStatus, @LastStatusDate, @PaidFees, @CreatedByUserID)
                  SELECT SCOPE_IDENTITY();";
 
             SqlCommand Command = new SqlCommand(query, Connection);
-            Command.Parameters.AddWithValue("@ApplicationPersonID", ApplicationPersonID);
+            Command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
             Command.Parameters.AddWithValue("@ApplicationDate", ApplicationDate);
             Command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
             Command.Parameters.AddWithValue("@ApplicationStatus", ApplicationStatus);
@@ -94,20 +94,20 @@ namespace DataAccessLayer
             return ApplicationID;
         }
 
-        public static bool UpdateApplication(int ApplicationID,int ApplicationPersonID,
+        public static bool UpdateApplication(int ApplicationID,int ApplicantPersonID,
             DateTime ApplicationDate, int ApplicationTypeID, short ApplicationStatus,
-             DateTime LastStatusDate, int PaidFees, int CreatedByUserID)
+             DateTime LastStatusDate, decimal PaidFees, int CreatedByUserID)
         {
             int RowsEffected = 0;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = @"UPDATE Applications SET
-               ApplicationPersonID = @ApplicationPersonID, ApplicationDate = @ApplicationDate,
-               ApplicationTypeID = @ApplicationTypeID, ApplicationStatus = @ApplicationStatus
-               LastStatusDate = @LastStatusDate, PaidFees = @PaidFees
-               CreatedByUserID = @CreatedByUserID) WHERE ApplicationID = @ApplicationID;";
+               ApplicantPersonID = @ApplicantPersonID, ApplicationDate = @ApplicationDate,
+               ApplicationTypeID = @ApplicationTypeID, ApplicationStatus = @ApplicationStatus,
+               LastStatusDate = @LastStatusDate, PaidFees = @PaidFees,
+               CreatedByUserID = @CreatedByUserID WHERE ApplicationID = @ApplicationID;";
 
             SqlCommand Command = new SqlCommand(query, Connection);
-            Command.Parameters.AddWithValue("@ApplicationPersonID", ApplicationPersonID);
+            Command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
             Command.Parameters.AddWithValue("@ApplicationDate", ApplicationDate);
             Command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
             Command.Parameters.AddWithValue("@ApplicationStatus", ApplicationStatus);
@@ -213,6 +213,37 @@ namespace DataAccessLayer
 
             return Exists;
         }
+
+        public static bool IsPersonHasRunningNewApplication(int ApplicantPersonID,int ApplicationTypeID)
+        {
+            bool IsFound = false;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT TOP 1 1 FROM Applications WHERE ApplicantPersonID = @ApplicantPersonID AND
+                            ApplicationTypeID = @ApplicationTypeID AND ApplicationStatus = 1";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
+            Command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+
+            try
+            {
+                Connection.Open();
+                object result = Command.ExecuteScalar();
+
+                if(result != null)
+                    IsFound = true;
+            }
+            catch
+            {
+                IsFound = false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return IsFound;
+        }
+
     }
 
 }

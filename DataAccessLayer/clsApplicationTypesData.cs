@@ -107,5 +107,61 @@ namespace DataAccessLayer
             return dt;
         }
 
+        public static DataTable GetAllApplicationsIDAndTitle()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT ApplicationTypeID, ApplicationTypeTitle FROM ApplicationTypes";
+            SqlCommand Command = new SqlCommand(query, Connection);
+
+            try
+            {
+                Connection.Open();
+                SqlDataReader reader = Command.ExecuteReader();
+
+                if (reader.HasRows)
+                    dt.Load(reader);
+
+                reader.Close();
+            }
+            catch
+            {
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return dt;
+        }
+
+        public static decimal GetApplicationFees(int ID)
+        {
+            decimal Fees = -1;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT ApplicationFees FROM ApplicationTypes
+                             Where ApplicationTypeID = @ApplicationTypeID";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@ApplicationTypeID", ID);
+
+            try
+            {
+                Connection.Open();
+                object fee =Command.ExecuteScalar();
+                if (!decimal.TryParse(fee.ToString(), out Fees))
+                    Fees = -1;
+            }
+            catch
+            {
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return Fees;
+        }
+
+
     }
 }

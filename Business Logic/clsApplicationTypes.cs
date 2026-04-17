@@ -57,6 +57,16 @@ namespace Business_Logic
         {
             return clsApplicationTypesData.GetAllApplicationTypes();
         }
+
+        public static DataTable GetApplicationIDAndTitle()
+        {
+            return clsApplicationTypesData.GetAllApplicationsIDAndTitle();
+        }
+
+        public static decimal GetApplicationFees(int ApplicationID)
+        {
+            return clsApplicationTypesData.GetApplicationFees(ApplicationID);
+        }
     }
 
 }

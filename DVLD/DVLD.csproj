@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationForms\frmAddApplication.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApplicationForms\frmAddApplication.Designer.cs">
+      <DependentUpon>frmAddApplication.cs</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationTypes\frmUpdateApplicationTypes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +153,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ApplicationForms\frmAddApplication.resx">
+      <DependentUpon>frmAddApplication.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ApplicationTypes\frmUpdateApplicationTypes.resx">
       <DependentUpon>frmUpdateApplicationTypes.cs</DependentUpon>
     </EmbeddedResource>
