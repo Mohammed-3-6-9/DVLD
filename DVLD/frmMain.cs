@@ -65,13 +65,14 @@ namespace DVLD
 
         private void localDrivingLicenceApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAddApplication frm = new frmAddApplication();
+            // Will Cahange The Argument Value
+            frmAddApplication frm = new frmAddApplication((int)clsGeneral.enApplicationType.NewLocalDrivingLicenseService);
             frm.ShowDialog();
         }
 
         private void localLicenceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAddApplication frm = new frmAddApplication();
+            frmAddApplication frm = new frmAddApplication((int)clsGeneral.enApplicationType.NewLocalDrivingLicenseService);
             frm.ShowDialog();
         }
     }

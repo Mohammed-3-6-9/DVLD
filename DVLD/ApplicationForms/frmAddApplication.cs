@@ -17,10 +17,11 @@ namespace DVLD.ApplicationForms
     {
         private clsApplication _Application;
         private int _PersonID = -1;
-        public frmAddApplication()
+        public frmAddApplication(int ApplicationTypeID)
         {
             InitializeComponent();
             _Application = new clsApplication();
+            _Application.ApplicationTypeID = ApplicationTypeID;
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -35,9 +36,9 @@ namespace DVLD.ApplicationForms
 
         void _PrepareLicenceClassList()
         {
-            cbLicenceClass.DisplayMember = "ApplicationTypeTitle";
-            cbLicenceClass.ValueMember = "ApplicationTypeID";
-            cbLicenceClass.DataSource = clsApplicationType.GetApplicationIDAndTitle();
+            cbLicenceClass.DisplayMember = "ClassName";
+            cbLicenceClass.ValueMember = "LicenseClassID";
+            cbLicenceClass.DataSource = clsLicenceClass.GetAllLicenceClassesIDAndName();
         }
 
         void InitializeApplication()
@@ -128,7 +129,6 @@ namespace DVLD.ApplicationForms
         void _FillApplicationWithData()
         {
             _Application.ApplicantPersonID = _PersonID;
-            _Application.ApplicationTypeID = (int)cbLicenceClass.SelectedValue;
         }
 
         private bool _Validation()
@@ -142,9 +142,9 @@ namespace DVLD.ApplicationForms
                 return false;
             }
 
-            if(clsApplication.IsPersonHasRunningNewApplication(_PersonID,_Application.ApplicationTypeID))
+            if(clsApplication.IsPersonHasRunningNewApplication(_PersonID, (int)cbLicenceClass.SelectedValue))
             {
-                MessageBox.Show("Sorry The Selected Person Has a Running New Licence Application", "Ops",
+                MessageBox.Show("Sorry The Selected Person Has a Running New Licence Application From The Same Class", "Ops",
                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
@@ -170,7 +170,7 @@ namespace DVLD.ApplicationForms
 
         private void cbLicenceClass_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _Application.PaidFees = clsApplicationType.GetApplicationFees((int)cbLicenceClass.SelectedValue);
+            _Application.PaidFees = clsLicenceClass.GetLicenceClassFees((int)cbLicenceClass.SelectedValue);
             lblApplicationFees.Text = _Application.PaidFees.ToString("C");
         }
     }

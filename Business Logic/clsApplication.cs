@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Business_Logic
 {
@@ -18,6 +19,8 @@ namespace Business_Logic
         public DateTime LastStatusDate { get; set; }
         public decimal PaidFees { get; set; }
         public int CreatedByUserID { get; set; }
+
+        public int LicenseClassID {  get; set; }
 
         public clsApplication()
         {
@@ -54,29 +57,19 @@ namespace Business_Logic
             return (this.ApplicationID != -1);
         }
 
-        /*
-        private bool _Update()
-        {
-            return clsApplicationData.(this.ApplicationTypeID, this.ApplicationTypeTitle, this.ApplicationFees);
-        }
-
-        public static clsApplicationType Find(int ApplicationTypeID)
-        {
-            string ApplicationTypeTitle = "";
-            decimal ApplicationFees = 0;
-
-            if (clsApplicationTypesData.GetApplicationTypeInfo(ApplicationTypeID, ref ApplicationTypeTitle, ref ApplicationFees))
-            {
-                return new clsApplicationType(ApplicationTypeID, ApplicationTypeTitle, ApplicationFees);
-            }
-            else
-                return null;
-        }
-        */
-
         private bool _Validation()
         {
             return !IsPersonHasRunningNewApplication(this.ApplicantPersonID,this.ApplicationTypeID);
+        }
+
+        private bool AddNewLocalLicenceApplication()
+        {
+            clsNewLocalDrivingLicenceApplication application = new clsNewLocalDrivingLicenceApplication();
+
+            application.ApplicationID = this.ApplicationID;
+            application.LicenseClassID = this.LicenseClassID;
+
+            return application.Save();
         }
 
         public bool Save()
@@ -84,7 +77,18 @@ namespace Business_Logic
             if (!_Validation())
                 return false;
 
-            return _AddNew();
+            if (_AddNew())
+            {
+                if (!AddNewLocalLicenceApplication())
+                {
+                    DeleteApplication(this.ApplicationID);
+                    return false;
+                }
+                else
+                    return true;
+            }
+
+            return false;
         }
 
         public static bool IsPersonHasRunningNewApplication(int ApplicantPersonID,int ApplicationTypeID)
@@ -92,11 +96,9 @@ namespace Business_Logic
             return clsApplicationsData.IsPersonHasRunningNewApplication(ApplicantPersonID, ApplicationTypeID);
         }
 
-        /*
-        public static DataTable GetAllApplications()
+        public static bool DeleteApplication(int ApplicationID)
         {
-            return clsApplicationData.GetAllApplications();
+            return clsApplicationsData.DeleteApplication(ApplicationID);
         }
-        */
     }
 }
