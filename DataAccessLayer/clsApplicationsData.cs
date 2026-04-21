@@ -214,15 +214,19 @@ namespace DataAccessLayer
             return Exists;
         }
 
-        public static bool IsPersonHasRunningNewApplication(int ApplicantPersonID,int ApplicationTypeID)
+        public static bool IsPersonHasRunningNewApplication(int ApplicantPersonID ,int LicenseClassID)
         {
             bool IsFound = false;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT TOP 1 1 FROM Applications WHERE ApplicantPersonID = @ApplicantPersonID AND
-                            ApplicationTypeID = @ApplicationTypeID AND ApplicationStatus = 1";
+            string query = @"select top 1 1 FROM Applications INNER JOIN LocalDrivingLicenseApplications ON
+                                Applications.ApplicationID = LocalDrivingLicenseApplications.ApplicationID	WHERE
+                                Applications.ApplicantPersonID = @ApplicantPersonID AND
+                                LocalDrivingLicenseApplications.LicenseClassID = @LicenseClassID AND
+                                Applications.ApplicationStatus = 1";
             SqlCommand Command = new SqlCommand(query, Connection);
             Command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
-            Command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+            Command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
 
             try
             {

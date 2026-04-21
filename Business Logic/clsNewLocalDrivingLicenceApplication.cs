@@ -1,4 +1,5 @@
-﻿using DataAccessLayer;
+﻿using Business_Logic;
+using DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,19 +13,19 @@ using System.Threading.Tasks;
 
 namespace Business_Logic
 {
-    public class clsNewLocalDrivingLicenceApplication
+    public class clsNewLocalDrivingLicenceApplication : clsApplication
     {
         public enum enMode { AddNew = 0, Update = 1 }
         enMode _Mode = enMode.AddNew;
 
         public int LocalDrivingLicenseApplicationID { get; set; }
-        public int ApplicationID { get; set; }
         public int LicenseClassID { get; set; }
 
         public clsNewLocalDrivingLicenceApplication()
         {
             LocalDrivingLicenseApplicationID = -1;
-            ApplicationID = -1;
+            base.ApplicationID = -1;
+            base.ApplicationTypeID = (int)clsGeneral.enApplicationType.NewLocalDrivingLicenseService;
             LicenseClassID = -1;
             _Mode = enMode.AddNew;
         }
@@ -33,7 +34,8 @@ namespace Business_Logic
             int ApplicationID, int LicenseClassID)
         {
             this.LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplicationID;
-            this.ApplicationID = ApplicationID;
+            base.ApplicationID = ApplicationID;
+            base.ApplicationTypeID = (int)clsGeneral.enApplicationType.NewLocalDrivingLicenseService;
             this.LicenseClassID = LicenseClassID;
             _Mode = enMode.Update;
         }
@@ -42,7 +44,7 @@ namespace Business_Logic
         private bool _AddNew()
         {
             this.LocalDrivingLicenseApplicationID = clsNewLocalDrivingLicenceApplicationData.AddNewLocalDrivingLicenceApplication(
-                ApplicationID, LicenseClassID);
+                base.ApplicationID, LicenseClassID);
 
             return (this.LocalDrivingLicenseApplicationID != -1);
         }
@@ -50,30 +52,41 @@ namespace Business_Logic
         private bool _Update()
         {
             return clsNewLocalDrivingLicenceApplicationData.UpdateLocalDrivingLicenceApplication(
-                this.LocalDrivingLicenseApplicationID, this.ApplicationID, this.LicenseClassID);
+                this.LocalDrivingLicenseApplicationID, base.ApplicationID, this.LicenseClassID);
         }
 
-        public static clsNewLocalDrivingLicenceApplication Find(int LocalDrivingLicenseApplicationID)
+        public new static clsNewLocalDrivingLicenceApplication Find(int LocalDrivingLicenseApplicationID)
         {
-            int ApplicationID = -1;
+            int applicationID = -1;
             int LicenseClassID = -1;
 
             if (clsNewLocalDrivingLicenceApplicationData.GetLocalDrivingLicenceApplicationInfoByID(LocalDrivingLicenseApplicationID,
-                ref ApplicationID, ref LicenseClassID))
+                ref applicationID, ref LicenseClassID))
             {
                 return new clsNewLocalDrivingLicenceApplication(LocalDrivingLicenseApplicationID,
-                    ApplicationID, LicenseClassID);
+                    applicationID, LicenseClassID);
             }
             else
                 return null;
         }
 
+        private bool _Validation()
+        {
+            return !IsPersonHasRunningNewApplication(this.ApplicantPersonID, this.LicenseClassID);
+        }
+
         public bool Save()
         {
+            if (!_Validation())
+                return false;
+
             switch (_Mode)
             {
                 case enMode.AddNew:
                     {
+                        if(!base._Save())
+                            return false;
+
                         if (_AddNew())
                         {
                             _Mode = enMode.Update;
@@ -81,6 +94,7 @@ namespace Business_Logic
                         }
                         else
                         {
+                            clsApplication.DeleteApplication(base.ApplicationID);
                             return false;
                         }
                     }
@@ -106,6 +120,11 @@ namespace Business_Logic
         public static bool IsLocalDrivingLicenseApplicationExist(int LocalDrivingLicenseApplicationID)
         {
             return clsNewLocalDrivingLicenceApplicationData.IsLocalDrivingLicenseApplicationExist(LocalDrivingLicenseApplicationID);
+        }
+
+        public static bool IsPersonHasRunningNewApplication(int ApplicantPersonID, int LicenceClassID)
+        {
+            return clsApplicationsData.IsPersonHasRunningNewApplication(ApplicantPersonID, LicenceClassID);
         }
     }
 }

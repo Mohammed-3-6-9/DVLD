@@ -1,6 +1,6 @@
 ﻿namespace DVLD.ApplicationForms
 {
-    partial class frmAddApplication
+    partial class frmAddNewLocalDrivingLicenceApplication
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAddApplication));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAddNewLocalDrivingLicenceApplication));
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.lblHeader = new System.Windows.Forms.Label();

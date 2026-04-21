@@ -11,16 +11,25 @@ namespace Business_Logic
 {
     public class clsApplication
     {
-        public int ApplicationID { get; set; }
+        private int _ApplicationID { get; set; }
+        public int ApplicationID
+        {
+            get => _ApplicationID;
+            set
+            {
+                _ApplicationID = value;
+                if (value != -1)
+                    _LoadApplicationData(value);
+            }
+        }
+
         public int ApplicantPersonID { get; set; }
         public DateTime ApplicationDate { get; set; }
-        public int ApplicationTypeID { get; set; }
+        public int ApplicationTypeID { get; protected set; }
         public short ApplicationStatus { get; set; }
         public DateTime LastStatusDate { get; set; }
         public decimal PaidFees { get; set; }
         public int CreatedByUserID { get; set; }
-
-        public int LicenseClassID {  get; set; }
 
         public clsApplication()
         {
@@ -38,7 +47,7 @@ namespace Business_Logic
             int ApplicationTypeID, short ApplicationStatus, DateTime LastStatusDate,
             decimal PaidFees, int CreatedByUserID)
         {
-            this.ApplicationID = ApplicationID;
+            this._ApplicationID = ApplicationID;
             this.ApplicantPersonID = ApplicantPersonID;
             this.ApplicationDate = ApplicationDate;
             this.ApplicationTypeID = ApplicationTypeID;
@@ -50,50 +59,60 @@ namespace Business_Logic
 
         private bool _AddNew()
         {
-            this.ApplicationID = clsApplicationsData.AddNewApplication(this.ApplicantPersonID,
+            this._ApplicationID = clsApplicationsData.AddNewApplication(this.ApplicantPersonID,
                 this.ApplicationDate, this.ApplicationTypeID, this.ApplicationStatus,
                 this.LastStatusDate, this.PaidFees, this.CreatedByUserID);
 
             return (this.ApplicationID != -1);
         }
 
-        private bool _Validation()
+        private void _LoadApplicationData(int ID)
         {
-            return !IsPersonHasRunningNewApplication(this.ApplicantPersonID,this.ApplicationTypeID);
-        }
+            int applicantPersonID = -1;
+            DateTime applicationDate = DateTime.Now;
+            int applicationTypeID = -1;
+            short applicationStatus = 1;
+            DateTime lastStatusDate = DateTime.Now;
+            decimal paidFees = -1;
+            int createdByUserID = -1;
 
-        private bool AddNewLocalLicenceApplication()
-        {
-            clsNewLocalDrivingLicenceApplication application = new clsNewLocalDrivingLicenceApplication();
-
-            application.ApplicationID = this.ApplicationID;
-            application.LicenseClassID = this.LicenseClassID;
-
-            return application.Save();
-        }
-
-        public bool Save()
-        {
-            if (!_Validation())
-                return false;
-
-            if (_AddNew())
+            if (clsApplicationsData.GetApplicationInfoByID(ID, ref applicantPersonID, ref applicationDate, ref applicationTypeID,
+                ref applicationStatus, ref lastStatusDate, ref paidFees, ref createdByUserID))
             {
-                if (!AddNewLocalLicenceApplication())
-                {
-                    DeleteApplication(this.ApplicationID);
-                    return false;
-                }
-                else
-                    return true;
+                this._ApplicationID = ID;
+                this.ApplicantPersonID = applicantPersonID;
+                this.ApplicationDate = applicationDate;
+                this.ApplicationTypeID = applicationTypeID;
+                this.ApplicationStatus = applicationStatus;
+                this.LastStatusDate =lastStatusDate;
+                this.PaidFees = paidFees;
+                this.CreatedByUserID = createdByUserID;
             }
-
-            return false;
         }
 
-        public static bool IsPersonHasRunningNewApplication(int ApplicantPersonID,int ApplicationTypeID)
+        public static clsApplication Find(int ID)
         {
-            return clsApplicationsData.IsPersonHasRunningNewApplication(ApplicantPersonID, ApplicationTypeID);
+            int ApplicantPersonID = -1;
+            DateTime ApplicationDate = DateTime.Now;
+            int ApplicationTypeID = -1;
+            short ApplicationStatus = 1;
+            DateTime LastStatusDate = DateTime.Now;
+            decimal PaidFees = -1;
+            int  CreatedByUserID = -1;
+
+            if (clsApplicationsData.GetApplicationInfoByID(ID, ref ApplicantPersonID, ref ApplicationDate, ref ApplicationTypeID,
+                ref ApplicationStatus, ref LastStatusDate, ref PaidFees, ref CreatedByUserID))
+            {
+                return new clsApplication(ID, ApplicantPersonID, ApplicationDate, ApplicationTypeID,
+                    ApplicationStatus, LastStatusDate, PaidFees, CreatedByUserID);
+            }
+            else
+                return null;
+        }
+
+        protected bool _Save()
+        {
+            return _AddNew();
         }
 
         public static bool DeleteApplication(int ApplicationID)

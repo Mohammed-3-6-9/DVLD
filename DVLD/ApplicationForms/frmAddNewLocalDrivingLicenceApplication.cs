@@ -13,15 +13,14 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLD.ApplicationForms
 {
-    public partial class frmAddApplication : Form
+    public partial class frmAddNewLocalDrivingLicenceApplication : Form
     {
-        private clsApplication _Application;
+        private clsNewLocalDrivingLicenceApplication _NewLocalLicenceApplication;
         private int _PersonID = -1;
-        public frmAddApplication(int ApplicationTypeID)
+        public frmAddNewLocalDrivingLicenceApplication()
         {
             InitializeComponent();
-            _Application = new clsApplication();
-            _Application.ApplicationTypeID = ApplicationTypeID;
+            _NewLocalLicenceApplication = new clsNewLocalDrivingLicenceApplication();
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -43,10 +42,10 @@ namespace DVLD.ApplicationForms
 
         void InitializeApplication()
         {
-            _Application.ApplicationDate = DateTime.Now;
-            _Application.ApplicationStatus = 1;
-            _Application.LastStatusDate = DateTime.Now;
-            _Application.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
+            _NewLocalLicenceApplication.ApplicationDate = DateTime.Now;
+            _NewLocalLicenceApplication.ApplicationStatus = 1;
+            _NewLocalLicenceApplication.LastStatusDate = DateTime.Now;
+            _NewLocalLicenceApplication.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
         }
 
         void _PrepareProperties()
@@ -55,9 +54,9 @@ namespace DVLD.ApplicationForms
             InitializeApplication();
             cbLicenceClass.SelectedIndex = 0;
             cbFilter.SelectedIndex = 0;
-            lblApplicationFees.Text = _Application.PaidFees.ToString("C");
-            lblCreatedUser.Text = _Application.CreatedByUserID.ToString();
-            lblApplicationDate.Text = _Application.ApplicationDate.ToString();
+            //lblApplicationFees.Text = _NewLocalLicenceApplication.PaidFees.ToString("C");
+            lblCreatedUser.Text = _NewLocalLicenceApplication.CreatedByUserID.ToString();
+            lblApplicationDate.Text = _NewLocalLicenceApplication.ApplicationDate.ToString();
         }
 
         private void frmAddApplication_Load(object sender, EventArgs e)
@@ -128,7 +127,8 @@ namespace DVLD.ApplicationForms
 
         void _FillApplicationWithData()
         {
-            _Application.ApplicantPersonID = _PersonID;
+            _NewLocalLicenceApplication.ApplicantPersonID = _PersonID;
+            _NewLocalLicenceApplication.LicenseClassID = (int)cbLicenceClass.SelectedValue;
         }
 
         private bool _Validation()
@@ -142,9 +142,9 @@ namespace DVLD.ApplicationForms
                 return false;
             }
 
-            if(clsApplication.IsPersonHasRunningNewApplication(_PersonID, (int)cbLicenceClass.SelectedValue))
+            if(clsNewLocalDrivingLicenceApplication.IsPersonHasRunningNewApplication(_PersonID, (int)cbLicenceClass.SelectedValue))
             {
-                MessageBox.Show("Sorry The Selected Person Has a Running New Licence Application From The Same Class", "Ops",
+                MessageBox.Show("Sorry The Selected Person Has a Running Application With The Same Class", "Ops",
                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
@@ -159,10 +159,10 @@ namespace DVLD.ApplicationForms
 
             _FillApplicationWithData();
 
-            if (_Application.Save())
+            if (_NewLocalLicenceApplication.Save())
             {
                 MessageBox.Show("Application Saved Successfully", "Save Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                lblApplicationID.Text = _Application.ApplicationID.ToString();
+                lblApplicationID.Text = _NewLocalLicenceApplication.ApplicationID.ToString();
             }
             else
                 MessageBox.Show("Application Didn't Saved", "Save Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -170,8 +170,8 @@ namespace DVLD.ApplicationForms
 
         private void cbLicenceClass_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _Application.PaidFees = clsLicenceClass.GetLicenceClassFees((int)cbLicenceClass.SelectedValue);
-            lblApplicationFees.Text = _Application.PaidFees.ToString("C");
+            _NewLocalLicenceApplication.PaidFees = clsLicenceClass.GetLicenceClassFees((int)cbLicenceClass.SelectedValue);
+            lblApplicationFees.Text = _NewLocalLicenceApplication.PaidFees.ToString("C");
         }
     }
 }
