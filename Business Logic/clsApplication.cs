@@ -115,9 +115,14 @@ namespace Business_Logic
             return _AddNew();
         }
 
-        public static bool DeleteApplication(int ApplicationID)
+        protected static bool _DeleteApplication(int ApplicationID)
         {
             return clsApplicationsData.DeleteApplication(ApplicationID);
+        }
+
+        public static DataTable GetAllApplicationsFullData()
+        {
+            return clsApplicationsData.GetAllApplicationsFullData();
         }
     }
 }

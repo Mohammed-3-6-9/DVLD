@@ -65,8 +65,7 @@ namespace DVLD
 
         private void localDrivingLicenceApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Will Cahange The Argument Value
-            frmAddNewLocalDrivingLicenceApplication frm = new frmAddNewLocalDrivingLicenceApplication();
+            frmManageApplicatons frm = new frmManageApplicatons();
             frm.ShowDialog();
         }
 

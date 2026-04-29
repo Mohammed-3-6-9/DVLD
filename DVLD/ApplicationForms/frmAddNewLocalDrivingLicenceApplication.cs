@@ -17,6 +17,10 @@ namespace DVLD.ApplicationForms
     {
         private clsNewLocalDrivingLicenceApplication _NewLocalLicenceApplication;
         private int _PersonID = -1;
+
+        public delegate void DataUpdated();
+        public event DataUpdated DataUpdatedEvent;
+
         public frmAddNewLocalDrivingLicenceApplication()
         {
             InitializeComponent();
@@ -163,6 +167,7 @@ namespace DVLD.ApplicationForms
             {
                 MessageBox.Show("Application Saved Successfully", "Save Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lblApplicationID.Text = _NewLocalLicenceApplication.ApplicationID.ToString();
+                DataUpdatedEvent?.Invoke();
             }
             else
                 MessageBox.Show("Application Didn't Saved", "Save Data", MessageBoxButtons.OK, MessageBoxIcon.Error);

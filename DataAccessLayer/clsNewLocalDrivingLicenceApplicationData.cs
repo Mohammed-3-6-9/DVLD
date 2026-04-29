@@ -190,5 +190,53 @@ namespace DataAccessLayer
 
             return Exists;
         }
+
+        public static bool GetLDLAppFullDetailsByID(int LocalDrivingLicenseApplicationID,
+            ref int ApplicationID,ref string ApplicantFullName, ref string ApplicationTypeTitle,
+            ref DateTime ApplicationDate, ref DateTime LastStatusDate,
+            ref string Status, ref decimal PaidFees, ref string UserName,
+            ref string ClassName, ref int PassedTests,ref int ApplicantPersonID)
+        {
+            bool IsFound = false;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = "SELECT * FROM LDLAppFullDetails_View WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LocalDrivingLicenseApplicationID);
+
+            try
+            {
+                Connection.Open();
+                SqlDataReader reader = Command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    IsFound = true;
+
+                    ApplicationID = (int)reader["ApplicationID"];
+                    ApplicantFullName = reader["ApplicantFullName"].ToString();
+                    ApplicationTypeTitle = reader["ApplicationTypeTitle"].ToString();
+                    ApplicationDate = (DateTime)reader["ApplicationDate"];
+                    LastStatusDate = ((DateTime)reader["LastStatusDate"]);
+                    Status = reader["Status"].ToString();
+                    PaidFees = (decimal)reader["PaidFees"];
+                    UserName = reader["UserName"].ToString();
+                    ClassName = reader["ClassName"].ToString();
+                    PassedTests = (int)reader["PassedTests"];
+                    ApplicantPersonID = (int)reader["ApplicantPersonID"];
+                }
+
+                reader.Close();
+            }
+            catch
+            {
+                IsFound = false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return IsFound;
+        }
     }
 }

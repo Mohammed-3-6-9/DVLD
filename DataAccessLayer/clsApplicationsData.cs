@@ -133,11 +133,11 @@ namespace DataAccessLayer
             return (RowsEffected > 0);
         }
 
-        public static DataTable GetAllApplications()
+        public static DataTable GetAllApplicationsFullData()
         {
             DataTable dt = new DataTable();
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT * FROM Applications;";
+            string query = @"SELECT * FROM LocalDrivingLicenseApplications_View;";
             SqlCommand Command = new SqlCommand(query, Connection);
 
             try

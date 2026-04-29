@@ -69,26 +69,28 @@
             this.ctrlLoginInformation1.Name = "ctrlLoginInformation1";
             this.ctrlLoginInformation1.Size = new System.Drawing.Size(1160, 111);
             this.ctrlLoginInformation1.TabIndex = 15;
-            this.ctrlLoginInformation1.UserID = 0;
+            this.ctrlLoginInformation1.UserID = -1;
             // 
             // ctrlPersonCard1
             // 
             this.ctrlPersonCard1.Location = new System.Drawing.Point(12, 95);
             this.ctrlPersonCard1.Name = "ctrlPersonCard1";
-            this.ctrlPersonCard1.PersonID = 0;
+            this.ctrlPersonCard1.PersonID = -1;
             this.ctrlPersonCard1.Size = new System.Drawing.Size(1160, 360);
             this.ctrlPersonCard1.TabIndex = 0;
             // 
             // frmUserDetails
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1181, 681);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.ctrlLoginInformation1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ctrlPersonCard1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "frmUserDetails";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmUserDetails";
             this.Load += new System.EventHandler(this.frmUserDetails_Load);
             this.ResumeLayout(false);

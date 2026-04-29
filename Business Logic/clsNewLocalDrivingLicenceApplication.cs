@@ -6,6 +6,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -17,6 +18,22 @@ namespace Business_Logic
     {
         public enum enMode { AddNew = 0, Update = 1 }
         enMode _Mode = enMode.AddNew;
+
+        public struct stLDLAppFullDetails
+        {
+            public int LocalDrivingLicenseApplicationID;
+            public int ApplicationID;
+            public string FullName;
+            public string ApplicationTypeTitle;
+            public DateTime ApplicationDate;
+            public DateTime LastStatusDate;
+            public string Status;
+            public decimal PaidFees;
+            public string UserName;
+            public string CalssName;
+            public int PassedTests;
+            public int ApplicantPersonID;
+        }
 
         public int LocalDrivingLicenseApplicationID { get; set; }
         public int LicenseClassID { get; set; }
@@ -94,7 +111,7 @@ namespace Business_Logic
                         }
                         else
                         {
-                            clsApplication.DeleteApplication(base.ApplicationID);
+                            clsApplication._DeleteApplication(base.ApplicationID);
                             return false;
                         }
                     }
@@ -114,7 +131,18 @@ namespace Business_Logic
 
         public static bool DeleteLocalDrivingLicenceApplication(int LocalDrivingLicenseApplicationID)
         {
-            return clsNewLocalDrivingLicenceApplicationData.DeleteLocalDrivingLicenceApplication(LocalDrivingLicenseApplicationID);
+            clsNewLocalDrivingLicenceApplication obj = clsNewLocalDrivingLicenceApplication.Find(LocalDrivingLicenseApplicationID);
+            
+            if (obj == null)
+                return false;
+
+            int appid = obj.ApplicationID;
+
+            if (!clsNewLocalDrivingLicenceApplicationData.
+                DeleteLocalDrivingLicenceApplication(LocalDrivingLicenseApplicationID))
+                return false;
+
+            return clsApplication._DeleteApplication(appid);
         }
 
         public static bool IsLocalDrivingLicenseApplicationExist(int LocalDrivingLicenseApplicationID)
@@ -125,6 +153,24 @@ namespace Business_Logic
         public static bool IsPersonHasRunningNewApplication(int ApplicantPersonID, int LicenceClassID)
         {
             return clsApplicationsData.IsPersonHasRunningNewApplication(ApplicantPersonID, LicenceClassID);
+        }
+
+        public static stLDLAppFullDetails ? GetLDLAppFullDetailsByID(int LocalDrivingLicenseApplicationID)
+        {
+            stLDLAppFullDetails LDLAppFullDetails = new stLDLAppFullDetails();
+            LDLAppFullDetails.LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplicationID;
+
+            if (clsNewLocalDrivingLicenceApplicationData.GetLDLAppFullDetailsByID(LocalDrivingLicenseApplicationID,
+                ref LDLAppFullDetails.ApplicationID, ref LDLAppFullDetails.FullName,
+                ref LDLAppFullDetails.ApplicationTypeTitle, ref LDLAppFullDetails.ApplicationDate,
+                ref LDLAppFullDetails.LastStatusDate, ref LDLAppFullDetails.Status, ref LDLAppFullDetails.PaidFees,
+                ref LDLAppFullDetails.UserName, ref LDLAppFullDetails.CalssName,
+                ref LDLAppFullDetails.PassedTests, ref LDLAppFullDetails.ApplicantPersonID))
+            {
+                return LDLAppFullDetails;
+            }
+            else
+                return null;
         }
     }
 }

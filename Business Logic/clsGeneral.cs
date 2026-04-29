@@ -14,5 +14,12 @@ namespace Business_Logic
             ReplacementforaLostDrivingLicense = 3, ReplacementforaDamagedDrivingLicense = 4,
             ReleaseDetainedDrivingLicsense = 5, NewInternationalLicense = 6
         }
+
+        public enum enApplicationStatus
+        {
+            New = 1,
+            Canceled = 2,
+            Completed =3
+        }
     }
 }
