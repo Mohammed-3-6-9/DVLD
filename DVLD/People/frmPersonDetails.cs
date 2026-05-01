@@ -15,7 +15,7 @@ namespace DVLD.People
         public frmPersonDetails(int PersonID)
         {
             InitializeComponent();
-            ctrlPersonCard1.PersonID = PersonID;
+            ctrlPersonCard1.FillCardWithData(PersonID);
         }
 
         private void btnClose_Click(object sender, EventArgs e)

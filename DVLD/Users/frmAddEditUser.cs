@@ -30,7 +30,7 @@ namespace DVLD.Users
 
             _UserID = UserID;
             _PersonID= PersonID;
-            ctrlPersonCard1.PersonID = PersonID;
+            ctrlPersonCard1.FillCardWithData(PersonID);
             gbFilter.Enabled = false;
             _Mode = enMode.Update;
         }

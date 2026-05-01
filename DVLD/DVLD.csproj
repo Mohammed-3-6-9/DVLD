@@ -79,6 +79,12 @@
     <Compile Include="Controls\ctrlAddEditPerson.Designer.cs">
       <DependentUpon>ctrlAddEditPerson.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ctrlApplicationDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ctrlApplicationDetails.Designer.cs">
+      <DependentUpon>ctrlApplicationDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ctrlLoginInformation.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -179,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlAddEditPerson.resx">
       <DependentUpon>ctrlAddEditPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ctrlApplicationDetails.resx">
+      <DependentUpon>ctrlApplicationDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlLoginInformation.resx">
       <DependentUpon>ctrlLoginInformation.cs</DependentUpon>

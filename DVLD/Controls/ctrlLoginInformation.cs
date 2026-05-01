@@ -15,17 +15,6 @@ namespace DVLD.Controls
     {
         private int _UserID = -1;
 
-        public int UserID
-        {
-            get => _UserID;
-
-            set
-            {
-                _UserID = value;
-                _RefreshUserCard();
-            }
-        }
-
         public ctrlLoginInformation()
         {
             InitializeComponent();
@@ -41,7 +30,7 @@ namespace DVLD.Controls
 
         void _RefreshUserCard()
         {
-            clsUser User = clsUser.Find(UserID);
+            clsUser User = clsUser.Find(_UserID);
 
             if (User == null)
             {
@@ -52,6 +41,12 @@ namespace DVLD.Controls
             lblUserID.Text = User.UserID.ToString();
             lblUserName.Text = User.UserName;
             lblIsActive.Text = (User.IsActive) ? "Yes" : "No";
+        }
+
+        public void FillCardWithData(int UserID)
+        {
+            _UserID = UserID;
+            _RefreshUserCard();
         }
     }
 }

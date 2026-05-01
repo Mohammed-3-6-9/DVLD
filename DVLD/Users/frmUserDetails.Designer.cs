@@ -69,13 +69,11 @@
             this.ctrlLoginInformation1.Name = "ctrlLoginInformation1";
             this.ctrlLoginInformation1.Size = new System.Drawing.Size(1160, 111);
             this.ctrlLoginInformation1.TabIndex = 15;
-            this.ctrlLoginInformation1.UserID = -1;
             // 
             // ctrlPersonCard1
             // 
             this.ctrlPersonCard1.Location = new System.Drawing.Point(12, 95);
             this.ctrlPersonCard1.Name = "ctrlPersonCard1";
-            this.ctrlPersonCard1.PersonID = -1;
             this.ctrlPersonCard1.Size = new System.Drawing.Size(1160, 360);
             this.ctrlPersonCard1.TabIndex = 0;
             // 

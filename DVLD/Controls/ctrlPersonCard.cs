@@ -16,13 +16,7 @@ namespace DVLD.Controls
     public partial class ctrlPersonCard : UserControl
     {
         private int _PersonID = -1;
-        public int PersonID { get => _PersonID;
-            set
-            {
-                _PersonID = value;
-                _FindPerson(_PersonID);
-            }
-        }
+        private clsPerson _Person = new clsPerson();
 
         public ctrlPersonCard()
         {
@@ -32,7 +26,7 @@ namespace DVLD.Controls
         private bool _RefreshPersonCard(clsPerson Person)
         {
             _PersonID = Person.PersonID;
-            lblPersonID.Text = PersonID.ToString();
+            lblPersonID.Text = _PersonID.ToString();
             lblName.Text = Person.FirstName + " " + Person.SecondName + " " + Person.ThirdName + Person.LastName;
             lblNationalNo.Text = Person.NationalNumber;
             lblGendor.Text = (Person.Gendor == 0) ? "Male" : "Female";
@@ -67,44 +61,39 @@ namespace DVLD.Controls
 
         private int _FindPerson(int PersonID)
         {
-            clsPerson Person = clsPerson.Find(PersonID);
+            _Person = clsPerson.Find(PersonID);
 
-            if (Person == null)
+            if (_Person == null)
             {
                 ResetDefaultValues();
                 return -1;
             }
 
-            _RefreshPersonCard(Person);
-            return Person.PersonID;
+            _RefreshPersonCard(_Person);
+            return _Person.PersonID;
         }
 
         private int _FindPerson(string NationalNumber)
         {
-            clsPerson Person = clsPerson.Find(NationalNumber);
+            _Person = clsPerson.Find(NationalNumber);
 
-            if (Person == null)
+            if (_Person == null)
             {
                 ResetDefaultValues();
                 return -1;
             }
 
-            _RefreshPersonCard(Person);
+            _RefreshPersonCard(_Person);
 
-            return Person.PersonID;
-        }
-
-        private void ctrlPersonCard_Load(object sender, EventArgs e)
-        {
-            _FindPerson(PersonID);
+            return _Person.PersonID;
         }
 
         private void lblEditPersonLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmAddEditPerson frm = new frmAddEditPerson(PersonID);
+            frmAddEditPerson frm = new frmAddEditPerson(_PersonID);
             frm.ShowDialog();
 
-            _FindPerson(PersonID);
+            _FindPerson(_PersonID);
         }
 
         public int FillCardWithData(int PersonID)
