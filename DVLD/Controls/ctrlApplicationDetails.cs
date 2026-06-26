@@ -51,7 +51,7 @@ namespace DVLD.Controls
             }
 
             lblDrivingLicenseAppID.Text = _LDLAppFullDetails.Value.LocalDrivingLicenseApplicationID.ToString();
-            lblAppliedForLicense.Text = _LDLAppFullDetails.Value.CalssName;
+            lblAppliedForLicense.Text = _LDLAppFullDetails.Value.ClassName;
             lblPassedTests.Text = _LDLAppFullDetails.Value.PassedTests.ToString() + "/3";
             lblApplicationID.Text = _LDLAppFullDetails.Value.ApplicationID.ToString();
             lblStatus.Text = _LDLAppFullDetails.Value.Status.ToString();
@@ -59,7 +59,7 @@ namespace DVLD.Controls
             lblType.Text = _LDLAppFullDetails.Value.ApplicationTypeTitle.ToString();
             lblApplicant.Text = _LDLAppFullDetails.Value.FullName.ToString();
             lblDate.Text = _LDLAppFullDetails.Value.ApplicationDate.ToString();
-            lblStatusDate.Text = _LDLAppFullDetails.Value.ToString();
+            lblStatusDate.Text = _LDLAppFullDetails.Value.LastStatusDate.ToString();
             lblCreatedBy.Text = _LDLAppFullDetails.Value.UserName.ToString();
         }
 

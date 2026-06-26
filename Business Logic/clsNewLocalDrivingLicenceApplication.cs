@@ -30,7 +30,7 @@ namespace Business_Logic
             public string Status;
             public decimal PaidFees;
             public string UserName;
-            public string CalssName;
+            public string ClassName;
             public int PassedTests;
             public int ApplicantPersonID;
         }
@@ -164,7 +164,7 @@ namespace Business_Logic
                 ref LDLAppFullDetails.ApplicationID, ref LDLAppFullDetails.FullName,
                 ref LDLAppFullDetails.ApplicationTypeTitle, ref LDLAppFullDetails.ApplicationDate,
                 ref LDLAppFullDetails.LastStatusDate, ref LDLAppFullDetails.Status, ref LDLAppFullDetails.PaidFees,
-                ref LDLAppFullDetails.UserName, ref LDLAppFullDetails.CalssName,
+                ref LDLAppFullDetails.UserName, ref LDLAppFullDetails.ClassName,
                 ref LDLAppFullDetails.PassedTests, ref LDLAppFullDetails.ApplicantPersonID))
             {
                 return LDLAppFullDetails;

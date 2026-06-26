@@ -1,5 +1,6 @@
 ﻿using Business_Logic;
 using DVLD.People;
+using DVLD.Tests;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,8 +26,8 @@ namespace DVLD.ApplicationForms
             DataTable dt = clsApplication.GetAllApplicationsFullData();
             dt.Columns["LocalDrivingLicenseApplicationID"].ColumnName = "L.D.L.AppID";
             _DataView = dt.DefaultView;
-            dgvPeople.DataSource = _DataView;
-            lblRecordsNumber.Text = dgvPeople.RowCount.ToString();
+            dgvManageApplications.DataSource = _DataView;
+            lblRecordsNumber.Text = dgvManageApplications.RowCount.ToString();
         }
 
         private void frmManageApplicatons_Load(object sender, EventArgs e)
@@ -46,7 +47,7 @@ namespace DVLD.ApplicationForms
             if (string.IsNullOrWhiteSpace(tbFilterValue.Text))
             {
                 _DataView.RowFilter = null;
-                lblRecordsNumber.Text = dgvPeople.RowCount.ToString();
+                lblRecordsNumber.Text = dgvManageApplications.RowCount.ToString();
                 return;
             }
 
@@ -63,7 +64,7 @@ namespace DVLD.ApplicationForms
                 _DataView.RowFilter = $"{cbFiltersType.Text} LIKE '%{Filter}%'";
             }
 
-            lblRecordsNumber.Text = dgvPeople.RowCount.ToString();
+            lblRecordsNumber.Text = dgvManageApplications.RowCount.ToString();
         }
 
         private void cbFiltersType_SelectedIndexChanged(object sender, EventArgs e)
@@ -91,7 +92,7 @@ namespace DVLD.ApplicationForms
         private void cbStatusFilterValue_SelectedIndexChanged(object sender, EventArgs e)
         {
             _DataView.RowFilter = $"{cbFiltersType.Text} LIKE '%{cbStatusFilterValue.Text}%'";
-            lblRecordsNumber.Text = dgvPeople.RowCount.ToString();
+            lblRecordsNumber.Text = dgvManageApplications.RowCount.ToString();
         }
 
         private void tbFilterValue_KeyPress(object sender, KeyPressEventArgs e)
@@ -118,7 +119,58 @@ namespace DVLD.ApplicationForms
 
         private void showApplicationDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmApplicationDetails frm = new frmApplicationDetails((int)dgvPeople.CurrentRow.Cells["L.D.L.AppID"].Value);
+            frmApplicationDetails frm = new frmApplicationDetails((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value);
+            frm.ShowDialog();
+        }
+
+        void _ScheduleTestUI()
+        {
+            switch ((int)dgvManageApplications.CurrentRow.Cells["PassedTestCount"].Value)
+            {
+                case 0:
+                    {
+                        visionTestToolStripMenuItem.Enabled = true;
+                        writtenTestToolStripMenuItem.Enabled = false;
+                        streetTestToolStripMenuItem.Enabled = false;
+                        break;
+                    }
+                case 1:
+                    {
+                        visionTestToolStripMenuItem.Enabled = false;
+                        writtenTestToolStripMenuItem.Enabled = true;
+                        streetTestToolStripMenuItem.Enabled = false;
+                        break;
+                    }
+                case 2:
+                    {
+                        visionTestToolStripMenuItem.Enabled = false;
+                        writtenTestToolStripMenuItem.Enabled = false;
+                        streetTestToolStripMenuItem.Enabled = true;
+                        break;
+                    }
+                case 3:
+                    {
+                        visionTestToolStripMenuItem.Enabled = false;
+                        writtenTestToolStripMenuItem.Enabled = false;
+                        streetTestToolStripMenuItem.Enabled = false;
+                        break;
+                    }
+            }
+        }
+
+        private void scheduleTestsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _ScheduleTestUI();
+        }
+
+        private void scheduleTestsToolStripMenuItem_MouseHover(object sender, EventArgs e)
+        {
+            _ScheduleTestUI();
+        }
+
+        private void visionTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmVisionTest frm = new frmVisionTest((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value);
             frm.ShowDialog();
         }
     }

@@ -21,5 +21,12 @@ namespace Business_Logic
             Canceled = 2,
             Completed =3
         }
+
+        public enum enTestTypes
+        {
+            Vision = 1,
+            Written = 2,
+            Practical = 3
+        }
     }
 }
