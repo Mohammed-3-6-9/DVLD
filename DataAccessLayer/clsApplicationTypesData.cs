@@ -106,5 +106,37 @@ namespace DataAccessLayer
 
             return dt;
         }
+
+        public static decimal GetApplicationFees(int ApplicationTypeID)
+        {
+            decimal Fees = -1;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT ApplicationFees FROM ApplicationTypes
+                             WHERE ApplicationTypes.ApplicationTypeID = @ApplicationTypeID";
+
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+
+            try
+            {
+                Connection.Open();
+                object result = Command.ExecuteScalar();
+
+                if (result == null || result == DBNull.Value)
+                    Fees = -1;
+                else
+                    Fees = decimal.Parse(result.ToString());
+            }
+            catch
+            {
+                Fees = -1;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return Fees;
+        }
     }
 }

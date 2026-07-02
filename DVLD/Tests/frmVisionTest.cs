@@ -40,8 +40,65 @@ namespace DVLD.Tests
 
         private void frmVisionTest_Load(object sender, EventArgs e)
         {
-            _RefreshTableTests();
             ctrlApplicationDetails1.FindAppDetails(_LDLAppID);
+            _RefreshTableTests();
+        }
+
+        private void btnAddPerson_Click(object sender, EventArgs e)
+        {
+            if (dgvManageTestAppointments.Rows.Count > 0)
+            {
+                if (clsTestAppointments.IsThereAnActiveAppointment(_LDLAppID, (int)clsGeneral.enTestTypes.Vision))
+                {
+                    MessageBox.Show("Person Already Has an Active Appointment For This Test, You Can't Add New Appointment",
+                        "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    if (clsTestAppointments.GetLastTestResult(_LDLAppID,(int)clsGeneral.enTestTypes.Vision) == 1)
+                    {
+                        MessageBox.Show("Person Already Passed This Test, You Can't Add New Appointment", "Not Allowed",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        frmScheduleTest frm = new frmScheduleTest(_LDLAppID,-1,true);
+                        frm.OnTestScheduledSuccessfully += DataUpdated;
+                        frm.ShowDialog();
+                    }
+                }
+            }
+            else
+            {
+                frmScheduleTest frm = new frmScheduleTest(_LDLAppID);
+                frm.OnTestScheduledSuccessfully += DataUpdated;
+                frm.ShowDialog();
+            }
+        }
+
+        void DataUpdated()
+        {
+            _RefreshTableTests();
+        }
+
+        private void tsmEdit_Click(object sender, EventArgs e)
+        {
+            if (dgvManageTestAppointments.Rows.Count > 0)
+            {
+                var CurrentRow = dgvManageTestAppointments.CurrentRow;
+
+                if (Convert.ToBoolean(CurrentRow.Cells["IsLocked"].Value) == true)
+                {
+                    MessageBox.Show("This Test Is Locked, Can't Be Edited",
+                        "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    frmScheduleTest frm = new frmScheduleTest(_LDLAppID, (int)CurrentRow.Cells["TestAppointmentID"].Value);
+                    frm.OnTestScheduledSuccessfully += DataUpdated;
+                    frm.ShowDialog();
+                }
+            }
         }
     }
 }

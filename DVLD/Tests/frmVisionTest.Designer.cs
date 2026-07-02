@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmVisionTest));
             this.label2 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
@@ -35,10 +36,14 @@
             this.dgvManageTestAppointments = new System.Windows.Forms.DataGridView();
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnAddPerson = new System.Windows.Forms.Button();
+            this.btnAddTestAppointment = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmTakeTest = new System.Windows.Forms.ToolStripMenuItem();
             this.ctrlApplicationDetails1 = new DVLD.Controls.ctrlApplicationDetails();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvManageTestAppointments)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -90,6 +95,7 @@
             this.dgvManageTestAppointments.Name = "dgvManageTestAppointments";
             this.dgvManageTestAppointments.ReadOnly = true;
             this.dgvManageTestAppointments.RowHeadersWidth = 62;
+            this.dgvManageTestAppointments.RowTemplate.ContextMenuStrip = this.contextMenuStrip1;
             this.dgvManageTestAppointments.RowTemplate.Height = 28;
             this.dgvManageTestAppointments.Size = new System.Drawing.Size(1151, 166);
             this.dgvManageTestAppointments.TabIndex = 28;
@@ -114,17 +120,44 @@
             this.label1.TabIndex = 23;
             this.label1.Text = "# Records :";
             // 
-            // btnAddPerson
+            // btnAddTestAppointment
             // 
-            this.btnAddPerson.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddPerson.BackgroundImage")));
-            this.btnAddPerson.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnAddPerson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddPerson.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.btnAddPerson.Location = new System.Drawing.Point(1090, 767);
-            this.btnAddPerson.Name = "btnAddPerson";
-            this.btnAddPerson.Size = new System.Drawing.Size(63, 41);
-            this.btnAddPerson.TabIndex = 29;
-            this.btnAddPerson.UseVisualStyleBackColor = true;
+            this.btnAddTestAppointment.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddTestAppointment.BackgroundImage")));
+            this.btnAddTestAppointment.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnAddTestAppointment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddTestAppointment.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.btnAddTestAppointment.Location = new System.Drawing.Point(1090, 767);
+            this.btnAddTestAppointment.Name = "btnAddTestAppointment";
+            this.btnAddTestAppointment.Size = new System.Drawing.Size(63, 41);
+            this.btnAddTestAppointment.TabIndex = 29;
+            this.btnAddTestAppointment.UseVisualStyleBackColor = true;
+            this.btnAddTestAppointment.Click += new System.EventHandler(this.btnAddPerson_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmEdit,
+            this.tsmTakeTest});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(169, 72);
+            // 
+            // tsmEdit
+            // 
+            this.tsmEdit.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.tsmEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsmEdit.Image")));
+            this.tsmEdit.Name = "tsmEdit";
+            this.tsmEdit.Size = new System.Drawing.Size(168, 34);
+            this.tsmEdit.Text = "Edit";
+            this.tsmEdit.Click += new System.EventHandler(this.tsmEdit_Click);
+            // 
+            // tsmTakeTest
+            // 
+            this.tsmTakeTest.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.tsmTakeTest.Image = ((System.Drawing.Image)(resources.GetObject("tsmTakeTest.Image")));
+            this.tsmTakeTest.Name = "tsmTakeTest";
+            this.tsmTakeTest.Size = new System.Drawing.Size(168, 34);
+            this.tsmTakeTest.Text = "Take Test";
             // 
             // ctrlApplicationDetails1
             // 
@@ -138,7 +171,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1175, 1050);
-            this.Controls.Add(this.btnAddPerson);
+            this.Controls.Add(this.btnAddTestAppointment);
             this.Controls.Add(this.dgvManageTestAppointments);
             this.Controls.Add(this.lblRecordsNumber);
             this.Controls.Add(this.label1);
@@ -153,6 +186,7 @@
             this.Load += new System.EventHandler(this.frmVisionTest_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvManageTestAppointments)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -167,6 +201,9 @@
         private System.Windows.Forms.DataGridView dgvManageTestAppointments;
         private System.Windows.Forms.Label lblRecordsNumber;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnAddPerson;
+        private System.Windows.Forms.Button btnAddTestAppointment;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem tsmEdit;
+        private System.Windows.Forms.ToolStripMenuItem tsmTakeTest;
     }
 }

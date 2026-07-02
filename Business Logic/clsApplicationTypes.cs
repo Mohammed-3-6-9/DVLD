@@ -57,6 +57,11 @@ namespace Business_Logic
         {
             return clsApplicationTypesData.GetAllApplicationTypes();
         }
+
+        public static decimal GetApplicationFees(int ApplicationTypeID)
+        {
+            return clsApplicationTypesData.GetApplicationFees(ApplicationTypeID);
+        }
     }
 
 }

@@ -114,11 +114,6 @@ namespace Business_Logic
             return clsTestAppointmentsData.GetAllTestAppointments();
         }
 
-        public static DataTable GetAllTestAppointmentsForTableView(int LocalDrivingLicenseApplicationID,int TestTypeID)
-        {
-            return clsTestAppointmentsData.GetAllTestAppointmentsForTableView(LocalDrivingLicenseApplicationID,TestTypeID);
-        }
-
         public static bool DeleteTestAppointment(int TestAppointmentID)
         {
             return clsTestAppointmentsData.DeleteTestAppointment(TestAppointmentID);
@@ -132,6 +127,34 @@ namespace Business_Logic
         public static int GetLastTestTypeID(int LDLAppID)
         {
             return clsTestAppointmentsData.GetLastTestTypeID(LDLAppID);
+        }
+
+        public static int GetLastFailedTest(int LDLAppID)
+        {
+            return clsTestAppointmentsData.GetLastFailedTest(LDLAppID);
+        }
+
+        public static bool GetDataForScheduleTest(int LocalDrivingLicenseApplicationID, int TestTypeID,
+            ref string ClassName, ref string FullName, ref decimal Fees)
+        {
+
+            return clsTestAppointmentsData.GetDataForScheduleTest(LocalDrivingLicenseApplicationID,
+                  TestTypeID, ref ClassName, ref FullName, ref Fees);
+        }
+
+        public static DataTable GetAllTestAppointmentsForTableView(int LocalDrivingLicenseApplicationID, int TestTypeID)
+        {
+            return clsTestAppointmentsData.GetAllTestAppointmentsForTableView(LocalDrivingLicenseApplicationID, TestTypeID);
+        }
+
+        public static int GetLastTestResult(int LocalDrivingLicenseApplicationID, int TestTypeID)
+        {
+            return clsTestAppointmentsData.GetLastTestResult(LocalDrivingLicenseApplicationID, TestTypeID);
+        }
+
+        public static bool IsThereAnActiveAppointment(int LDLAppID, int TestTypeID)
+        {
+            return clsTestAppointmentsData.IsThereAnActiveAppointment(LDLAppID, TestTypeID);
         }
     }
 }

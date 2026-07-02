@@ -12,9 +12,34 @@ namespace DVLD.Tests
 {
     public partial class frmScheduleTest : Form
     {
-        public frmScheduleTest()
+        private int _LDLAppID = -1;
+        private bool _reTake = false;
+        private int _TestAppointmentID = -1;
+        public event Action OnTestScheduledSuccessfully;
+
+        public frmScheduleTest(int localDrivingLicenseApplicationID,int TestAppointmentID=-1,bool reTake=false)
         {
             InitializeComponent();
+
+            ctrlVisionTest1.DataUpdatedEvent += DataUpdated;
+            _LDLAppID = localDrivingLicenseApplicationID;
+            _reTake = reTake;
+            _TestAppointmentID = TestAppointmentID;
+        }
+
+        private void frmScheduleTest_Load(object sender, EventArgs e)
+        {
+            ctrlVisionTest1.ScheduleTest(_LDLAppID, _TestAppointmentID, _reTake);
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        void DataUpdated()
+        {
+            OnTestScheduledSuccessfully?.Invoke();
         }
     }
 }

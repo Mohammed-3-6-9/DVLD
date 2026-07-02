@@ -53,7 +53,7 @@
             this.btnLogin.Location = new System.Drawing.Point(825, 363);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(142, 55);
-            this.btnLogin.TabIndex = 4;
+            this.btnLogin.TabIndex = 0;
             this.btnLogin.Text = "Login";
             this.btnLogin.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLogin.UseVisualStyleBackColor = true;
@@ -89,7 +89,7 @@
             this.button1.Location = new System.Drawing.Point(1067, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(43, 37);
-            this.button1.TabIndex = 0;
+            this.button1.TabIndex = 4;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
