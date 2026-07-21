@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScheduleTest));
             this.btnClose = new System.Windows.Forms.Button();
-            this.ctrlVisionTest1 = new DVLD.Controls.Tests.ctrlVisionTest();
+            this.ctrlVisionTest1 = new DVLD.Controls.Tests.ctrlScheduleTest();
             this.SuspendLayout();
             // 
             // btnClose
@@ -74,7 +74,7 @@
         }
 
         #endregion
-        private Controls.Tests.ctrlVisionTest ctrlVisionTest1;
+        private Controls.Tests.ctrlScheduleTest ctrlVisionTest1;
         private System.Windows.Forms.Button btnClose;
     }
 }

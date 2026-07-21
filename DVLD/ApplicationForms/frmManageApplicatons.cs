@@ -170,7 +170,8 @@ namespace DVLD.ApplicationForms
 
         private void visionTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmVisionTest frm = new frmVisionTest((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value);
+            frmMainScheduleTest frm = new frmMainScheduleTest((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value,
+                TestType: clsGeneral.enTestTypes.Vision);
             frm.ShowDialog();
         }
     }

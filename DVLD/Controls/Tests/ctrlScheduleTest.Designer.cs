@@ -1,6 +1,6 @@
 ﻿namespace DVLD.Controls.Tests
 {
-    partial class ctrlVisionTest
+    partial class ctrlScheduleTest
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ctrlVisionTest));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ctrlScheduleTest));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.gbReTakeTest = new System.Windows.Forms.GroupBox();
             this.lblReTake_Test_App_ID = new System.Windows.Forms.Label();

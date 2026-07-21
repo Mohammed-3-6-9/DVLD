@@ -1,6 +1,6 @@
 ﻿namespace DVLD.Tests
 {
-    partial class frmVisionTest
+    partial class frmMainScheduleTest
     {
         /// <summary>
         /// Required designer variable.
@@ -29,60 +29,33 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmVisionTest));
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMainScheduleTest));
+            this.lblHeader = new System.Windows.Forms.Label();
             this.dgvManageTestAppointments = new System.Windows.Forms.DataGridView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.ctrlApplicationDetails1 = new DVLD.Controls.ctrlApplicationDetails();
             this.btnAddTestAppointment = new System.Windows.Forms.Button();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmTakeTest = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctrlApplicationDetails1 = new DVLD.Controls.ctrlApplicationDetails();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvManageTestAppointments)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
-            // label2
+            // lblHeader
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 18F);
-            this.label2.ForeColor = System.Drawing.Color.DarkRed;
-            this.label2.Location = new System.Drawing.Point(342, 190);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(464, 46);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "Vision Test Appointments";
-            // 
-            // btnClose
-            // 
-            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
-            this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(1005, 995);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(158, 46);
-            this.btnClose.TabIndex = 18;
-            this.btnClose.Text = "Close";
-            this.btnClose.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(457, 12);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(219, 175);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
+            this.lblHeader.AutoSize = true;
+            this.lblHeader.Font = new System.Drawing.Font("Microsoft YaHei", 18F);
+            this.lblHeader.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblHeader.Location = new System.Drawing.Point(342, 190);
+            this.lblHeader.Name = "lblHeader";
+            this.lblHeader.Size = new System.Drawing.Size(464, 46);
+            this.lblHeader.TabIndex = 17;
+            this.lblHeader.Text = "Vision Test Appointments";
             // 
             // dgvManageTestAppointments
             // 
@@ -99,6 +72,15 @@
             this.dgvManageTestAppointments.RowTemplate.Height = 28;
             this.dgvManageTestAppointments.Size = new System.Drawing.Size(1151, 166);
             this.dgvManageTestAppointments.TabIndex = 28;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmEdit,
+            this.tsmTakeTest});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(169, 72);
             // 
             // lblRecordsNumber
             // 
@@ -120,6 +102,13 @@
             this.label1.TabIndex = 23;
             this.label1.Text = "# Records :";
             // 
+            // ctrlApplicationDetails1
+            // 
+            this.ctrlApplicationDetails1.Location = new System.Drawing.Point(12, 260);
+            this.ctrlApplicationDetails1.Name = "ctrlApplicationDetails1";
+            this.ctrlApplicationDetails1.Size = new System.Drawing.Size(1164, 501);
+            this.ctrlApplicationDetails1.TabIndex = 19;
+            // 
             // btnAddTestAppointment
             // 
             this.btnAddTestAppointment.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddTestAppointment.BackgroundImage")));
@@ -132,15 +121,6 @@
             this.btnAddTestAppointment.TabIndex = 29;
             this.btnAddTestAppointment.UseVisualStyleBackColor = true;
             this.btnAddTestAppointment.Click += new System.EventHandler(this.btnAddPerson_Click);
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmEdit,
-            this.tsmTakeTest});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(169, 72);
             // 
             // tsmEdit
             // 
@@ -159,12 +139,32 @@
             this.tsmTakeTest.Size = new System.Drawing.Size(168, 34);
             this.tsmTakeTest.Text = "Take Test";
             // 
-            // ctrlApplicationDetails1
+            // btnClose
             // 
-            this.ctrlApplicationDetails1.Location = new System.Drawing.Point(12, 260);
-            this.ctrlApplicationDetails1.Name = "ctrlApplicationDetails1";
-            this.ctrlApplicationDetails1.Size = new System.Drawing.Size(1164, 501);
-            this.ctrlApplicationDetails1.TabIndex = 19;
+            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
+            this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClose.Location = new System.Drawing.Point(1005, 995);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(158, 46);
+            this.btnClose.TabIndex = 18;
+            this.btnClose.Text = "Close";
+            this.btnClose.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::DVLD.Properties.Resources.Vision_512;
+            this.pictureBox2.Location = new System.Drawing.Point(457, 12);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(219, 175);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
             // 
             // frmVisionTest
             // 
@@ -177,16 +177,16 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ctrlApplicationDetails1);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblHeader);
             this.Controls.Add(this.pictureBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "frmVisionTest";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmVisionTest";
             this.Load += new System.EventHandler(this.frmVisionTest_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvManageTestAppointments)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,7 +195,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblHeader;
         private System.Windows.Forms.Button btnClose;
         private Controls.ctrlApplicationDetails ctrlApplicationDetails1;
         private System.Windows.Forms.DataGridView dgvManageTestAppointments;

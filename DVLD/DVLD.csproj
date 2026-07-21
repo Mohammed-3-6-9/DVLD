@@ -97,11 +97,11 @@
     <Compile Include="Controls\ctrlPersonCard.Designer.cs">
       <DependentUpon>ctrlPersonCard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Tests\ctrlVisionTest.cs">
+    <Compile Include="Controls\Tests\ctrlScheduleTest.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Tests\ctrlVisionTest.Designer.cs">
-      <DependentUpon>ctrlVisionTest.cs</DependentUpon>
+    <Compile Include="Controls\Tests\ctrlScheduleTest.Designer.cs">
+      <DependentUpon>ctrlScheduleTest.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
@@ -139,11 +139,11 @@
     <Compile Include="Tests\frmScheduleTest.Designer.cs">
       <DependentUpon>frmScheduleTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tests\frmVisionTest.cs">
+    <Compile Include="Tests\frmMainScheduleTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tests\frmVisionTest.Designer.cs">
-      <DependentUpon>frmVisionTest.cs</DependentUpon>
+    <Compile Include="Tests\frmMainScheduleTest.Designer.cs">
+      <DependentUpon>frmMainScheduleTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Users\frmAddEditUser.cs">
       <SubType>Form</SubType>
@@ -213,8 +213,8 @@
     <EmbeddedResource Include="Controls\ctrlPersonCard.resx">
       <DependentUpon>ctrlPersonCard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Tests\ctrlVisionTest.resx">
-      <DependentUpon>ctrlVisionTest.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Tests\ctrlScheduleTest.resx">
+      <DependentUpon>ctrlScheduleTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
@@ -253,8 +253,8 @@
     <EmbeddedResource Include="Tests\frmScheduleTest.resx">
       <DependentUpon>frmScheduleTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tests\frmVisionTest.resx">
-      <DependentUpon>frmVisionTest.cs</DependentUpon>
+    <EmbeddedResource Include="Tests\frmMainScheduleTest.resx">
+      <DependentUpon>frmMainScheduleTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\frmAddEditUser.resx">
       <DependentUpon>frmAddEditUser.cs</DependentUpon>
@@ -293,6 +293,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Female 512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Vision 512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Written Test 512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\driving-test 512.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

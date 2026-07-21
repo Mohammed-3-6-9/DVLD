@@ -109,37 +109,12 @@ namespace Business_Logic
             return false;
         }
 
-        public static DataTable GetAllTestAppointments()
-        {
-            return clsTestAppointmentsData.GetAllTestAppointments();
-        }
-
-        public static bool DeleteTestAppointment(int TestAppointmentID)
-        {
-            return clsTestAppointmentsData.DeleteTestAppointment(TestAppointmentID);
-        }
-
-        public static bool IsTestAppointmentExist(int TestAppointmentID)
-        {
-            return clsTestAppointmentsData.IsTestAppointmentExist(TestAppointmentID);
-        }
-
-        public static int GetLastTestTypeID(int LDLAppID)
-        {
-            return clsTestAppointmentsData.GetLastTestTypeID(LDLAppID);
-        }
-
-        public static int GetLastFailedTest(int LDLAppID)
-        {
-            return clsTestAppointmentsData.GetLastFailedTest(LDLAppID);
-        }
-
         public static bool GetDataForScheduleTest(int LocalDrivingLicenseApplicationID, int TestTypeID,
-            ref string ClassName, ref string FullName, ref decimal Fees)
+            ref string ClassName, ref string FullName, ref decimal Fees,ref int Trials)
         {
 
             return clsTestAppointmentsData.GetDataForScheduleTest(LocalDrivingLicenseApplicationID,
-                  TestTypeID, ref ClassName, ref FullName, ref Fees);
+                  TestTypeID, ref ClassName, ref FullName, ref Fees, ref Trials);
         }
 
         public static DataTable GetAllTestAppointmentsForTableView(int LocalDrivingLicenseApplicationID, int TestTypeID)

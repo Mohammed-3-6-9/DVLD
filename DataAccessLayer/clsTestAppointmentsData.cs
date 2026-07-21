@@ -30,7 +30,7 @@ namespace DataAccessLayer
                     IsFound = true;
 
                     TestTypeID = (int)reader["TestTypeID"];
-                    LDLAppID = (int)reader["LDLAppID"];
+                    LDLAppID = (int)reader["LocalDrivingLicenseApplicationID"];
                     AppointmentDate = (DateTime)reader["AppointmentDate"];
                     PaidFees = (decimal)reader["PaidFees"];
                     CreatedByUserID = (int)reader["CreatedByUserID"];
@@ -99,14 +99,14 @@ namespace DataAccessLayer
             int RowsEffected = 0;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = @"UPDATE TestAppointments SET
-               TestTypeID = @TestTypeID, LDLAppID = @LDLAppID,
+               TestTypeID = @TestTypeID, LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID,
                AppointmentDate = @AppointmentDate, PaidFees = @PaidFees,
                CreatedByUserID = @CreatedByUserID, IsLocked = @IsLocked
                WHERE TestAppointmentID = @TestAppointmentID;";
 
             SqlCommand Command = new SqlCommand(query, Connection);
             Command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
-            Command.Parameters.AddWithValue("@LDLAppID", LDLAppID);
+            Command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LDLAppID);
             Command.Parameters.AddWithValue("@AppointmentDate", AppointmentDate);
             Command.Parameters.AddWithValue("@PaidFees", PaidFees);
             Command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
@@ -128,34 +128,6 @@ namespace DataAccessLayer
             }
 
             return (RowsEffected > 0);
-        }
-
-        public static DataTable GetAllTestAppointments()
-        {
-            DataTable dt = new DataTable();
-            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT * FROM TestAppointments;";
-            SqlCommand Command = new SqlCommand(query, Connection);
-
-            try
-            {
-                Connection.Open();
-                SqlDataReader reader = Command.ExecuteReader();
-
-                if (reader.HasRows)
-                    dt.Load(reader);
-
-                reader.Close();
-            }
-            catch
-            {
-            }
-            finally
-            {
-                Connection.Close();
-            }
-
-            return dt;
         }
 
         public static DataTable GetAllTestAppointmentsForTableView(int LocalDrivingLicenseApplicationID, int TestTypeID)
@@ -192,11 +164,14 @@ namespace DataAccessLayer
         }
 
         public static bool GetDataForScheduleTest(int LocalDrivingLicenseApplicationID, int TestTypeID, ref string ClassName,
-            ref string FullName, ref decimal Fees)
+            ref string FullName, ref decimal Fees,ref int Trials)
         {
             bool IsFound = false;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT ClassName , FullName FROM ScheduleTest_View WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+            string query = @"SELECT ClassName, FullName FROM ScheduleTest_View WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+                             SELECT  COUNT(dbo.TestAppointments.LocalDrivingLicenseApplicationID) AS Trials
+                             FROM TestAppointments WHERE TestAppointments.LocalDrivingLicenseApplicationID=@LocalDrivingLicenseApplicationID
+                             AND TestAppointments.TestTypeID=@TestTypeID;
                              SELECT TestTypeFees FROM TestTypes WHERE TestTypeID = @TestTypeID;";
             SqlCommand Command = new SqlCommand(query, Connection);
             Command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LocalDrivingLicenseApplicationID);
@@ -215,6 +190,9 @@ namespace DataAccessLayer
                     FullName = reader["FullName"].ToString();
 
                     if (reader.NextResult() && reader.Read())
+                        Trials = Convert.ToInt32(reader["Trials"]);
+
+                    if (reader.NextResult() && reader.Read())
                         Fees = (decimal)reader["TestTypeFees"];
 
                 }
@@ -231,123 +209,6 @@ namespace DataAccessLayer
             }
 
             return IsFound;
-        }
-
-        public static bool DeleteTestAppointment(int TestAppointmentID)
-        {
-            int RowsAffected = 0;
-            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"Delete FROM TestAppointments Where TestAppointmentID = @TestAppointmentID;";
-            SqlCommand Command = new SqlCommand(query, Connection);
-            Command.Parameters.AddWithValue("@TestAppointmentID", TestAppointmentID);
-
-            try
-            {
-                Connection.Open();
-                RowsAffected = Command.ExecuteNonQuery();
-            }
-            catch
-            {
-                return false;
-            }
-            finally
-            {
-                Connection.Close();
-            }
-
-            return (RowsAffected > 0);
-        }
-
-        public static bool IsTestAppointmentExist(int TestAppointmentID)
-        {
-            bool Exists = false;
-            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT 1 FROM TestAppointments Where TestAppointmentID = @TestAppointmentID";
-            SqlCommand Command = new SqlCommand(query, Connection);
-            Command.Parameters.AddWithValue("@TestAppointmentID", TestAppointmentID);
-
-            try
-            {
-                Connection.Open();
-                object obj = Command.ExecuteScalar();
-
-                if (obj != null)
-                    Exists = true;
-            }
-            catch
-            {
-                Exists = false;
-            }
-            finally
-            {
-                Connection.Close();
-            }
-
-            return Exists;
-        }
-
-        public static short GetLastTestTypeID(int LDLAppID)
-        {
-            short LastTestTypeID = -1;
-            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT TOP 1 TestTypeID FROM TestAppointments WHERE
-                             LocalDrivingLicenseApplicationID =@LDLAppID AND IsLocked=1
-                             ORDER BY TestTypeID DESC;";
-            SqlCommand Command = new SqlCommand(query, Connection);
-            Command.Parameters.AddWithValue("@LDLAppID", LDLAppID);
-
-            try
-            {
-                Connection.Open();
-                object result = Command.ExecuteScalar();
-
-                if (result != null || result != DBNull.Value)
-                    LastTestTypeID = short.Parse(result.ToString());
-            }
-            catch
-            {
-                LastTestTypeID = -1;
-            }
-            finally
-            {
-                Connection.Close();
-            }
-
-            return LastTestTypeID;
-        }
-
-        public static int GetLastFailedTest(int LDLAppID)
-        {
-            int LastFailedTestID = -1;
-            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT TestAppointments.TestAppointmentID
-                             FROM   TestAppointments INNER JOIN
-                             Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
-                             WHERE TestAppointments.LocalDrivingLicenseApplicationID=@LDLAppID AND Tests.TestResult =0
-                             ORDER BY TestAppointments.TestAppointmentID DESC;";
-            SqlCommand Command = new SqlCommand(query, Connection);
-            Command.Parameters.AddWithValue("@LDLAppID", LDLAppID);
-
-            try
-            {
-                Connection.Open();
-                object result = Command.ExecuteScalar();
-
-                if (result == null || result == DBNull.Value)
-                    LastFailedTestID = -1;
-                else
-                    LastFailedTestID = int.Parse(result.ToString());
-            }
-            catch
-            {
-                LastFailedTestID = -1;
-            }
-            finally
-            {
-                Connection.Close();
-            }
-
-            return LastFailedTestID;
         }
 
         public static int GetLastTestResult(int LocalDrivingLicenseApplicationID, int TestTypeID)
