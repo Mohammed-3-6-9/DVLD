@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,12 +26,13 @@ namespace DVLD.Controls.Tests
         private clsGeneral.enTestTypes _TestType;
         private int _ReTakeTestAppID { get; set; }
         private int _Trial = 0;
-        private int _TestTypeID = (int)clsGeneral.enTestTypes.Vision;
         private string _ClassName = "";
         private string _FullName = "";
         private decimal _Fees = -1;
         private decimal _RetakeTestFees = 0;
         private decimal _TotalFees =-1;
+
+        bool Crash = false;
 
         public delegate void DataUpdated();
         public event DataUpdated DataUpdatedEvent;
@@ -56,13 +58,19 @@ namespace DVLD.Controls.Tests
 
         private void PrepareScheduleTestScreen()
         {
-            if (clsTestAppointments.GetDataForScheduleTest(_LDLAppID, _TestTypeID, ref _ClassName, ref _FullName, ref _Fees,ref _Trial))
+            if (clsTestAppointments.GetDataForScheduleTest(_LDLAppID, (int)_TestType, ref _ClassName, ref _FullName, ref _Fees, ref _Trial))
             {
+                Crash = false;
                 lblD_L_AppID.Text = _LDLAppID.ToString();
                 lblD_Class.Text = _ClassName;
                 lblName.Text = _FullName;
                 lblTrial.Text = _Trial.ToString();
                 lblFees.Text = _Fees.ToString();
+            }
+            else
+            {
+                Crash = true;
+                _ResetDefaultValues();
             }
 
             switch (_Mode)
@@ -157,19 +165,18 @@ namespace DVLD.Controls.Tests
             _reTake = reTake;
             _TestType = TestType;
             PrepareMode();
-            PrepareScreen();
 
             if (_Mode == enMode.Update)
                 _TestAppointment = clsTestAppointments.Find(TestAppointmentID);
             else
                 _TestAppointment = new clsTestAppointments();
-
-            PrepareScheduleTestScreen();
         }
 
         private void ctrlVisionTest_Load(object sender, EventArgs e)
         {
             dtpTestDate.MinDate = DateTime.Now;
+            PrepareScreen();
+            PrepareScheduleTestScreen();
         }
 
         private void _FillTestAppointment()
@@ -184,7 +191,7 @@ namespace DVLD.Controls.Tests
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (_LDLAppID == -1)
+            if (Crash)
                 return;
 
             _FillTestAppointment();

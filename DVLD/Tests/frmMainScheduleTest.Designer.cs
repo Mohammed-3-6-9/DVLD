@@ -33,12 +33,12 @@
             this.lblHeader = new System.Windows.Forms.Label();
             this.dgvManageTestAppointments = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmTakeTest = new System.Windows.Forms.ToolStripMenuItem();
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ctrlApplicationDetails1 = new DVLD.Controls.ctrlApplicationDetails();
             this.btnAddTestAppointment = new System.Windows.Forms.Button();
-            this.tsmEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmTakeTest = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClose = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvManageTestAppointments)).BeginInit();
@@ -80,7 +80,25 @@
             this.tsmEdit,
             this.tsmTakeTest});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(169, 72);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(249, 105);
+            // 
+            // tsmEdit
+            // 
+            this.tsmEdit.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.tsmEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsmEdit.Image")));
+            this.tsmEdit.Name = "tsmEdit";
+            this.tsmEdit.Size = new System.Drawing.Size(248, 34);
+            this.tsmEdit.Text = "Edit";
+            this.tsmEdit.Click += new System.EventHandler(this.tsmEdit_Click);
+            // 
+            // tsmTakeTest
+            // 
+            this.tsmTakeTest.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.tsmTakeTest.Image = ((System.Drawing.Image)(resources.GetObject("tsmTakeTest.Image")));
+            this.tsmTakeTest.Name = "tsmTakeTest";
+            this.tsmTakeTest.Size = new System.Drawing.Size(248, 34);
+            this.tsmTakeTest.Text = "Take Test";
+            this.tsmTakeTest.Click += new System.EventHandler(this.tsmTakeTest_Click);
             // 
             // lblRecordsNumber
             // 
@@ -122,23 +140,6 @@
             this.btnAddTestAppointment.UseVisualStyleBackColor = true;
             this.btnAddTestAppointment.Click += new System.EventHandler(this.btnAddPerson_Click);
             // 
-            // tsmEdit
-            // 
-            this.tsmEdit.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.tsmEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsmEdit.Image")));
-            this.tsmEdit.Name = "tsmEdit";
-            this.tsmEdit.Size = new System.Drawing.Size(168, 34);
-            this.tsmEdit.Text = "Edit";
-            this.tsmEdit.Click += new System.EventHandler(this.tsmEdit_Click);
-            // 
-            // tsmTakeTest
-            // 
-            this.tsmTakeTest.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.tsmTakeTest.Image = ((System.Drawing.Image)(resources.GetObject("tsmTakeTest.Image")));
-            this.tsmTakeTest.Name = "tsmTakeTest";
-            this.tsmTakeTest.Size = new System.Drawing.Size(168, 34);
-            this.tsmTakeTest.Text = "Take Test";
-            // 
             // btnClose
             // 
             this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
@@ -166,7 +167,7 @@
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             // 
-            // frmVisionTest
+            // frmMainScheduleTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -180,7 +181,7 @@
             this.Controls.Add(this.lblHeader);
             this.Controls.Add(this.pictureBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Name = "frmVisionTest";
+            this.Name = "frmMainScheduleTest";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmVisionTest";
             this.Load += new System.EventHandler(this.frmVisionTest_Load);

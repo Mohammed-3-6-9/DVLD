@@ -56,21 +56,21 @@ namespace DVLD.Tests
                     {
                         this.Text = "Vision Test";
                         pictureBox2.Image = Properties.Resources.Vision_512;
-                        lblHeader.Text = "Schedule Vision Test";
+                        lblHeader.Text = "Vision Test Appointments";
                         break;
                     }
                 case clsGeneral.enTestTypes.Written:
                     {
                         this.Text = "Written Test";
                         pictureBox2.Image = Properties.Resources.Written_Test_512;
-                        lblHeader.Text = "Schedule Written Test";
+                        lblHeader.Text = "Written Test Appointments";
                         break;
                     }
                 case clsGeneral.enTestTypes.Practical:
                     {
                         this.Text = "Driving Test";
                         pictureBox2.Image = Properties.Resources.driving_test_512;
-                        lblHeader.Text = "Schedule Driving Test";
+                        lblHeader.Text = "Driving Test Appointments";
                         break;
                     }
             }
@@ -135,6 +135,26 @@ namespace DVLD.Tests
                 {
                     frmScheduleTest frm = new frmScheduleTest(TestType: _TestType, _LDLAppID, (int)CurrentRow.Cells["TestAppointmentID"].Value);
                     frm.OnTestScheduledSuccessfully += DataUpdated;
+                    frm.ShowDialog();
+                }
+            }
+        }
+
+        private void tsmTakeTest_Click(object sender, EventArgs e)
+        {
+            if (dgvManageTestAppointments.Rows.Count > 0)
+            {
+                var CurrentRow = dgvManageTestAppointments.CurrentRow;
+
+                if (Convert.ToBoolean(CurrentRow.Cells["IsLocked"].Value) == true)
+                {
+                    MessageBox.Show("This Test Is Already Finished",
+                        "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    frmTakeTest frm = new frmTakeTest((int)CurrentRow.Cells["TestAppointmentID"].Value, _LDLAppID, _TestType);
+                    frm.DataUpdatedEvent += DataUpdated;
                     frm.ShowDialog();
                 }
             }

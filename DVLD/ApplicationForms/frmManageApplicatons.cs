@@ -171,7 +171,21 @@ namespace DVLD.ApplicationForms
         private void visionTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmMainScheduleTest frm = new frmMainScheduleTest((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value,
-                TestType: clsGeneral.enTestTypes.Vision);
+                    TestType: clsGeneral.enTestTypes.Vision);
+            frm.ShowDialog();
+        }
+
+        private void writtenTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmMainScheduleTest frm = new frmMainScheduleTest((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value,
+                    TestType: clsGeneral.enTestTypes.Written);
+            frm.ShowDialog();
+        }
+
+        private void streetTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmMainScheduleTest frm = new frmMainScheduleTest((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value,
+                    TestType: clsGeneral.enTestTypes.Practical);
             frm.ShowDialog();
         }
     }
