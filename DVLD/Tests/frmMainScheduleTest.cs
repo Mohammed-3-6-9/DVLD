@@ -17,6 +17,9 @@ namespace DVLD.Tests
         private int _LDLAppID = -1;
         private DataView _DataView;
 
+        public delegate void deDataUpdated();
+        public event deDataUpdated ApplicationsDataUpdatedEvent;
+
         /*
         public frmVisionTest(int localDrivingLicenseApplicationID)
         {
@@ -33,9 +36,9 @@ namespace DVLD.Tests
             _TestType = TestType;
         }
 
-        private void _RefreshTableTests()
+        private void _RefreshTableTestAppointments()
         {
-            DataTable dt = clsTestAppointments.GetAllTestAppointmentsForTableView((int)_LDLAppID, (int)clsGeneral.enTestTypes.Vision);
+            DataTable dt = clsTestAppointments.GetAllTestAppointmentsForTableView((int)_LDLAppID, (int)_TestType);
 
             _DataView = dt.DefaultView;
             dgvManageTestAppointments.DataSource = _DataView;
@@ -80,21 +83,21 @@ namespace DVLD.Tests
         {
             PrepareForm();
             ctrlApplicationDetails1.FindAppDetails(_LDLAppID);
-            _RefreshTableTests();
+            _RefreshTableTestAppointments();
         }
 
         private void btnAddPerson_Click(object sender, EventArgs e)
         {
             if (dgvManageTestAppointments.Rows.Count > 0)
             {
-                if (clsTestAppointments.IsThereAnActiveAppointment(_LDLAppID, (int)clsGeneral.enTestTypes.Vision))
+                if (clsTestAppointments.IsThereAnActiveAppointment(_LDLAppID, (int)_TestType))
                 {
                     MessageBox.Show("Person Already Has an Active Appointment For This Test, You Can't Add New Appointment",
                         "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    if (clsTestAppointments.GetLastTestResult(_LDLAppID,(int)clsGeneral.enTestTypes.Vision) == 1)
+                    if (clsTestAppointments.GetLastTestResult(_LDLAppID,(int)_TestType) == 1)
                     {
                         MessageBox.Show("Person Already Passed This Test, You Can't Add New Appointment", "Not Allowed",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -117,7 +120,8 @@ namespace DVLD.Tests
 
         void DataUpdated()
         {
-            _RefreshTableTests();
+            _RefreshTableTestAppointments();
+            ApplicationsDataUpdatedEvent?.Invoke();
         }
 
         private void tsmEdit_Click(object sender, EventArgs e)

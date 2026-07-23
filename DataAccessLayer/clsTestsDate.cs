@@ -61,7 +61,10 @@ namespace DataAccessLayer
             SqlCommand Command = new SqlCommand(query, Connection);
             Command.Parameters.AddWithValue("@TestAppointmentID", TestAppointmentID);
             Command.Parameters.AddWithValue("@TestResult", TestResult);
-            Command.Parameters.AddWithValue("@Notes", Notes);
+            if (string.IsNullOrEmpty(Notes))
+                Command.Parameters.AddWithValue("@Notes", DBNull.Value);
+            else
+                Command.Parameters.AddWithValue("@Notes", Notes);
             Command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
 
             try

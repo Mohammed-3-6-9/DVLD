@@ -158,7 +158,7 @@ namespace DVLD.Controls.Tests
             }
         }
 
-        public void ScheduleTest(int localDrivingLicenseApplicationID, int TestAppointmentID, bool reTake,clsGeneral.enTestTypes TestType)
+        public void SetScheduleTestVariables(int localDrivingLicenseApplicationID, int TestAppointmentID, bool reTake,clsGeneral.enTestTypes TestType)
         {
             _LDLAppID = localDrivingLicenseApplicationID;
             _TestAppointmentID = TestAppointmentID;
@@ -181,12 +181,18 @@ namespace DVLD.Controls.Tests
 
         private void _FillTestAppointment()
         {
-            _TestAppointment.TestTypeID = (int)clsGeneral.enTestTypes.Vision;
+            _TestAppointment.TestTypeID = (int)_TestType;
             _TestAppointment.LDLAppID = _LDLAppID;
             _TestAppointment.AppointmentDate = dtpTestDate.Value;
             _TestAppointment.PaidFees = _TotalFees;
             _TestAppointment.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
             _TestAppointment.IsLocked = false;
+        }
+
+        private void FreezeScreen()
+        {
+            btnSave.Enabled = false;
+            dtpTestDate.Enabled=false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -199,6 +205,7 @@ namespace DVLD.Controls.Tests
             if(_TestAppointment.Save())
             {
                 MessageBox.Show("Test Apointment Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                FreezeScreen();
                 DataUpdatedEvent?.Invoke();
             }
             else

@@ -28,20 +28,30 @@ namespace DVLD.Tests
             _TestAppointmentID = TestAppointmentID;
             _LDLAppID = LDLAppID;
             _TestType=TestType;
+
+            ctrlTakeTest1.SetTakeTestVariables(_TestAppointmentID, _LDLAppID, _TestType);
         }
 
         private void frmTakeTest_Load(object sender, EventArgs e)
         {
-            ctrlTakeTest1.SetTakeTestVariables(_TestAppointmentID, _LDLAppID, _TestType);
+            // ctrlTakeTest1.SetTakeTestVariables(_TestAppointmentID, _LDLAppID, _TestType);
             _Test = new clsTests();
         }
 
         private void _FillTest()
         {
-            _Test.TestAppointmentID = (int)clsGeneral.enTestTypes.Vision;
+            _Test.TestAppointmentID = _TestAppointmentID;
             _Test.TestResult = (rbFail.Checked) ? false : true;
             _Test.Note = tbNotes.Text;
             _Test.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
+        }
+
+        private void FreezeScreen()
+        {
+            btnSave.Enabled = false;
+            ctrlTakeTest1.Enabled = false;
+            panel1.Enabled = false;
+            tbNotes.Enabled = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -56,6 +66,7 @@ namespace DVLD.Tests
                 MessageBox.Show("Test Result Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ctrlTakeTest1.TestID = _Test.TestID;
                 DataUpdatedEvent?.Invoke();
+                FreezeScreen();
             }
             else
                 MessageBox.Show("Test Result Didn't Saved", "Save Data", MessageBoxButtons.OK, MessageBoxIcon.Error);

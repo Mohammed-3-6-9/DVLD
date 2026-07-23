@@ -66,17 +66,24 @@ namespace Business_Logic
 
         public bool Save()
         {
-            if (_AddNew())
-                return true;
-            else
-                return false;
+            if (this.TestID == -1)
+            {
+                if (_AddNew())
+                {
+                    return clsTestAppointments.LockTestAppointment(this.TestAppointmentID);
+                }
+                else
+                    return false;
+            }
+
+            return false;
         }
 
         public static bool GetDataForTakeTest(int TestAppointmentID, int LocalDrivingLicenseApplicationID, int TestTypeID,
             ref string ClassName, ref DateTime AppointmentDate, ref decimal PaidFees, ref string FullName, ref int Trials)
         {
 
-            return clsTests.GetDataForTakeTest(TestAppointmentID, LocalDrivingLicenseApplicationID,
+            return clsTestsDate.GetDataForTakeTestScreen(TestAppointmentID, LocalDrivingLicenseApplicationID,
                   TestTypeID, ref ClassName, ref AppointmentDate, ref PaidFees, ref FullName, ref Trials);
         }
 

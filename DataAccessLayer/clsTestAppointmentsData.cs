@@ -215,7 +215,7 @@ namespace DataAccessLayer
         {
             int TestResult = -1;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT TOP (1) TestAppointments.TestAppointmentID, Tests.TestResult
+            string query = @"SELECT TOP (1) Tests.TestResult
                              FROM   TestAppointments INNER JOIN
                              Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
                              WHERE (TestAppointments.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID) AND
@@ -233,7 +233,9 @@ namespace DataAccessLayer
                 if (result == null || result == DBNull.Value)
                     TestResult = -1;
                 else
-                    TestResult = int.Parse(result.ToString());
+                {
+                    TestResult = Convert.ToBoolean(result) ? 1 : 0;
+                }
             }
             catch
             {
@@ -277,6 +279,33 @@ namespace DataAccessLayer
             }
 
             return IsActive;
+        }
+
+        public static bool LockTestAppointment(int TestAppointmentID)
+        {
+            int RowsEffected = 0;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"UPDATE TestAppointments SET
+               IsLocked = 1 WHERE TestAppointmentID = @TestAppointmentID;";
+
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@TestAppointmentID", TestAppointmentID);
+
+            try
+            {
+                Connection.Open();
+                RowsEffected = Command.ExecuteNonQuery();
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return (RowsEffected > 0);
         }
 
     }

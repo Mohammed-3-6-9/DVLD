@@ -131,5 +131,10 @@ namespace Business_Logic
         {
             return clsTestAppointmentsData.IsThereAnActiveAppointment(LDLAppID, TestTypeID);
         }
+
+        public static bool LockTestAppointment(int TestAppointment)
+        {
+            return clsTestAppointmentsData.LockTestAppointment(TestAppointment);
+        }
     }
 }

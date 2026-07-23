@@ -28,11 +28,13 @@ namespace DVLD.Tests
             _reTake = reTake;
             _TestAppointmentID = TestAppointmentID;
             _TestType = TestType;
+
+            ctrlVisionTest1.SetScheduleTestVariables(_LDLAppID, _TestAppointmentID, _reTake, _TestType);
         }
 
         private void frmScheduleTest_Load(object sender, EventArgs e)
         {
-            ctrlVisionTest1.ScheduleTest(_LDLAppID, _TestAppointmentID, _reTake, _TestType);
+            //ctrlVisionTest1.ScheduleTest(_LDLAppID, _TestAppointmentID, _reTake, _TestType);
         }
 
         private void btnClose_Click(object sender, EventArgs e)

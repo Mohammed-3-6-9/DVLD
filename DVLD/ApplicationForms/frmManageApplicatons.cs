@@ -172,6 +172,7 @@ namespace DVLD.ApplicationForms
         {
             frmMainScheduleTest frm = new frmMainScheduleTest((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value,
                     TestType: clsGeneral.enTestTypes.Vision);
+            frm.ApplicationsDataUpdatedEvent += DataUpdated;
             frm.ShowDialog();
         }
 
@@ -179,6 +180,7 @@ namespace DVLD.ApplicationForms
         {
             frmMainScheduleTest frm = new frmMainScheduleTest((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value,
                     TestType: clsGeneral.enTestTypes.Written);
+            frm.ApplicationsDataUpdatedEvent += DataUpdated;
             frm.ShowDialog();
         }
 
@@ -186,6 +188,7 @@ namespace DVLD.ApplicationForms
         {
             frmMainScheduleTest frm = new frmMainScheduleTest((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value,
                     TestType: clsGeneral.enTestTypes.Practical);
+            frm.ApplicationsDataUpdatedEvent += DataUpdated;
             frm.ShowDialog();
         }
     }
