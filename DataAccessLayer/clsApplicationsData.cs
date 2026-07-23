@@ -248,6 +248,34 @@ namespace DataAccessLayer
             return IsFound;
         }
 
+        public static bool UpdateApplicationStatus(int ApplicationID,short ApplicationStatus)
+        {
+            int RowsEffected = 0;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"UPDATE Applications SET ApplicationStatus = @ApplicationStatus,
+               WHERE ApplicationID = @ApplicationID;";
+
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@ApplicationStatus", ApplicationStatus);
+            Command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
+            try
+            {
+                Connection.Open();
+                RowsEffected = Command.ExecuteNonQuery();
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return (RowsEffected > 0);
+        }
+
     }
 
 }

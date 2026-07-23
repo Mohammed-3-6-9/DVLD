@@ -112,7 +112,8 @@
             this.toolStripSeparator6,
             this.showPersonLicenseHistoryToolStripMenuItem});
             this.ctxMain.Name = "contextMenuStrip1";
-            this.ctxMain.Size = new System.Drawing.Size(424, 457);
+            this.ctxMain.Size = new System.Drawing.Size(424, 424);
+            this.ctxMain.Opened += new System.EventHandler(this.ctxMain_Opened);
             // 
             // showApplicationDetailsToolStripMenuItem
             // 
@@ -140,6 +141,7 @@
             this.deleteApplicationToolStripMenuItem.Name = "deleteApplicationToolStripMenuItem";
             this.deleteApplicationToolStripMenuItem.Size = new System.Drawing.Size(423, 48);
             this.deleteApplicationToolStripMenuItem.Text = "Delete Application";
+            this.deleteApplicationToolStripMenuItem.Click += new System.EventHandler(this.deleteApplicationToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -152,6 +154,7 @@
             this.cancelApplicationToolStripMenuItem.Name = "cancelApplicationToolStripMenuItem";
             this.cancelApplicationToolStripMenuItem.Size = new System.Drawing.Size(423, 48);
             this.cancelApplicationToolStripMenuItem.Text = "Cancel Application";
+            this.cancelApplicationToolStripMenuItem.Click += new System.EventHandler(this.cancelApplicationToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -175,7 +178,7 @@
             // 
             this.visionTestToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("visionTestToolStripMenuItem.Image")));
             this.visionTestToolStripMenuItem.Name = "visionTestToolStripMenuItem";
-            this.visionTestToolStripMenuItem.Size = new System.Drawing.Size(286, 50);
+            this.visionTestToolStripMenuItem.Size = new System.Drawing.Size(248, 50);
             this.visionTestToolStripMenuItem.Text = "Vision Test";
             this.visionTestToolStripMenuItem.Click += new System.EventHandler(this.visionTestToolStripMenuItem_Click);
             // 
@@ -183,7 +186,7 @@
             // 
             this.writtenTestToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("writtenTestToolStripMenuItem.Image")));
             this.writtenTestToolStripMenuItem.Name = "writtenTestToolStripMenuItem";
-            this.writtenTestToolStripMenuItem.Size = new System.Drawing.Size(286, 50);
+            this.writtenTestToolStripMenuItem.Size = new System.Drawing.Size(248, 50);
             this.writtenTestToolStripMenuItem.Text = "Written Test";
             this.writtenTestToolStripMenuItem.Click += new System.EventHandler(this.writtenTestToolStripMenuItem_Click);
             // 
@@ -191,7 +194,7 @@
             // 
             this.streetTestToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("streetTestToolStripMenuItem.Image")));
             this.streetTestToolStripMenuItem.Name = "streetTestToolStripMenuItem";
-            this.streetTestToolStripMenuItem.Size = new System.Drawing.Size(286, 50);
+            this.streetTestToolStripMenuItem.Size = new System.Drawing.Size(248, 50);
             this.streetTestToolStripMenuItem.Text = "Street Test";
             this.streetTestToolStripMenuItem.Click += new System.EventHandler(this.streetTestToolStripMenuItem_Click);
             // 

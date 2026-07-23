@@ -124,5 +124,10 @@ namespace Business_Logic
         {
             return clsApplicationsData.GetAllApplicationsFullData();
         }
+
+        public static bool UpdateApplicationStatus(int ApplicationID,clsGeneral.enApplicationStatus AppStatus)
+        {
+            return clsApplicationsData.UpdateApplicationStatus(ApplicationID, (short)AppStatus);
+        }
     }
 }

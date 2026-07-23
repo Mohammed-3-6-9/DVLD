@@ -47,7 +47,7 @@ namespace DVLD.ApplicationForms
         void InitializeApplication()
         {
             _NewLocalLicenceApplication.ApplicationDate = DateTime.Now;
-            _NewLocalLicenceApplication.ApplicationStatus = 1;
+            _NewLocalLicenceApplication.ApplicationStatus = (int)clsGeneral.enApplicationStatus.New;
             _NewLocalLicenceApplication.LastStatusDate = DateTime.Now;
             _NewLocalLicenceApplication.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
         }

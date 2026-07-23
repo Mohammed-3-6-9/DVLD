@@ -191,5 +191,41 @@ namespace DVLD.ApplicationForms
             frm.ApplicationsDataUpdatedEvent += DataUpdated;
             frm.ShowDialog();
         }
+
+        private void ctxMain_Opened(object sender, EventArgs e)
+        {
+            if ((int)dgvManageApplications.CurrentRow.Cells["PassedTestCount"].Value < 3)
+            {
+                showLicenseToolStripMenuItem.Enabled = false;
+                issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+
+            }
+        }
+
+        private void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (clsApplication.UpdateApplicationStatus((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value,clsGeneral.enApplicationStatus.Canceled))
+            {
+                MessageBox.Show("Application Deleted Successfully", "Delet Application", MessageBoxButtons.OK);
+                _RefreshApplications();
+            }
+            else
+            {
+                MessageBox.Show("Application Didn't Deleted Successfully", "Delet Application", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void deleteApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(clsNewLocalDrivingLicenceApplication.DeleteLocalDrivingLicenceApplication((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value))
+            {
+                MessageBox.Show("Application Deleted Successfully", "Delet Application", MessageBoxButtons.OK);
+                _RefreshApplications();
+            }
+            else
+            {
+                MessageBox.Show("Application Didn't Deleted Successfully", "Delet Application", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
