@@ -109,6 +109,12 @@
     <Compile Include="Controls\Tests\ctrlTakeTest.Designer.cs">
       <DependentUpon>ctrlTakeTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmDrivers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDrivers.Designer.cs">
+      <DependentUpon>frmDrivers.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +132,12 @@
     </Compile>
     <Compile Include="ApplicationTypes\frmManageApplicationTypes.Designer.cs">
       <DependentUpon>frmManageApplicationTypes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Licenses\frmIssueLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Licenses\frmIssueLicense.Designer.cs">
+      <DependentUpon>frmIssueLicense.cs</DependentUpon>
     </Compile>
     <Compile Include="Test Types\frmManageTestTypes.cs">
       <SubType>Form</SubType>
@@ -231,6 +243,9 @@
     <EmbeddedResource Include="Controls\Tests\ctrlTakeTest.resx">
       <DependentUpon>ctrlTakeTest.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmDrivers.resx">
+      <DependentUpon>frmDrivers.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -239,6 +254,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ApplicationTypes\frmManageApplicationTypes.resx">
       <DependentUpon>frmManageApplicationTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\frmIssueLicense.resx">
+      <DependentUpon>frmIssueLicense.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\frmAddEditPerson.resx">
       <DependentUpon>frmAddEditPerson.cs</DependentUpon>

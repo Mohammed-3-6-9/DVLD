@@ -1,4 +1,5 @@
 ﻿using Business_Logic;
+using DVLD.Licenses;
 using DVLD.People;
 using DVLD.Tests;
 using System;
@@ -53,8 +54,9 @@ namespace DVLD.ApplicationForms
 
             if (cbFiltersType.Text == "L.D.L.AppID")
             {
-                if (tbFilterValue.Text != "")
-                    _DataView.RowFilter = $"{cbFiltersType.Text} = {int.Parse(tbFilterValue.Text)}";
+                int result = -1;
+                if (int.TryParse(tbFilterValue.Text, out result))
+                    _DataView.RowFilter = $"{cbFiltersType.Text} = {result.ToString()}";
                 else
                     _DataView.RowFilter = null;
             }
@@ -198,7 +200,20 @@ namespace DVLD.ApplicationForms
             {
                 showLicenseToolStripMenuItem.Enabled = false;
                 issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
-
+            }
+            else
+            {
+                if (clsLicenses.IsPersonHasThisLicense((string)dgvManageApplications.CurrentRow.Cells["NationalNo"].Value,
+                    (string)dgvManageApplications.CurrentRow.Cells["ClassName"].Value))
+                {
+                    showLicenseToolStripMenuItem.Enabled = true;
+                    issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+                }
+                else
+                {
+                    showLicenseToolStripMenuItem.Enabled = false;
+                    issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = true;
+                }
             }
         }
 
@@ -226,6 +241,12 @@ namespace DVLD.ApplicationForms
             {
                 MessageBox.Show("Application Didn't Deleted Successfully", "Delet Application", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void issueDrivingLicenseFirstTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmIssueLicense frm = new frmIssueLicense((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value);
+            frm.ShowDialog();
         }
     }
 }

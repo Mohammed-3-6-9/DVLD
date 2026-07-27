@@ -74,5 +74,11 @@ namespace DVLD
             frmAddNewLocalDrivingLicenceApplication frm = new frmAddNewLocalDrivingLicenceApplication();
             frm.ShowDialog();
         }
+
+        private void driversToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmDrivers frm = new frmDrivers();
+            frm.ShowDialog();
+        }
     }
 }

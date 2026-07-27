@@ -112,7 +112,7 @@
             this.toolStripSeparator6,
             this.showPersonLicenseHistoryToolStripMenuItem});
             this.ctxMain.Name = "contextMenuStrip1";
-            this.ctxMain.Size = new System.Drawing.Size(424, 424);
+            this.ctxMain.Size = new System.Drawing.Size(424, 457);
             this.ctxMain.Opened += new System.EventHandler(this.ctxMain_Opened);
             // 
             // showApplicationDetailsToolStripMenuItem
@@ -209,6 +209,7 @@
             this.issueDrivingLicenseFirstTimeToolStripMenuItem.Name = "issueDrivingLicenseFirstTimeToolStripMenuItem";
             this.issueDrivingLicenseFirstTimeToolStripMenuItem.Size = new System.Drawing.Size(423, 48);
             this.issueDrivingLicenseFirstTimeToolStripMenuItem.Text = "Issue Driving License (First Time)";
+            this.issueDrivingLicenseFirstTimeToolStripMenuItem.Click += new System.EventHandler(this.issueDrivingLicenseFirstTimeToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
