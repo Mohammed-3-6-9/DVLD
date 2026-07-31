@@ -24,7 +24,7 @@ namespace Business_Logic
         public string Notes = "";
         public decimal PaidFees = -1;
         public bool IsActive = false;
-        public short IssueReason = -1;
+        public byte IssueReason = 0;
         public int CreatedByUserID = -1;
 
         public clsLicenses()
@@ -38,7 +38,7 @@ namespace Business_Logic
             Notes = "";
             PaidFees = -1;
             IsActive = false;
-            IssueReason = -1;
+            IssueReason = 0;
             CreatedByUserID = -1;
             _Mode = enMode.AddNew;
         }
@@ -46,7 +46,7 @@ namespace Business_Logic
         private clsLicenses(int LicenseID, int ApplicationID, int DriverID,
                  int LicenseClass, DateTime IssueDate,
                  DateTime ExpirationDate, string Notes, decimal PaidFees, bool IsActive
-                , short IssueReason, int CreatedByUserID)
+                , byte IssueReason, int CreatedByUserID)
         {
             this.LicenseID = LicenseID;
             this.ApplicationID = ApplicationID;
@@ -87,7 +87,7 @@ namespace Business_Logic
             string Notes = "";
             decimal PaidFees = -1;
             bool IsActive = false;
-            short IssueReason = -1;
+            byte IssueReason = 0;
             int CreatedByUserID = -1;
 
             if (clsLicensesData.GetLicenseInfoByID(LicenseID, ref ApplicationID, ref DriverID,
@@ -129,24 +129,71 @@ namespace Business_Logic
             return false;
         }
 
+        private clsDrivers FillDriverWithData(int PersonID)
+        {
+            clsDrivers Driver = new clsDrivers();
+            Driver.PersonID = PersonID;
+            Driver.CreatedDate = DateTime.Now;
+            Driver.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
+
+            return Driver;
+        }
+
+        public bool IssueLicense(int PersonID = -1)
+        {
+            if (this._Mode == enMode.AddNew)
+            {
+                this.DriverID = clsDrivers.IsPersonADriver(PersonID);
+
+                if (this.DriverID == -1)
+                {
+                    clsDrivers Driver = FillDriverWithData(PersonID);
+
+                    if (!Driver.Save())
+                    {
+                        return false;
+                    }
+                }
+
+                if (_AddNew())
+                {
+                    _Mode = enMode.Update;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
         public static DataTable GetAllLicenses()
         {
             return clsLicensesData.GetAllLicenses();
         }
 
-        public static bool DeleteLicense(int PersonID)
+        public static bool DeleteLicense(int LicenseID)
         {
-            return clsLicensesData.DeleteLicense(PersonID);
+            return clsLicensesData.DeleteLicense(LicenseID);
         }
 
-        public static bool IsLicenseExist(int PersonID)
+        public static bool IsLicenseExist(int LicenseID)
         {
-            return clsLicensesData.IsLicenseExist(PersonID);
+            return clsLicensesData.IsLicenseExist(LicenseID);
         }
 
         public static bool IsPersonHasThisLicense(string NationalNo, string ClassName)
         {
             return clsLicensesData.IsPersonHasThisLicense(NationalNo, ClassName);
+        }
+
+        public static bool GetIssueLicenseRequiredData(int LDLAppID, ref int PersonID, ref int ApplicationID,
+            ref int LicensesClassID, ref decimal PaidFees, ref int DefaultValidityLength)
+        {
+            return clsLicensesData.GetIssueLicenseRequiredData(LDLAppID, ref PersonID, ref ApplicationID,
+            ref LicensesClassID, ref PaidFees, ref DefaultValidityLength);
         }
     }
 }

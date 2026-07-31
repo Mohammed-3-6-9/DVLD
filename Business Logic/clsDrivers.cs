@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -100,6 +101,11 @@ namespace Business_Logic
         public static bool IsDriverExist(int DriverID)
         {
             return clsDriversData.IsDriverExist(DriverID);
+        }
+
+        public static int IsPersonADriver(int PersonID = -1)
+        {
+            return clsDriversData.IsPersonADriver(PersonID);
         }
     }
 

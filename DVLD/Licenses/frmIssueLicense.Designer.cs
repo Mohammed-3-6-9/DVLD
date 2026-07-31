@@ -29,19 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmIssueLicense));
-            this.ctrlApplicationDetails1 = new DVLD.Controls.ctrlApplicationDetails();
             this.btnIssue = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.tbNotes = new System.Windows.Forms.TextBox();
+            this.ctrlApplicationDetails1 = new DVLD.Controls.ctrlApplicationDetails();
             this.SuspendLayout();
-            // 
-            // ctrlApplicationDetails1
-            // 
-            this.ctrlApplicationDetails1.Location = new System.Drawing.Point(7, 31);
-            this.ctrlApplicationDetails1.Name = "ctrlApplicationDetails1";
-            this.ctrlApplicationDetails1.Size = new System.Drawing.Size(1151, 496);
-            this.ctrlApplicationDetails1.TabIndex = 0;
             // 
             // btnIssue
             // 
@@ -58,6 +51,7 @@
             this.btnIssue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnIssue.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnIssue.UseVisualStyleBackColor = true;
+            this.btnIssue.Click += new System.EventHandler(this.btnIssue_Click);
             // 
             // btnClose
             // 
@@ -96,6 +90,13 @@
             this.tbNotes.Name = "tbNotes";
             this.tbNotes.Size = new System.Drawing.Size(997, 218);
             this.tbNotes.TabIndex = 77;
+            // 
+            // ctrlApplicationDetails1
+            // 
+            this.ctrlApplicationDetails1.Location = new System.Drawing.Point(7, 31);
+            this.ctrlApplicationDetails1.Name = "ctrlApplicationDetails1";
+            this.ctrlApplicationDetails1.Size = new System.Drawing.Size(1151, 496);
+            this.ctrlApplicationDetails1.TabIndex = 0;
             // 
             // frmIssueLicense
             // 

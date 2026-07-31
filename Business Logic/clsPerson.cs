@@ -286,5 +286,10 @@ namespace Business_Logic
         {
             return clsPersonData.IsPersonHasUser(NationalNumber);
         }
+
+        public static int GetPersonIDByNationalNo(string NationalNumber)
+        {
+            return clsPersonData.GetPersonIDByNationalNo(NationalNumber);
+        }
     }
 }

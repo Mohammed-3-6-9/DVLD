@@ -14,7 +14,7 @@ namespace DataAccessLayer
         public static bool GetLicenseInfoByID(int LicenseID, ref int ApplicationID, ref int DriverID,
                 ref int LicenseClassID, ref DateTime IssueDate,
                 ref DateTime ExpirationDate, ref string Notes, ref decimal PaidFees, ref bool IsActive
-                , ref short IssueReason, ref int CreatedByUserID)
+                , ref byte IssueReason, ref int CreatedByUserID)
         {
             bool IsFound = false;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -38,7 +38,7 @@ namespace DataAccessLayer
                     Notes = reader["Notes"].ToString();
                     PaidFees = (decimal)reader["PaidFees"];
                     IsActive = (bool)reader["IsActive"];
-                    IssueReason = (short)reader["IssueReason"];
+                    IssueReason = (byte)reader["IssueReason"];
                     CreatedByUserID = (int)reader["CreatedByUserID"];
                 }
 
@@ -56,16 +56,14 @@ namespace DataAccessLayer
             return IsFound;
         }
 
-
-
         public static int AddNewLicense(int ApplicationID, int DriverID,
                  int LicenseClassID, DateTime IssueDate,
                  DateTime ExpirationDate, string Notes, decimal PaidFees, bool IsActive
-                , short IssueReason, int CreatedByUserID)
+                , byte IssueReason, int CreatedByUserID)
         {
             int LicenseID = -1;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"INSERT INTO License (ApplicationID,
+            string query = @"INSERT INTO Licenses (ApplicationID,
                DriverID, LicenseClass, IssueDate,
                ExpirationDate, Notes, PaidFees, IsActive
                 ,IssueReason, CreatedByUserID) VALUES
@@ -109,11 +107,11 @@ namespace DataAccessLayer
         public static bool UpdateLicense(int LicenseID, int ApplicationID, int DriverID,
                  int LicenseClassID, DateTime IssueDate,
                  DateTime ExpirationDate, string Notes, decimal PaidFees, bool IsActive
-                , short IssueReason, int CreatedByUserID)
+                , byte IssueReason, int CreatedByUserID)
         {
             int RowsEffected = 0;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"UPDATE People SET
+            string query = @"UPDATE Licenses SET
                ApplicationID = @ApplicationID, DriverID = @DriverID, LicenseClass = @LicenseClass,
                IssueDate = @IssueDate, ExpirationDate = @ExpirationDate, Notes = @Notes,
                PaidFees = @PaidFees, IsActive = @IsActive,IssueReason = @IssueReason, CreatedByUserID = @CreatedByUserID
@@ -155,7 +153,6 @@ namespace DataAccessLayer
         {
             DataTable dt = new DataTable();
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            //string query = @"SELECT * FROM People;";
             string query = @"SELECT LicenseID, ApplicationID,
                DriverID, LicenseClass, IssueDate,
                ExpirationDate, Notes, PaidFees, IsActive
@@ -269,6 +266,46 @@ namespace DataAccessLayer
             }
 
             return Exists;
+        }
+
+        public static bool GetIssueLicenseRequiredData(int LDLAppID,ref int PersonID, ref int ApplicationID,
+            ref int LicenseClassID, ref decimal PaidFees,ref int DefaultValidityLength)
+        {
+            bool IsFound = false;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT PersonID, ApplicationID, LicenseClassID, PaidFees, DefaultValidityLength FROM IssueLicenseRequiredData_View
+                             WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LDLAppID);
+
+            try
+            {
+                Connection.Open();
+                SqlDataReader reader = Command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    IsFound = true;
+
+                    PersonID = (int)reader["PersonID"];
+                    ApplicationID = (int)reader["ApplicationID"];
+                    LicenseClassID = (int)reader["LicenseClassID"];
+                    PaidFees = (decimal)reader["PaidFees"];
+                    DefaultValidityLength = (byte)reader["DefaultValidityLength"];
+                }
+
+                reader.Close();
+            }
+            catch
+            {
+                IsFound = false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return IsFound;
         }
     }
 }

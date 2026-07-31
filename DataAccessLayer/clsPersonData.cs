@@ -391,5 +391,33 @@ namespace DataAccessLayer
 
             return Exists;
         }
+
+        public static int GetPersonIDByNationalNo(string NationalNo)
+        {
+            int PersonID = -1;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = "SELECT PersonID FROM People WHERE NationalNo = @NationalNo";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@NationalNo", NationalNo);
+
+            try
+            {
+                Connection.Open();
+                object obj = Command.ExecuteScalar();
+
+                if (obj == null || (!int.TryParse(obj.ToString(), out PersonID)))
+                    PersonID = -1;
+            }
+            catch
+            {
+                PersonID = -1;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return PersonID;
+        }
     }
 }

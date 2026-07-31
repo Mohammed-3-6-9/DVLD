@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -192,6 +193,34 @@ namespace DataAccessLayer
             }
 
             return Exists;
+        }
+
+        public static int IsPersonADriver(int PersonID = -1)
+        {
+            int DriverID = -1;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT DriverID FROM Drivers Where PersonID = @PersonID";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@PersonID", PersonID);
+
+            try
+            {
+                Connection.Open();
+                object obj = Command.ExecuteScalar();
+
+                if (obj == null || (!int.TryParse(obj.ToString(), out DriverID)))
+                    DriverID = -1;
+            }
+            catch
+            {
+                DriverID = -1;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return DriverID;
         }
     }
 }
