@@ -71,9 +71,14 @@ namespace Business_Logic
             return clsLicenceClassesData.GetAllLicenceClassesIDAndName();
         }
 
-        public static decimal GetLicenceClassFees(int LicenceCalssID)
+        public static decimal GetLicenceClassFees(int LicenceClassID)
         {
-            return clsLicenceClassesData.GetLicenceClassFees(LicenceCalssID);
+            return clsLicenceClassesData.GetLicenceClassFees(LicenceClassID);
+        }
+
+        public static byte GetMinimumAllowedAge(int LicenceClassID)
+        {
+            return clsLicenceClassesData.GetMinimumAllowedAge(LicenceClassID);
         }
     }
 }

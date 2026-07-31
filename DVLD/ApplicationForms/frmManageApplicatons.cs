@@ -248,5 +248,11 @@ namespace DVLD.ApplicationForms
             frmIssueLicense frm = new frmIssueLicense((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value);
             frm.ShowDialog();
         }
+
+        private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmLicenseInfo frm = new frmLicenseInfo((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value);
+            frm.ShowDialog();
+        }
     }
 }

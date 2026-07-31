@@ -195,5 +195,14 @@ namespace Business_Logic
             return clsLicensesData.GetIssueLicenseRequiredData(LDLAppID, ref PersonID, ref ApplicationID,
             ref LicensesClassID, ref PaidFees, ref DefaultValidityLength);
         }
+
+        public static DataRow GetDriverLicenseData(int LDLAppID)
+        {
+            DataTable dt = clsLicensesData.GetDriverLicenseData(LDLAppID);
+            if (dt.Rows.Count == 0)
+                return null;
+            else
+                return dt.Rows[0];
+        }
     }
 }

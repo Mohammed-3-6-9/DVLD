@@ -18,6 +18,19 @@ namespace DVLD.Controls
         private int _PersonID = -1;
         private clsPerson _Person = new clsPerson();
 
+        public byte PersonAge
+        {
+            get
+            {
+                if (_Person == null) return 0;
+
+                byte age = (byte)(DateTime.Now.Year - _Person.DateOfBirth.Year);
+                if (_Person.DateOfBirth.Date > DateTime.Now.AddYears(-age))
+                    age--;
+                return age;
+            }
+        }
+
         public ctrlPersonCard()
         {
             InitializeComponent();

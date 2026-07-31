@@ -307,5 +307,38 @@ namespace DataAccessLayer
 
             return IsFound;
         }
+
+        public static DataTable GetDriverLicenseData(int LDLAppID)
+        {
+            DataTable DriverLicenseData = new DataTable();
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT ClassName, FullName, LicenseID, NationalNo, Gendor, IssueDate,
+                             IssueReason, Notes, IsActive, DateOfBirth,
+                             DriverID, ExpirationDate, IsDetained, ImagePath
+                             FROM DriverLicenseData_View
+                             WHERE LDLAppID = @LDLAppID";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@LDLAppID", LDLAppID);
+
+            try
+            {
+                Connection.Open();
+                SqlDataReader reader = Command.ExecuteReader();
+
+                if (reader.HasRows)
+                    DriverLicenseData.Load(reader);
+
+                reader.Close();
+            }
+            catch
+            {
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return DriverLicenseData;
+        }
     }
 }

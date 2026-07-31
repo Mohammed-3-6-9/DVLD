@@ -85,6 +85,12 @@
     <Compile Include="Controls\ctrlApplicationDetails.Designer.cs">
       <DependentUpon>ctrlApplicationDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ctrlDriverLicenseInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ctrlDriverLicenseInfo.Designer.cs">
+      <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ctrlLoginInformation.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -138,6 +144,12 @@
     </Compile>
     <Compile Include="Licenses\frmIssueLicense.Designer.cs">
       <DependentUpon>frmIssueLicense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Licenses\frmLicenseInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Licenses\frmLicenseInfo.Designer.cs">
+      <DependentUpon>frmLicenseInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Test Types\frmManageTestTypes.cs">
       <SubType>Form</SubType>
@@ -231,6 +243,9 @@
     <EmbeddedResource Include="Controls\ctrlApplicationDetails.resx">
       <DependentUpon>ctrlApplicationDetails.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ctrlDriverLicenseInfo.resx">
+      <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlLoginInformation.resx">
       <DependentUpon>ctrlLoginInformation.cs</DependentUpon>
     </EmbeddedResource>
@@ -257,6 +272,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Licenses\frmIssueLicense.resx">
       <DependentUpon>frmIssueLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\frmLicenseInfo.resx">
+      <DependentUpon>frmLicenseInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\frmAddEditPerson.resx">
       <DependentUpon>frmAddEditPerson.cs</DependentUpon>

@@ -291,5 +291,34 @@ namespace DataAccessLayer
 
             return LicenseCalssID;
         }
+
+        public static byte GetMinimumAllowedAge(int LicenceClassID)
+        {
+            byte MinAllowedAge = 0;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT MinimumAllowedAge FROM LicenseClasses
+                     WHERE LicenseClassID = @LicenseClassID";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@LicenseClassID", LicenceClassID);
+
+            try
+            {
+                Connection.Open();
+                object obj = Command.ExecuteScalar();
+
+                if (obj == null || !(byte.TryParse(obj.ToString(), out MinAllowedAge)))
+                    MinAllowedAge = 0;
+            }
+            catch
+            {
+                MinAllowedAge = 0;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return MinAllowedAge;
+        }
     }
 }

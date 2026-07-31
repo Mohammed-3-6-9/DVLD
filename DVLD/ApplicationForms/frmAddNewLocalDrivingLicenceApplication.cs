@@ -146,7 +146,17 @@ namespace DVLD.ApplicationForms
                 return false;
             }
 
-            if(clsNewLocalDrivingLicenceApplication.IsPersonHasRunningNewApplication(_PersonID, (int)cbLicenceClass.SelectedValue))
+            byte PersonAge = ctrlPersonCard1.PersonAge;
+
+            if (PersonAge < clsLicenceClass.GetMinimumAllowedAge((int)cbLicenceClass.SelectedValue))
+            {
+                MessageBox.Show("Person Doesn't Mit Minimum Allowed Age Set a Person", "Missed Data",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+
+            if (clsNewLocalDrivingLicenceApplication.IsPersonHasRunningNewApplication(_PersonID, (int)cbLicenceClass.SelectedValue))
             {
                 MessageBox.Show("Sorry The Selected Person Has a Running Application With The Same Class", "Ops",
                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
