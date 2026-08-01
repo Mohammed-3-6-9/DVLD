@@ -340,5 +340,35 @@ namespace DataAccessLayer
 
             return DriverLicenseData;
         }
+
+        public static DataSet GetPersonLicensesHistory(int PersonID)
+        {
+            DataSet DriverLicensesData = new DataSet();
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT LicenseID, ApplicationID, ClassName, IssueDate, ExpirationDate, IsActive
+                             FROM PersonLicensesHistory_View
+                             WHERE PersonID = @PersonID;
+                             SELECT InterNationalLicenseID, ApplicationID, LocalLicenseID, IssueDate, ExpirationDate, IsActive
+                             FROM PersonInterNationalLicensesHistory_View 
+                             WHERE PersonID = @PersonID;";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@PersonID", PersonID);
+
+            try
+            {
+                Connection.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(Command);
+                adapter.Fill(DriverLicensesData);
+            }
+            catch
+            {
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return DriverLicensesData;
+        }
     }
 }

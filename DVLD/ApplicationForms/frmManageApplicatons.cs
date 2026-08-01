@@ -203,8 +203,8 @@ namespace DVLD.ApplicationForms
             }
             else
             {
-                if (clsLicenses.IsPersonHasThisLicense((string)dgvManageApplications.CurrentRow.Cells["NationalNo"].Value,
-                    (string)dgvManageApplications.CurrentRow.Cells["ClassName"].Value))
+                if (clsLicenses.IsPersonHasThisLicense(dgvManageApplications.CurrentRow.Cells["NationalNo"].Value.ToString(),
+                    dgvManageApplications.CurrentRow.Cells["ClassName"].Value.ToString()))
                 {
                     showLicenseToolStripMenuItem.Enabled = true;
                     issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
@@ -252,6 +252,12 @@ namespace DVLD.ApplicationForms
         private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmLicenseInfo frm = new frmLicenseInfo((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value);
+            frm.ShowDialog();
+        }
+
+        private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmLicenseHistory frm = new frmLicenseHistory(dgvManageApplications.CurrentRow.Cells["NationalNo"].Value.ToString());
             frm.ShowDialog();
         }
     }

@@ -204,5 +204,10 @@ namespace Business_Logic
             else
                 return dt.Rows[0];
         }
+
+        public static DataSet GetPersonLicensesHistory(int PersonID)
+        {
+            return clsLicensesData.GetPersonLicensesHistory(PersonID);
+        }
     }
 }
