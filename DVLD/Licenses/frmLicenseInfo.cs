@@ -27,7 +27,7 @@ namespace DVLD.Licenses
 
         private void frmLicenseInfo_Load(object sender, EventArgs e)
         {
-            ctrlDriverLicenseInfo1.FindDriverLicenseDetails(_LDLAppID);
+            ctrlDriverLicenseInfo1.FindDriverLicenseDetailsByID(_LDLAppID);
         }
     }
 }

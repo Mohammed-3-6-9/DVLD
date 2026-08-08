@@ -172,5 +172,15 @@ namespace Business_Logic
             else
                 return null;
         }
+
+        public static bool CompleteApplication(int LDLAppID)
+        {
+            clsNewLocalDrivingLicenceApplication ldlapp = clsNewLocalDrivingLicenceApplication.Find(LDLAppID);
+
+            if (ldlapp == null)
+                return false;
+
+            return clsApplication.UpdateApplicationStatus(ldlapp.ApplicationID, clsGeneral.enApplicationStatus.Completed);
+        }
     }
 }

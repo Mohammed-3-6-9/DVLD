@@ -16,6 +16,8 @@ namespace Business_Logic
         public string Note { get; set; }
         public int CreatedByUserID { get; set; }
 
+        public int LDLAppID {  get; set; }
+
         public clsTests()
         {
             TestID = -1;
@@ -23,6 +25,7 @@ namespace Business_Logic
             TestResult = false;
             Note = "";
             CreatedByUserID = -1;
+            LDLAppID = -1;
         }
 
         private clsTests(int TestID, int TestAppointmentID, bool TestResult,
@@ -70,7 +73,8 @@ namespace Business_Logic
             {
                 if (_AddNew())
                 {
-                    return clsTestAppointments.LockTestAppointment(this.TestAppointmentID);
+                    return clsTestAppointments.LockTestAppointment(this.TestAppointmentID) &&
+                        clsNewLocalDrivingLicenceApplication.CompleteApplication(this.LDLAppID);
                 }
                 else
                     return false;

@@ -16,7 +16,8 @@ namespace DVLD.Controls
     public partial class ctrlDriverLicenseInfo : UserControl
     {
         private int _LDLAppID = -1;
-        private DataRow _DriverLicenseData;
+        private int _LicenseID = -1;
+        public DataRow _DriverLicenseData;
 
         public ctrlDriverLicenseInfo()
         {
@@ -41,15 +42,13 @@ namespace DVLD.Controls
             pbPersonImage.InitialImage = null;
         }
 
-        private void _RefreshDetails()
+        private bool _RefreshDetails()
         {
-            _DriverLicenseData = clsLicenses.GetDriverLicenseData(_LDLAppID);
-
             if (_DriverLicenseData == null)
             {
                 _ResetDefaultValues();
                 MessageBox.Show("Not Found");
-                return;
+                return false;
             }
 
             byte Gendor = Convert.ToByte(_DriverLicenseData["Gendor"]);
@@ -76,12 +75,22 @@ namespace DVLD.Controls
             lblNotes.Text = (_DriverLicenseData["Notes"] == DBNull.Value ||
                 string.IsNullOrWhiteSpace(_DriverLicenseData["Notes"].ToString()))? "No Notes"
                             : _DriverLicenseData["Notes"].ToString();
+
+            return true;
         }
 
-        public void FindDriverLicenseDetails(int LDLAppID)
+        public bool FindDriverLicenseDetailsByID(int LDLAppID)
         {
             _LDLAppID = LDLAppID;
-            _RefreshDetails();
+            _DriverLicenseData = clsLicenses.GetDriverLicenseDataByLDLAppID(_LDLAppID);
+            return _RefreshDetails();
+        }
+
+        public bool FindDriverLicenseDetailsByLicenseID(int LicenseID)
+        {
+            _LicenseID = LicenseID;
+            _DriverLicenseData = clsLicenses.GetDriverLicenseDataByLicenseID(_LicenseID);
+            return _RefreshDetails();
         }
     }
 }

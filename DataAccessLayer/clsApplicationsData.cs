@@ -252,7 +252,7 @@ namespace DataAccessLayer
         {
             int RowsEffected = 0;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"UPDATE Applications SET ApplicationStatus = @ApplicationStatus,
+            string query = @"UPDATE Applications SET ApplicationStatus = @ApplicationStatus
                WHERE ApplicationID = @ApplicationID;";
 
             SqlCommand Command = new SqlCommand(query, Connection);

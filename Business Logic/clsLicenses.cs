@@ -196,9 +196,18 @@ namespace Business_Logic
             ref LicensesClassID, ref PaidFees, ref DefaultValidityLength);
         }
 
-        public static DataRow GetDriverLicenseData(int LDLAppID)
+        public static DataRow GetDriverLicenseDataByLDLAppID(int LDLAppID)
         {
-            DataTable dt = clsLicensesData.GetDriverLicenseData(LDLAppID);
+            DataTable dt = clsLicensesData.GetDriverLicenseData("LDLAppID", LDLAppID);
+            if (dt.Rows.Count == 0)
+                return null;
+            else
+                return dt.Rows[0];
+        }
+
+        public static DataRow GetDriverLicenseDataByLicenseID(int LicenseID)
+        {
+            DataTable dt = clsLicensesData.GetDriverLicenseData("LicenseID", LicenseID);
             if (dt.Rows.Count == 0)
                 return null;
             else
@@ -208,6 +217,11 @@ namespace Business_Logic
         public static DataSet GetPersonLicensesHistory(int PersonID)
         {
             return clsLicensesData.GetPersonLicensesHistory(PersonID);
+        }
+
+        public static bool IsLicenseClass3(int LicenseID)
+        {
+            return clsLicensesData.IsLicenseClass3(LicenseID);
         }
     }
 }

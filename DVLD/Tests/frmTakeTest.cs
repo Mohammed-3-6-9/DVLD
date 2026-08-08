@@ -40,6 +40,7 @@ namespace DVLD.Tests
 
         private void _FillTest()
         {
+            _Test.LDLAppID = _LDLAppID;
             _Test.TestAppointmentID = _TestAppointmentID;
             _Test.TestResult = (rbFail.Checked) ? false : true;
             _Test.Note = tbNotes.Text;

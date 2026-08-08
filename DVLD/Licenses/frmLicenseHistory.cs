@@ -23,6 +23,12 @@ namespace DVLD.Licenses
             _NationalNo = NationalNo;
         }
 
+        public frmLicenseHistory(int PersonID)
+        {
+            InitializeComponent();
+            _PersonID = PersonID;
+        }
+
         private void frmLicenseHistory_Load(object sender, EventArgs e)
         {
             _PrepareProperties();
@@ -31,7 +37,11 @@ namespace DVLD.Licenses
         void _PrepareProperties()
         {
             gbFilter.Enabled = false;
-            _PersonID = ctrlPersonCard1.FillCardWithData(_NationalNo);
+
+            if (_PersonID != -1)
+                _PersonID = ctrlPersonCard1.FillCardWithData(_PersonID);
+            else
+                _PersonID = ctrlPersonCard1.FillCardWithData(_NationalNo);
 
             if (_PersonID == -1)
             {

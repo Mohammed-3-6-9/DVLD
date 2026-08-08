@@ -88,7 +88,13 @@ namespace DVLD.Controls
 
         private int _FindPerson(string NationalNumber)
         {
-            _Person = clsPerson.Find(NationalNumber);
+            if(string.IsNullOrEmpty(NationalNumber))
+            {
+                ResetDefaultValues();
+                return -1;
+            }
+
+            _Person = clsPerson.Find(NationalNumber.Trim());
 
             if (_Person == null)
             {

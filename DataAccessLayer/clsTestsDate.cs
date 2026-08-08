@@ -51,7 +51,7 @@ namespace DataAccessLayer
         public static int AddNewTest(int TestAppointmentID, bool TestResult,
             string Notes, int CreatedByUserID)
         {
-            int ApplicationID = -1;
+            int TestID = -1;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = @"INSERT INTO Tests (TestAppointmentID,
                TestResult, Notes, CreatedByUserID) VALUES
@@ -73,18 +73,18 @@ namespace DataAccessLayer
                 object objID = Command.ExecuteScalar();
 
                 if (objID != null && int.TryParse(objID.ToString(), out int ID))
-                    ApplicationID = ID;
+                    TestID = ID;
             }
             catch
             {
-                ApplicationID = -1;
+                TestID = -1;
             }
             finally
             {
                 Connection.Close();
             }
 
-            return ApplicationID;
+            return TestID;
         }
 
         public static bool UpdateTest(int TestID, int TestAppointmentID, bool TestResult,

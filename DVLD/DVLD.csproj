@@ -67,6 +67,12 @@
     <Compile Include="ApplicationForms\frmManageApplicatons.Designer.cs">
       <DependentUpon>frmManageApplicatons.cs</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationForms\frmManageInternationalLicenseApplications.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApplicationForms\frmManageInternationalLicenseApplications.Designer.cs">
+      <DependentUpon>frmManageInternationalLicenseApplications.cs</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationTypes\frmUpdateApplicationTypes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,11 +91,23 @@
     <Compile Include="Controls\ctrlApplicationDetails.Designer.cs">
       <DependentUpon>ctrlApplicationDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ctrlApplicationInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ctrlApplicationInfo.Designer.cs">
+      <DependentUpon>ctrlApplicationInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ctrlDriverLicenseInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ctrlDriverLicenseInfo.Designer.cs">
       <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ctrlInternationalDriverInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ctrlInternationalDriverInfo.Designer.cs">
+      <DependentUpon>ctrlInternationalDriverInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ctrlLoginInformation.cs">
       <SubType>UserControl</SubType>
@@ -156,6 +174,18 @@
     </Compile>
     <Compile Include="Licenses\frmLicenseInfo.Designer.cs">
       <DependentUpon>frmLicenseInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Licenses\internationalLicenses\frmInternationalLicenseApplication.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Licenses\internationalLicenses\frmInternationalLicenseApplication.Designer.cs">
+      <DependentUpon>frmInternationalLicenseApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Licenses\internationalLicenses\frmInterNationalLicenseInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Licenses\internationalLicenses\frmInterNationalLicenseInfo.Designer.cs">
+      <DependentUpon>frmInterNationalLicenseInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Test Types\frmManageTestTypes.cs">
       <SubType>Form</SubType>
@@ -240,6 +270,9 @@
     <EmbeddedResource Include="ApplicationForms\frmManageApplicatons.resx">
       <DependentUpon>frmManageApplicatons.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationForms\frmManageInternationalLicenseApplications.resx">
+      <DependentUpon>frmManageInternationalLicenseApplications.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ApplicationTypes\frmUpdateApplicationTypes.resx">
       <DependentUpon>frmUpdateApplicationTypes.cs</DependentUpon>
     </EmbeddedResource>
@@ -249,8 +282,14 @@
     <EmbeddedResource Include="Controls\ctrlApplicationDetails.resx">
       <DependentUpon>ctrlApplicationDetails.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ctrlApplicationInfo.resx">
+      <DependentUpon>ctrlApplicationInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlDriverLicenseInfo.resx">
       <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ctrlInternationalDriverInfo.resx">
+      <DependentUpon>ctrlInternationalDriverInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlLoginInformation.resx">
       <DependentUpon>ctrlLoginInformation.cs</DependentUpon>
@@ -284,6 +323,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Licenses\frmLicenseInfo.resx">
       <DependentUpon>frmLicenseInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\internationalLicenses\frmInternationalLicenseApplication.resx">
+      <DependentUpon>frmInternationalLicenseApplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\internationalLicenses\frmInterNationalLicenseInfo.resx">
+      <DependentUpon>frmInterNationalLicenseInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\frmAddEditPerson.resx">
       <DependentUpon>frmAddEditPerson.cs</DependentUpon>

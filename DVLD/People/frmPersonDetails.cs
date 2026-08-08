@@ -18,6 +18,12 @@ namespace DVLD.People
             ctrlPersonCard1.FillCardWithData(PersonID);
         }
 
+        public frmPersonDetails(string NationalNo)
+        {
+            InitializeComponent();
+            ctrlPersonCard1.FillCardWithData(NationalNo);
+        }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();

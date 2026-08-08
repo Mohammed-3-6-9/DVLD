@@ -308,17 +308,17 @@ namespace DataAccessLayer
             return IsFound;
         }
 
-        public static DataTable GetDriverLicenseData(int LDLAppID)
+        public static DataTable GetDriverLicenseData(string ColumnName,int ColumnValue)
         {
             DataTable DriverLicenseData = new DataTable();
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT ClassName, FullName, LicenseID, NationalNo, Gendor, IssueDate,
+            string query = $@"SELECT ClassName, FullName, LicenseID, NationalNo, Gendor, IssueDate,
                              IssueReason, Notes, IsActive, DateOfBirth,
                              DriverID, ExpirationDate, IsDetained, ImagePath
                              FROM DriverLicenseData_View
-                             WHERE LDLAppID = @LDLAppID";
+                             WHERE {ColumnName} = @ColumnValue";
             SqlCommand Command = new SqlCommand(query, Connection);
-            Command.Parameters.AddWithValue("@LDLAppID", LDLAppID);
+            Command.Parameters.AddWithValue("@ColumnValue", ColumnValue);
 
             try
             {
@@ -369,6 +369,35 @@ namespace DataAccessLayer
             }
 
             return DriverLicensesData;
+        }
+
+        public static bool IsLicenseClass3(int LicenseID)
+        {
+            bool Exists = false;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT 1
+                    FROM Licenses WHERE (Licenses.LicenseID = @LicenseID) AND (Licenses.LicenseClass = 3)";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@LicenseID", LicenseID);
+
+            try
+            {
+                Connection.Open();
+                object obj = Command.ExecuteScalar();
+
+                if (obj != null)
+                    Exists = true;
+            }
+            catch
+            {
+                Exists = false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return Exists;
         }
     }
 }
