@@ -80,5 +80,10 @@ namespace Business_Logic
         {
             return clsLicenceClassesData.GetMinimumAllowedAge(LicenceClassID);
         }
+
+        public static bool GetRenewLicenseRequiredData(int LicenseClassID, ref byte DefaultValidityLength, ref decimal ClassFees)
+        {
+            return clsLicenceClassesData.GetRenewLicenseRequiredData(LicenseClassID, ref DefaultValidityLength, ref ClassFees);
+        }
     }
 }

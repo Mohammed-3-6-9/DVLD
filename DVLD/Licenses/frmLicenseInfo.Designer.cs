@@ -67,7 +67,6 @@
             this.Name = "frmLicenseInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmLicenseInfo";
-            this.Load += new System.EventHandler(this.frmLicenseInfo_Load);
             this.ResumeLayout(false);
 
         }

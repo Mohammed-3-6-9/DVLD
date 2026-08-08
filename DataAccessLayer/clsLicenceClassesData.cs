@@ -320,5 +320,41 @@ namespace DataAccessLayer
 
             return MinAllowedAge;
         }
+
+        public static bool GetRenewLicenseRequiredData(int LicenseClassID, ref byte DefaultValidityLength, ref decimal ClassFees)
+        {
+            bool Exists = false;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT DefaultValidityLength, ClassFees
+                             FROM   LicenseClasses
+                             WHERE LicenseClassID = @LicenseClassID";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+            try
+            {
+                Connection.Open();
+                SqlDataReader reader = Command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    Exists = true;
+                    DefaultValidityLength = (byte)reader["DefaultValidityLength"];
+                    ClassFees = (decimal)reader["ClassFees"];
+                }
+
+                reader.Close();
+            }
+            catch
+            {
+                Exists = false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return Exists;
+        }
     }
 }

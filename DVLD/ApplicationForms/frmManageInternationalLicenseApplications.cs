@@ -99,6 +99,7 @@ namespace DVLD.ApplicationForms
                 e.Handled = true;
             }
         }
+
         void DataUpdated()
         {
             _RefreshApplications();

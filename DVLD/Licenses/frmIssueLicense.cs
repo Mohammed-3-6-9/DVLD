@@ -50,7 +50,7 @@ namespace DVLD.Licenses
             _License.PaidFees = _PaidFees;
             _License.ExpirationDate = DateTime.Now.AddYears(_DefaultValidityLength);
             _License.IsActive = true;
-            _License.IssueReason = 0;
+            _License.IssueReason = (int)clsGeneral.enLicensesIssueReason.New;
             _License.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
             return true;
         }
@@ -63,6 +63,7 @@ namespace DVLD.Licenses
             if (_License.IssueLicense(_PersonID))
             {
                 MessageBox.Show("License Issued Successfully", "Save Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnIssue.Enabled = false;
             }
             else
                 MessageBox.Show("License Didn't Issued", "Save Data", MessageBoxButtons.OK, MessageBoxIcon.Error);

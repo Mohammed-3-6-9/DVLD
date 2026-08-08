@@ -153,6 +153,8 @@ namespace Business_Logic
                     {
                         return false;
                     }
+
+                    this.DriverID = Driver.DriverID;
                 }
 
                 if (_AddNew())
@@ -222,6 +224,50 @@ namespace Business_Logic
         public static bool IsLicenseClass3(int LicenseID)
         {
             return clsLicensesData.IsLicenseClass3(LicenseID);
+        }
+
+        private clsApplication FillApplicationWithData(string NationalNo)
+        {
+            clsApplication app = new clsApplication();
+            app.ApplicantPersonID = clsPerson.GetPersonIDByNationalNo(NationalNo);
+            app.ApplicationTypeID = (int)clsGeneral.enApplicationType.RenewDrivingLicenseService;
+            app.ApplicationDate = DateTime.Now;
+            app.ApplicationStatus = (int)clsGeneral.enApplicationStatus.New;
+            app.LastStatusDate = DateTime.Now;
+            app.PaidFees = clsApplicationType.GetApplicationFees((int)clsGeneral.enApplicationType.RenewDrivingLicenseService);
+            app.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
+            return app;
+        }
+
+        public clsLicenses RenewLicense(string NationalNo,string NewNotes)
+        {
+            clsApplication app = FillApplicationWithData(NationalNo);
+
+            if (!app.Save())
+                return null;
+
+            this.IsActive = false;
+            if (!this.Save())
+                return null;
+
+            byte DefaultValidityLength = 0;
+            decimal LicenseClassFees = -1;
+            clsLicenceClass.GetRenewLicenseRequiredData(this.LicenseClass, ref DefaultValidityLength, ref LicenseClassFees);
+
+            clsLicenses NewLicense = new clsLicenses();
+            NewLicense.ApplicationID = app.ApplicationID;
+            NewLicense.DriverID = this.DriverID;
+            NewLicense.LicenseClass = this.LicenseClass;
+            NewLicense.IssueDate = DateTime.Now;
+            NewLicense.ExpirationDate = DateTime.Now.AddYears(DefaultValidityLength);
+            NewLicense.IsActive = true;
+            NewLicense.IssueReason = (int)clsGeneral.enLicensesIssueReason.ReNew;
+            NewLicense.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
+            NewLicense.PaidFees = app.PaidFees + LicenseClassFees;
+            NewLicense.Notes = NewNotes;
+
+            return NewLicense.Save() ? NewLicense : null;
+
         }
     }
 }

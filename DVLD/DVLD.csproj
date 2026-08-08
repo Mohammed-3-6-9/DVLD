@@ -73,6 +73,12 @@
     <Compile Include="ApplicationForms\frmManageInternationalLicenseApplications.Designer.cs">
       <DependentUpon>frmManageInternationalLicenseApplications.cs</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationForms\frmRenewLocalDrivingLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApplicationForms\frmRenewLocalDrivingLicense.Designer.cs">
+      <DependentUpon>frmRenewLocalDrivingLicense.cs</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationTypes\frmUpdateApplicationTypes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -272,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ApplicationForms\frmManageInternationalLicenseApplications.resx">
       <DependentUpon>frmManageInternationalLicenseApplications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationForms\frmRenewLocalDrivingLicense.resx">
+      <DependentUpon>frmRenewLocalDrivingLicense.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ApplicationTypes\frmUpdateApplicationTypes.resx">
       <DependentUpon>frmUpdateApplicationTypes.cs</DependentUpon>

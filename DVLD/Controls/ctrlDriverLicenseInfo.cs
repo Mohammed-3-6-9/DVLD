@@ -79,7 +79,7 @@ namespace DVLD.Controls
             return true;
         }
 
-        public bool FindDriverLicenseDetailsByID(int LDLAppID)
+        public bool FindDriverLicenseDetailsByLDLAppID(int LDLAppID)
         {
             _LDLAppID = LDLAppID;
             _DriverLicenseData = clsLicenses.GetDriverLicenseDataByLDLAppID(_LDLAppID);

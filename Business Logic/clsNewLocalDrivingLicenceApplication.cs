@@ -101,7 +101,7 @@ namespace Business_Logic
             {
                 case enMode.AddNew:
                     {
-                        if(!base._Save())
+                        if(!base.Save())
                             return false;
 
                         if (_AddNew())

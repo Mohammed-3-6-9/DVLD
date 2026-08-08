@@ -251,7 +251,7 @@ namespace DVLD.ApplicationForms
 
         private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmLicenseInfo frm = new frmLicenseInfo((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value);
+            frmLicenseInfo frm = frmLicenseInfo.CreateByLDLAppID((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value);
             frm.ShowDialog();
         }
 

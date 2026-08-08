@@ -35,6 +35,7 @@ namespace DataAccessLayer
                     DriverID = (int)reader["DriverID"];
                     LicenseClassID = (int)reader["LicenseClass"];
                     IssueDate = (DateTime)reader["IssueDate"];
+                    ExpirationDate = (DateTime)reader["ExpirationDate"];
                     Notes = reader["Notes"].ToString();
                     PaidFees = (decimal)reader["PaidFees"];
                     IsActive = (bool)reader["IsActive"];
@@ -78,7 +79,12 @@ namespace DataAccessLayer
             Command.Parameters.AddWithValue("@LicenseClass", LicenseClassID);
             Command.Parameters.AddWithValue("@IssueDate", IssueDate);
             Command.Parameters.AddWithValue("@ExpirationDate", ExpirationDate);
-            Command.Parameters.AddWithValue("@Notes", Notes);
+
+            if (string.IsNullOrEmpty(Notes))
+                Command.Parameters.AddWithValue("@Notes", DBNull.Value);
+            else
+                Command.Parameters.AddWithValue("@Notes", Notes);
+
             Command.Parameters.AddWithValue("@PaidFees", PaidFees);
             Command.Parameters.AddWithValue("@IsActive", IsActive);
             Command.Parameters.AddWithValue("@IssueReason", IssueReason);

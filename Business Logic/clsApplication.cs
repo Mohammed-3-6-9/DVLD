@@ -25,7 +25,7 @@ namespace Business_Logic
 
         public int ApplicantPersonID { get; set; }
         public DateTime ApplicationDate { get; set; }
-        public int ApplicationTypeID { get; protected set; }
+        public int ApplicationTypeID { get; set; }
         public short ApplicationStatus { get; set; }
         public DateTime LastStatusDate { get; set; }
         public decimal PaidFees { get; set; }
@@ -110,7 +110,7 @@ namespace Business_Logic
                 return null;
         }
 
-        protected bool _Save()
+        public bool Save()
         {
             return _AddNew();
         }

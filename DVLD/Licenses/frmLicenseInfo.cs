@@ -13,11 +13,11 @@ namespace DVLD.Licenses
     public partial class frmLicenseInfo : Form
     {
         private int _LDLAppID = -1;
-        public frmLicenseInfo(int LDLAppID)
+        public int LicenseID { get; set; }
+
+        public frmLicenseInfo()
         {
             InitializeComponent();
-
-            _LDLAppID = LDLAppID;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -25,9 +25,18 @@ namespace DVLD.Licenses
             this.Close();
         }
 
-        private void frmLicenseInfo_Load(object sender, EventArgs e)
+        public static frmLicenseInfo CreateByLicenseID(int LicenseID)
         {
-            ctrlDriverLicenseInfo1.FindDriverLicenseDetailsByID(_LDLAppID);
+            frmLicenseInfo frm = new frmLicenseInfo();
+            frm.ctrlDriverLicenseInfo1.FindDriverLicenseDetailsByLicenseID(LicenseID);
+            return frm;
+        }
+
+        public static frmLicenseInfo CreateByLDLAppID(int LDLAppID)
+        {
+            frmLicenseInfo frm = new frmLicenseInfo();
+            frm.ctrlDriverLicenseInfo1.FindDriverLicenseDetailsByLDLAppID(LDLAppID);
+            return frm;
         }
     }
 }
