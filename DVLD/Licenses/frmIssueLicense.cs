@@ -50,7 +50,7 @@ namespace DVLD.Licenses
             _License.PaidFees = _PaidFees;
             _License.ExpirationDate = DateTime.Now.AddYears(_DefaultValidityLength);
             _License.IsActive = true;
-            _License.IssueReason = (int)clsGeneral.enLicensesIssueReason.New;
+            _License.IssueReason = (int)clsGeneral.enApplicationType.NewLocalDrivingLicenseService;
             _License.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
             return true;
         }

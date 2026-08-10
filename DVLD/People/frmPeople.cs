@@ -152,5 +152,15 @@ namespace DVLD
         {
             _MessageFeatureNotImplemented();
         }
+
+        private void dgvPeople_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
+            {
+                dgvPeople.CurrentCell = dgvPeople.Rows[e.RowIndex].Cells[e.ColumnIndex >= 0 ? e.ColumnIndex : 0];
+                dgvPeople.ClearSelection();
+                dgvPeople.Rows[e.RowIndex].Selected = true;
+            }
+        }
     }
 }

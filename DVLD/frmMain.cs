@@ -1,5 +1,7 @@
 ﻿using Business_Logic;
 using DVLD.ApplicationForms;
+using DVLD.Detain_Release;
+using DVLD.Licenses;
 using DVLD.Licenses.internationalLicenses;
 using DVLD.Test_Types;
 using DVLD.Users;
@@ -97,6 +99,42 @@ namespace DVLD
         private void reNewDrivingLicenceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmRenewLocalDrivingLicense frm = new frmRenewLocalDrivingLicense();
+            frm.ShowDialog();
+        }
+
+        private void replcaementForDamagedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReplaceForDamageOrLost frm = new frmReplaceForDamageOrLost();
+            frm.ShowDialog();
+        }
+
+        private void detainLicenceToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmDetainLicense frm = new frmDetainLicense();
+            frm.ShowDialog();
+        }
+
+        private void releaseLicenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReleaseLicense frm = new frmReleaseLicense();
+            frm.ShowDialog();
+        }
+
+        private void manageDetainedLicenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmManageDetainedLicenses frm = new frmManageDetainedLicenses();
+            frm.ShowDialog();
+        }
+
+        private void releaseDetainedDrivingLicenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReleaseLicense frm = new frmReleaseLicense();
+            frm.ShowDialog();
+        }
+
+        private void retakeTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmManageApplicatons frm = new frmManageApplicatons();
             frm.ShowDialog();
         }
     }

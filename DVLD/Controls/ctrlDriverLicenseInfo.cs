@@ -15,10 +15,20 @@ namespace DVLD.Controls
 {
     public partial class ctrlDriverLicenseInfo : UserControl
     {
-        private int _LDLAppID = -1;
+        private string _NationalNo = "";
         private int _LicenseID = -1;
         public DataRow _DriverLicenseData;
-
+        public bool IsDetained { set
+            {
+                if (_DriverLicenseData != null)
+                {
+                    _DriverLicenseData.Table.Columns["IsDetained"].ReadOnly = false;
+                    _DriverLicenseData["IsDetained"] = (value) ? 1 : 0;
+                    lblIsDetained.Text = Convert.ToBoolean(_DriverLicenseData["IsDetained"]) ? "Yes" : "No";
+                    _DriverLicenseData.Table.Columns["IsDetained"].ReadOnly = true;
+                }
+            }
+        }
         public ctrlDriverLicenseInfo()
         {
             InitializeComponent();
@@ -42,6 +52,22 @@ namespace DVLD.Controls
             pbPersonImage.InitialImage = null;
         }
 
+        private string PrepareLabelIssueReason(int IssueReason)
+        {
+            switch ((clsGeneral.enApplicationType)IssueReason)
+            {
+                case clsGeneral.enApplicationType.NewLocalDrivingLicenseService:
+                    return "New";
+                case clsGeneral.enApplicationType.RenewDrivingLicenseService:
+                    return "ReNew";
+                case clsGeneral.enApplicationType.ReplacementforaDamagedDrivingLicense:
+                    return "Replacement For Damage License";
+                case clsGeneral.enApplicationType.ReplacementforaLostDrivingLicense:
+                    return "Replacement For Lost License";
+            }
+            return "";
+        }
+
         private bool _RefreshDetails()
         {
             if (_DriverLicenseData == null)
@@ -59,10 +85,10 @@ namespace DVLD.Controls
             lblLicenseID.Text = _DriverLicenseData["LicenseID"].ToString();
             lblNationalNo.Text = _DriverLicenseData["NationalNo"].ToString();
             lblGendor.Text = (Gendor == 0) ? "Male" : "Female";
+            lblIssueReason.Text = PrepareLabelIssueReason(Convert.ToInt32(_DriverLicenseData["IssueReason"]));
             lblIssueDate.Text = Convert.ToDateTime(_DriverLicenseData["IssueDate"]).ToShortDateString();
             lblExpirationDate.Text = Convert.ToDateTime(_DriverLicenseData["ExpirationDate"]).ToShortDateString();
             lblDateOfBirth.Text = Convert.ToDateTime(_DriverLicenseData["DateOfBirth"]).ToShortDateString();
-            lblIssueReason.Text = _DriverLicenseData["IssueReason"].ToString();
             lblIsActive.Text = Convert.ToBoolean(_DriverLicenseData["IsActive"]) ? "Yes" : "No";
             lblIsDetained.Text = Convert.ToBoolean(_DriverLicenseData["IsDetained"]) ? "Yes" : "No";
             lblDriverID.Text = _DriverLicenseData["DriverID"].ToString();
@@ -79,10 +105,10 @@ namespace DVLD.Controls
             return true;
         }
 
-        public bool FindDriverLicenseDetailsByLDLAppID(int LDLAppID)
+        public bool FindDriverLicenseDetailsByNationalNo(string NationalNo)
         {
-            _LDLAppID = LDLAppID;
-            _DriverLicenseData = clsLicenses.GetDriverLicenseDataByLDLAppID(_LDLAppID);
+            _NationalNo = NationalNo;
+            _DriverLicenseData = clsLicenses.GetDriverLicenseDataByNationalNo(_NationalNo);
             return _RefreshDetails();
         }
 

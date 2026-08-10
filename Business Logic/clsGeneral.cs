@@ -28,10 +28,5 @@ namespace Business_Logic
             Written = 2,
             Practical = 3
         }
-        public enum enLicensesIssueReason
-        {
-            New = 1,
-            ReNew = 2,
-        }
     }
 }

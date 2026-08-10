@@ -12,9 +12,6 @@ namespace DVLD.Licenses
 {
     public partial class frmLicenseInfo : Form
     {
-        private int _LDLAppID = -1;
-        public int LicenseID { get; set; }
-
         public frmLicenseInfo()
         {
             InitializeComponent();
@@ -32,10 +29,10 @@ namespace DVLD.Licenses
             return frm;
         }
 
-        public static frmLicenseInfo CreateByLDLAppID(int LDLAppID)
+        public static frmLicenseInfo CreateByNationalNo(string NationalNo)
         {
             frmLicenseInfo frm = new frmLicenseInfo();
-            frm.ctrlDriverLicenseInfo1.FindDriverLicenseDetailsByLDLAppID(LDLAppID);
+            frm.ctrlDriverLicenseInfo1.FindDriverLicenseDetailsByNationalNo(NationalNo);
             return frm;
         }
     }

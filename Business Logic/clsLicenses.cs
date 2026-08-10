@@ -198,9 +198,9 @@ namespace Business_Logic
             ref LicensesClassID, ref PaidFees, ref DefaultValidityLength);
         }
 
-        public static DataRow GetDriverLicenseDataByLDLAppID(int LDLAppID)
+        public static DataRow GetDriverLicenseDataByNationalNo(string NationalNo)
         {
-            DataTable dt = clsLicensesData.GetDriverLicenseData("LDLAppID", LDLAppID);
+            DataTable dt = clsLicensesData.GetDriverLicenseDataByNationalNo(NationalNo);
             if (dt.Rows.Count == 0)
                 return null;
             else
@@ -209,7 +209,7 @@ namespace Business_Logic
 
         public static DataRow GetDriverLicenseDataByLicenseID(int LicenseID)
         {
-            DataTable dt = clsLicensesData.GetDriverLicenseData("LicenseID", LicenseID);
+            DataTable dt = clsLicensesData.GetDriverLicenseDataByLicenseID(LicenseID);
             if (dt.Rows.Count == 0)
                 return null;
             else
@@ -226,22 +226,22 @@ namespace Business_Logic
             return clsLicensesData.IsLicenseClass3(LicenseID);
         }
 
-        private clsApplication FillApplicationWithData(string NationalNo)
+        private clsApplication FillApplicationWithData(string NationalNo,clsGeneral.enApplicationType ApplicationType)
         {
             clsApplication app = new clsApplication();
             app.ApplicantPersonID = clsPerson.GetPersonIDByNationalNo(NationalNo);
-            app.ApplicationTypeID = (int)clsGeneral.enApplicationType.RenewDrivingLicenseService;
+            app.ApplicationTypeID = (int)ApplicationType;
             app.ApplicationDate = DateTime.Now;
-            app.ApplicationStatus = (int)clsGeneral.enApplicationStatus.New;
+            app.ApplicationStatus = (int)clsGeneral.enApplicationStatus.Completed;
             app.LastStatusDate = DateTime.Now;
-            app.PaidFees = clsApplicationType.GetApplicationFees((int)clsGeneral.enApplicationType.RenewDrivingLicenseService);
+            app.PaidFees = clsApplicationType.GetApplicationFees((int)ApplicationType);
             app.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
             return app;
         }
 
         public clsLicenses RenewLicense(string NationalNo,string NewNotes)
         {
-            clsApplication app = FillApplicationWithData(NationalNo);
+            clsApplication app = FillApplicationWithData(NationalNo, clsGeneral.enApplicationType.RenewDrivingLicenseService);
 
             if (!app.Save())
                 return null;
@@ -261,10 +261,41 @@ namespace Business_Logic
             NewLicense.IssueDate = DateTime.Now;
             NewLicense.ExpirationDate = DateTime.Now.AddYears(DefaultValidityLength);
             NewLicense.IsActive = true;
-            NewLicense.IssueReason = (int)clsGeneral.enLicensesIssueReason.ReNew;
+            NewLicense.IssueReason = (int)clsGeneral.enApplicationType.RenewDrivingLicenseService;
             NewLicense.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
-            NewLicense.PaidFees = app.PaidFees + LicenseClassFees;
+            NewLicense.PaidFees = LicenseClassFees;
             NewLicense.Notes = NewNotes;
+
+            return NewLicense.Save() ? NewLicense : null;
+
+        }
+
+        public clsLicenses ReplaceLicense(string NationalNo, clsGeneral.enApplicationType ApplicationType)
+        {
+            clsApplication app = FillApplicationWithData(NationalNo, ApplicationType);
+
+            if (!app.Save())
+                return null;
+
+            this.IsActive = false;
+            if (!this.Save())
+                return null;
+
+            clsLicenses NewLicense = new clsLicenses();
+            NewLicense.ApplicationID = app.ApplicationID;
+            NewLicense.DriverID = this.DriverID;
+            NewLicense.LicenseClass = this.LicenseClass;
+            NewLicense.IssueDate = DateTime.Now;
+            NewLicense.ExpirationDate = this.ExpirationDate;
+            NewLicense.IsActive = true;
+            NewLicense.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
+            NewLicense.PaidFees = 0;
+            NewLicense.Notes = this.Notes;
+
+            if (ApplicationType == clsGeneral.enApplicationType.ReplacementforaDamagedDrivingLicense)
+                NewLicense.IssueReason = (int)clsGeneral.enApplicationType.ReplacementforaDamagedDrivingLicense;
+            else
+                NewLicense.IssueReason = (int)clsGeneral.enApplicationType.ReplacementforaLostDrivingLicense;
 
             return NewLicense.Save() ? NewLicense : null;
 

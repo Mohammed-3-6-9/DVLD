@@ -251,7 +251,7 @@ namespace DVLD.ApplicationForms
 
         private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmLicenseInfo frm = frmLicenseInfo.CreateByLDLAppID((int)dgvManageApplications.CurrentRow.Cells["L.D.L.AppID"].Value);
+            frmLicenseInfo frm = frmLicenseInfo.CreateByNationalNo(dgvManageApplications.CurrentRow.Cells["NationalNo"].Value.ToString());
             frm.ShowDialog();
         }
 
@@ -259,6 +259,16 @@ namespace DVLD.ApplicationForms
         {
             frmLicenseHistory frm = new frmLicenseHistory(dgvManageApplications.CurrentRow.Cells["NationalNo"].Value.ToString());
             frm.ShowDialog();
+        }
+
+        private void dgvManageApplications_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
+            {
+                dgvManageApplications.CurrentCell = dgvManageApplications.Rows[e.RowIndex].Cells[e.ColumnIndex >= 0 ? e.ColumnIndex : 0];
+                dgvManageApplications.ClearSelection();
+                dgvManageApplications.Rows[e.RowIndex].Selected = true;
+            }
         }
     }
 }

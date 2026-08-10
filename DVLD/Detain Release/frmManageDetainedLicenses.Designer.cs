@@ -1,6 +1,6 @@
-﻿namespace DVLD.ApplicationForms
+﻿namespace DVLD.Detain_Release
 {
-    partial class frmManageInternationalLicenseApplications
+    partial class frmManageDetainedLicenses
     {
         /// <summary>
         /// Required designer variable.
@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmManageInternationalLicenseApplications));
-            this.cbIsActiveFilterValue = new System.Windows.Forms.ComboBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmManageDetainedLicenses));
+            this.cbIsReleasedFilterValue = new System.Windows.Forms.ComboBox();
             this.tbFilterValue = new System.Windows.Forms.TextBox();
             this.btnAddInternationalLicense = new System.Windows.Forms.Button();
-            this.dgvManageApplications = new System.Windows.Forms.DataGridView();
+            this.dgvManageDetainedLicenses = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showPersonDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showLicenseDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showPersonLicenseHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.releaseDetainedLicenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pbMainPhoto = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cbFiltersType = new System.Windows.Forms.ComboBox();
@@ -46,36 +46,26 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvManageApplications)).BeginInit();
+            this.button1 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvManageDetainedLicenses)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainPhoto)).BeginInit();
             this.SuspendLayout();
             // 
-            // cbIsActiveFilterValue
+            // cbIsReleasedFilterValue
             // 
-            this.cbIsActiveFilterValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbIsActiveFilterValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.cbIsActiveFilterValue.FormattingEnabled = true;
-            this.cbIsActiveFilterValue.Items.AddRange(new object[] {
-            "True",
-            "False"});
-            this.cbIsActiveFilterValue.Location = new System.Drawing.Point(441, 282);
-            this.cbIsActiveFilterValue.Name = "cbIsActiveFilterValue";
-            this.cbIsActiveFilterValue.Size = new System.Drawing.Size(258, 37);
-            this.cbIsActiveFilterValue.TabIndex = 34;
-            this.cbIsActiveFilterValue.SelectedIndexChanged += new System.EventHandler(this.cbStatusFilterValue_SelectedIndexChanged);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(800, 64);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(62, 57);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 33;
-            this.pictureBox1.TabStop = false;
+            this.cbIsReleasedFilterValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbIsReleasedFilterValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.cbIsReleasedFilterValue.FormattingEnabled = true;
+            this.cbIsReleasedFilterValue.Items.AddRange(new object[] {
+            "All",
+            "Yes",
+            "No"});
+            this.cbIsReleasedFilterValue.Location = new System.Drawing.Point(441, 282);
+            this.cbIsReleasedFilterValue.Name = "cbIsReleasedFilterValue";
+            this.cbIsReleasedFilterValue.Size = new System.Drawing.Size(258, 37);
+            this.cbIsReleasedFilterValue.TabIndex = 46;
+            this.cbIsReleasedFilterValue.SelectedIndexChanged += new System.EventHandler(this.cbIsReleasedFilterValue_SelectedIndexChanged);
             // 
             // tbFilterValue
             // 
@@ -83,7 +73,7 @@
             this.tbFilterValue.Location = new System.Drawing.Point(441, 282);
             this.tbFilterValue.Name = "tbFilterValue";
             this.tbFilterValue.Size = new System.Drawing.Size(258, 35);
-            this.tbFilterValue.TabIndex = 32;
+            this.tbFilterValue.TabIndex = 44;
             this.tbFilterValue.TextChanged += new System.EventHandler(this.tbFilterValue_TextChanged);
             this.tbFilterValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbFilterValue_KeyPress);
             // 
@@ -96,26 +86,26 @@
             this.btnAddInternationalLicense.Location = new System.Drawing.Point(1349, 256);
             this.btnAddInternationalLicense.Name = "btnAddInternationalLicense";
             this.btnAddInternationalLicense.Size = new System.Drawing.Size(74, 57);
-            this.btnAddInternationalLicense.TabIndex = 31;
+            this.btnAddInternationalLicense.TabIndex = 43;
             this.btnAddInternationalLicense.UseVisualStyleBackColor = true;
-            this.btnAddInternationalLicense.Click += new System.EventHandler(this.btnAddInternationalLicense_Click);
+            this.btnAddInternationalLicense.Click += new System.EventHandler(this.btnDetainLicense_Click);
             // 
-            // dgvManageApplications
+            // dgvManageDetainedLicenses
             // 
-            this.dgvManageApplications.AllowUserToAddRows = false;
-            this.dgvManageApplications.AllowUserToDeleteRows = false;
-            this.dgvManageApplications.AllowUserToOrderColumns = true;
-            this.dgvManageApplications.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvManageApplications.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvManageApplications.ContextMenuStrip = this.contextMenuStrip1;
-            this.dgvManageApplications.Location = new System.Drawing.Point(15, 336);
-            this.dgvManageApplications.Name = "dgvManageApplications";
-            this.dgvManageApplications.ReadOnly = true;
-            this.dgvManageApplications.RowHeadersWidth = 62;
-            this.dgvManageApplications.RowTemplate.Height = 28;
-            this.dgvManageApplications.Size = new System.Drawing.Size(1408, 363);
-            this.dgvManageApplications.TabIndex = 30;
-            this.dgvManageApplications.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvManageApplications_CellMouseDown);
+            this.dgvManageDetainedLicenses.AllowUserToAddRows = false;
+            this.dgvManageDetainedLicenses.AllowUserToDeleteRows = false;
+            this.dgvManageDetainedLicenses.AllowUserToOrderColumns = true;
+            this.dgvManageDetainedLicenses.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvManageDetainedLicenses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvManageDetainedLicenses.ContextMenuStrip = this.contextMenuStrip1;
+            this.dgvManageDetainedLicenses.Location = new System.Drawing.Point(15, 336);
+            this.dgvManageDetainedLicenses.Name = "dgvManageDetainedLicenses";
+            this.dgvManageDetainedLicenses.ReadOnly = true;
+            this.dgvManageDetainedLicenses.RowHeadersWidth = 62;
+            this.dgvManageDetainedLicenses.RowTemplate.Height = 28;
+            this.dgvManageDetainedLicenses.Size = new System.Drawing.Size(1408, 363);
+            this.dgvManageDetainedLicenses.TabIndex = 42;
+            this.dgvManageDetainedLicenses.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvManageDetainedLicenses_CellMouseDown);
             // 
             // contextMenuStrip1
             // 
@@ -124,9 +114,11 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showPersonDetailsToolStripMenuItem,
             this.showLicenseDetailsToolStripMenuItem,
-            this.showPersonLicenseHToolStripMenuItem});
+            this.showPersonLicenseHToolStripMenuItem,
+            this.releaseDetainedLicenseToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(408, 124);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(408, 197);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // showPersonDetailsToolStripMenuItem
             // 
@@ -152,6 +144,14 @@
             this.showPersonLicenseHToolStripMenuItem.Text = "Show Person License History";
             this.showPersonLicenseHToolStripMenuItem.Click += new System.EventHandler(this.showPersonLicenseHToolStripMenuItem_Click);
             // 
+            // releaseDetainedLicenseToolStripMenuItem
+            // 
+            this.releaseDetainedLicenseToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("releaseDetainedLicenseToolStripMenuItem.Image")));
+            this.releaseDetainedLicenseToolStripMenuItem.Name = "releaseDetainedLicenseToolStripMenuItem";
+            this.releaseDetainedLicenseToolStripMenuItem.Size = new System.Drawing.Size(407, 40);
+            this.releaseDetainedLicenseToolStripMenuItem.Text = "Release Detained License";
+            this.releaseDetainedLicenseToolStripMenuItem.Click += new System.EventHandler(this.releaseDetainedLicenseToolStripMenuItem_Click);
+            // 
             // pbMainPhoto
             // 
             this.pbMainPhoto.Image = ((System.Drawing.Image)(resources.GetObject("pbMainPhoto.Image")));
@@ -160,7 +160,7 @@
             this.pbMainPhoto.Name = "pbMainPhoto";
             this.pbMainPhoto.Size = new System.Drawing.Size(292, 165);
             this.pbMainPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbMainPhoto.TabIndex = 29;
+            this.pbMainPhoto.TabIndex = 41;
             this.pbMainPhoto.TabStop = false;
             // 
             // label2
@@ -168,11 +168,11 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.DarkRed;
-            this.label2.Location = new System.Drawing.Point(398, 181);
+            this.label2.Location = new System.Drawing.Point(500, 181);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(692, 52);
-            this.label2.TabIndex = 28;
-            this.label2.Text = "International Licenses Applications";
+            this.label2.Size = new System.Drawing.Size(448, 52);
+            this.label2.TabIndex = 40;
+            this.label2.Text = "List Detained Licenses";
             // 
             // cbFiltersType
             // 
@@ -181,15 +181,15 @@
             this.cbFiltersType.FormattingEnabled = true;
             this.cbFiltersType.Items.AddRange(new object[] {
             "None",
-            "InternationalLicenseID",
-            "ApplicationID",
-            "DriverID",
-            "IssuedUsingLocalLicenseID",
-            "IsActive"});
+            "DetainID",
+            "IsReleased",
+            "NationalNo",
+            "FullName",
+            "ReleaseApplicationID"});
             this.cbFiltersType.Location = new System.Drawing.Point(157, 281);
             this.cbFiltersType.Name = "cbFiltersType";
             this.cbFiltersType.Size = new System.Drawing.Size(258, 37);
-            this.cbFiltersType.TabIndex = 27;
+            this.cbFiltersType.TabIndex = 39;
             this.cbFiltersType.SelectedIndexChanged += new System.EventHandler(this.cbFiltersType_SelectedIndexChanged);
             // 
             // btnClose
@@ -202,7 +202,7 @@
             this.btnClose.Location = new System.Drawing.Point(1300, 720);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(123, 46);
-            this.btnClose.TabIndex = 26;
+            this.btnClose.TabIndex = 38;
             this.btnClose.Text = "Close";
             this.btnClose.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -216,7 +216,7 @@
             this.label3.Location = new System.Drawing.Point(11, 284);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(139, 29);
-            this.label3.TabIndex = 25;
+            this.label3.TabIndex = 37;
             this.label3.Text = "Filtered by :";
             // 
             // lblRecordsNumber
@@ -226,7 +226,7 @@
             this.lblRecordsNumber.Location = new System.Drawing.Point(152, 727);
             this.lblRecordsNumber.Name = "lblRecordsNumber";
             this.lblRecordsNumber.Size = new System.Drawing.Size(49, 29);
-            this.lblRecordsNumber.TabIndex = 24;
+            this.lblRecordsNumber.TabIndex = 36;
             this.lblRecordsNumber.Text = "???";
             // 
             // label1
@@ -236,19 +236,32 @@
             this.label1.Location = new System.Drawing.Point(11, 727);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(135, 29);
-            this.label1.TabIndex = 23;
+            this.label1.TabIndex = 35;
             this.label1.Text = "# Records :";
             // 
-            // frmManageInternationalLicenseApplications
+            // button1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.button1.Location = new System.Drawing.Point(1244, 256);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(74, 57);
+            this.button1.TabIndex = 47;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnReleaseLicense_Click);
+            // 
+            // frmManageDetainedLicenses
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1435, 779);
-            this.Controls.Add(this.cbIsActiveFilterValue);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cbIsReleasedFilterValue);
             this.Controls.Add(this.tbFilterValue);
             this.Controls.Add(this.btnAddInternationalLicense);
-            this.Controls.Add(this.dgvManageApplications);
+            this.Controls.Add(this.dgvManageDetainedLicenses);
             this.Controls.Add(this.pbMainPhoto);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cbFiltersType);
@@ -256,12 +269,12 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblRecordsNumber);
             this.Controls.Add(this.label1);
-            this.Name = "frmManageInternationalLicenseApplications";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Name = "frmManageDetainedLicenses";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "frmManageInternationalLicenseApplications";
-            this.Load += new System.EventHandler(this.frmManageInternationalLicenseApplications_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvManageApplications)).EndInit();
+            this.Text = "frmManageDetainedLicenses";
+            this.Load += new System.EventHandler(this.frmManageDetainedLicenses_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvManageDetainedLicenses)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbMainPhoto)).EndInit();
             this.ResumeLayout(false);
@@ -271,11 +284,14 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox cbIsActiveFilterValue;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ComboBox cbIsReleasedFilterValue;
         private System.Windows.Forms.TextBox tbFilterValue;
         private System.Windows.Forms.Button btnAddInternationalLicense;
-        private System.Windows.Forms.DataGridView dgvManageApplications;
+        private System.Windows.Forms.DataGridView dgvManageDetainedLicenses;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem showPersonDetailsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showLicenseDetailsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showPersonLicenseHToolStripMenuItem;
         private System.Windows.Forms.PictureBox pbMainPhoto;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbFiltersType;
@@ -283,9 +299,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblRecordsNumber;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem showPersonDetailsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showLicenseDetailsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showPersonLicenseHToolStripMenuItem;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripMenuItem releaseDetainedLicenseToolStripMenuItem;
     }
 }

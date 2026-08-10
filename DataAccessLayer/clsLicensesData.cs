@@ -314,7 +314,7 @@ namespace DataAccessLayer
             return IsFound;
         }
 
-        public static DataTable GetDriverLicenseData(string ColumnName,int ColumnValue)
+        public static DataTable GetDriverLicenseDataByLicenseID(int LicenseID)
         {
             DataTable DriverLicenseData = new DataTable();
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -322,9 +322,42 @@ namespace DataAccessLayer
                              IssueReason, Notes, IsActive, DateOfBirth,
                              DriverID, ExpirationDate, IsDetained, ImagePath
                              FROM DriverLicenseData_View
-                             WHERE {ColumnName} = @ColumnValue";
+                             WHERE LicenseID = @LicenseID";
             SqlCommand Command = new SqlCommand(query, Connection);
-            Command.Parameters.AddWithValue("@ColumnValue", ColumnValue);
+            Command.Parameters.AddWithValue("@LicenseID", LicenseID);
+
+            try
+            {
+                Connection.Open();
+                SqlDataReader reader = Command.ExecuteReader();
+
+                if (reader.HasRows)
+                    DriverLicenseData.Load(reader);
+
+                reader.Close();
+            }
+            catch
+            {
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return DriverLicenseData;
+        }
+
+        public static DataTable GetDriverLicenseDataByNationalNo(string NationalNo)
+        {
+            DataTable DriverLicenseData = new DataTable();
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = $@"SELECT ClassName, FullName, LicenseID, NationalNo, Gendor, IssueDate,
+                             IssueReason, Notes, IsActive, DateOfBirth,
+                             DriverID, ExpirationDate, IsDetained, ImagePath
+                             FROM DriverLicenseData_View
+                             WHERE NationalNo = @NationalNo";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@NationalNo", NationalNo);
 
             try
             {

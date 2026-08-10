@@ -1,6 +1,5 @@
 ﻿using Business_Logic;
 using DVLD.Licenses;
-using DVLD.Licenses.internationalLicenses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,56 +12,48 @@ using System.Windows.Forms;
 
 namespace DVLD.ApplicationForms
 {
-    public partial class frmRenewLocalDrivingLicense : Form
+    public partial class frmReplaceForDamageOrLost : Form
     {
         private int _LocalLicenseID = -1;
         private clsLicenses _LocalLicense = new clsLicenses();
-
-        public frmRenewLocalDrivingLicense()
+        private clsGeneral.enApplicationType _applicationType = clsGeneral.enApplicationType.ReplacementforaLostDrivingLicense;
+        decimal _AppFees = -1;
+        public frmReplaceForDamageOrLost()
         {
             InitializeComponent();
-        }
-
-        public frmRenewLocalDrivingLicense(int LicenseID)
-        {
-            InitializeComponent();
-            _LocalLicenseID = LicenseID;
-            SearchAndFillScreen();
         }
 
         private void ResetDefaultValues()
         {
-            lblRenewedLicenseID.Text = "???";
-            lblRenewLicenseApplicationID.Text = "???";
+            lblReplacedLicenseID.Text = "???";
+            lblApplicationID.Text = "???";
             lblApplicationDate.Text = "???";
-            lblIssueData.Text = "???";
             lblApplicationFees.Text = "???";
-            lblLicenseFees.Text = "???";
             lblOldLicenseID.Text = "???";
-            lblExpirationDate.Text = "???";
             lblCreatedBy.Text = "???";
-            lblTotalFees.Text = "???";
         }
 
         private void PrePrepareFields()
         {
-            byte DefaultValidityLength = 0;
-            decimal LicenseClassFees = -1;
-            clsLicenceClass.GetRenewLicenseRequiredData(_LocalLicense.LicenseClass, ref DefaultValidityLength, ref LicenseClassFees);
-            decimal appfees = clsApplicationType.GetApplicationFees((int)clsGeneral.enApplicationType.RenewDrivingLicenseService);
-
             lblApplicationDate.Text = DateTime.Now.ToString();
-            lblIssueData.Text = DateTime.Now.ToString();
-            lblApplicationFees.Text = appfees.ToString();
-            lblLicenseFees.Text = LicenseClassFees.ToString();
+            lblApplicationFees.Text = _AppFees.ToString();
             lblOldLicenseID.Text = _LocalLicenseID.ToString();
-            lblExpirationDate.Text = DateTime.Now.AddYears(DefaultValidityLength).ToString();
             lblCreatedBy.Text = clsSessionInfo.CurrentUser.UserName;
-            lblTotalFees.Text = (appfees + LicenseClassFees).ToString();
         }
 
-        private void SearchAndFillScreen()
+        private void btnSearch_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(tbFilterValue.Text))
+            {
+                MessageBox.Show("Please Inser A License ID",
+                        "Required License ID", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+                ResetDefaultValues();
+
+            _LocalLicenseID = Convert.ToInt32(tbFilterValue.Text.Trim());
+
             if (ctrlDriverLicenseInfo1.FindDriverLicenseDetailsByLicenseID(_LocalLicenseID))
             {
                 _LocalLicense = clsLicenses.Find(_LocalLicenseID);
@@ -89,21 +80,6 @@ namespace DVLD.ApplicationForms
                 llblShowLicensesHistory.Enabled = false;
                 btnReNew.Enabled = false;
             }
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(tbFilterValue.Text))
-            {
-                MessageBox.Show("Please Inser A License ID",
-                        "Required License ID", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            else
-                ResetDefaultValues();
-
-            _LocalLicenseID = Convert.ToInt32(tbFilterValue.Text.Trim());
-            SearchAndFillScreen();
         }
 
         private void tbFilterValue_KeyPress(object sender, KeyPressEventArgs e)
@@ -139,31 +115,42 @@ namespace DVLD.ApplicationForms
         private void PrepareProbertiesAfterSave(clsLicenses NewLicense)
         {
             gbFilter.Enabled = false;
+            gbReplacementFor.Enabled=false;
             llblShowLicenseInfo.Enabled = true;
             btnReNew.Enabled = false;
             _LocalLicenseID = NewLicense.LicenseID;
             ctrlDriverLicenseInfo1.FindDriverLicenseDetailsByLicenseID(_LocalLicenseID);
-            lblRenewedLicenseID.Text = NewLicense.LicenseID.ToString();
-            lblRenewLicenseApplicationID.Text = NewLicense.ApplicationID.ToString();
+            lblReplacedLicenseID.Text = NewLicense.LicenseID.ToString();
+            lblApplicationID.Text = NewLicense.ApplicationID.ToString();
         }
 
         private bool Validation()
         {
-            if (_LocalLicense.ExpirationDate > DateTime.Now)
+            if (!_LocalLicense.IsActive)
             {
-                MessageBox.Show("License Didn't ReNewed, Today Is Before ExpirationDate", "ReNew License", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("License Didn't Replaced, License Isn't Active", "ReNew License", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 llblShowLicenseInfo.Enabled = true;
                 llblShowLicensesHistory.Enabled = true;
                 btnReNew.Enabled = false;
                 return false;
             }
 
-            if (!_LocalLicense.IsActive)
+            if (_LocalLicense.ExpirationDate < DateTime.Now)
             {
-                MessageBox.Show("License Didn't ReNewed, License Isn't Active", "ReNew License", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("License Can't Replaced, License Is Expired", "Replace License", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 llblShowLicenseInfo.Enabled = true;
                 llblShowLicensesHistory.Enabled = true;
                 btnReNew.Enabled = false;
+
+                if (MessageBox.Show("Are You Want To ReNew The License, License Is Expired", "ReNew License", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    this.Hide();
+                    frmRenewLocalDrivingLicense frm = new frmRenewLocalDrivingLicense(_LocalLicenseID);
+                    frm.ShowDialog();
+                    this.Close();
+                }
+
+
                 return false;
             }
 
@@ -172,18 +159,41 @@ namespace DVLD.ApplicationForms
 
         private void btnReNew_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are You Sure That You Want To Renew License", "ReNew License", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
+            if (MessageBox.Show("Are You Sure That You Want To Replace License", "Replace License", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
                 return;
-            
-            clsLicenses NewLicense = _LocalLicense.RenewLicense(ctrlDriverLicenseInfo1._DriverLicenseData["NationalNo"].ToString(), tbNotes.Text);
+
+            clsLicenses NewLicense = _LocalLicense.ReplaceLicense(ctrlDriverLicenseInfo1._DriverLicenseData["NationalNo"].ToString(), _applicationType);
 
             if (NewLicense != null)
             {
-                MessageBox.Show("License ReNewed Successfully", "ReNew License", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("License Replaced Successfully", "Replace License", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 PrepareProbertiesAfterSave(NewLicense);
             }
             else
-                MessageBox.Show("License Didn't ReNewed", "ReNew License", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("License Didn't Replaced", "Replace License", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void frmReplaceForDamageOrLost_Load(object sender, EventArgs e)
+        {
+            rbLostLicense.Checked= true;
+            _AppFees = clsApplicationType.GetApplicationFees((int)_applicationType);
+        }
+
+        private void rbLostLicense_CheckedChanged(object sender, EventArgs e)
+        {
+            if(rbLostLicense.Checked)
+            {
+                _applicationType = clsGeneral.enApplicationType.ReplacementforaLostDrivingLicense;
+                lblHeader.Text = "Replacement For Lost License";
+            }
+            else
+            {
+                _applicationType = clsGeneral.enApplicationType.ReplacementforaDamagedDrivingLicense;
+                lblHeader.Text = "Replacement For Damage License";
+            }
+
+            _AppFees = clsApplicationType.GetApplicationFees((int)_applicationType);
+            lblApplicationFees.Text = _AppFees.ToString();
         }
     }
 }

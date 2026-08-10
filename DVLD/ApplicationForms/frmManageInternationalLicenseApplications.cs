@@ -129,5 +129,15 @@ namespace DVLD.ApplicationForms
             frmLicenseHistory frm = new frmLicenseHistory((int)dgvManageApplications.CurrentRow.Cells["PersonID"].Value);
             frm.ShowDialog();
         }
+
+        private void dgvManageApplications_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
+            {
+                dgvManageApplications.CurrentCell = dgvManageApplications.Rows[e.RowIndex].Cells[e.ColumnIndex >= 0 ? e.ColumnIndex : 0];
+                dgvManageApplications.ClearSelection();
+                dgvManageApplications.Rows[e.RowIndex].Selected = true;
+            }
+        }
     }
 }

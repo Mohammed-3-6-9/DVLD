@@ -160,6 +160,7 @@
             this.dgvPeople.RowTemplate.Height = 28;
             this.dgvPeople.Size = new System.Drawing.Size(1408, 363);
             this.dgvPeople.TabIndex = 8;
+            this.dgvPeople.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvPeople_CellMouseDown);
             // 
             // contextMenuStrip1
             // 
@@ -175,7 +176,7 @@
             this.sendEmailToolStripMenuItem,
             this.phoneCallToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(284, 313);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(284, 280);
             // 
             // showDetailsToolStripMenuItem
             // 
