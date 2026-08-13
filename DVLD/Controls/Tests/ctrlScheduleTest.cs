@@ -25,12 +25,13 @@ namespace DVLD.Controls.Tests
         private bool _reTake = false;
         private clsGeneral.enTestTypes _TestType;
         private int _ReTakeTestAppID { get; set; }
+        private int _PersonID = -1;
         private int _Trial = 0;
         private string _ClassName = "";
         private string _FullName = "";
         private decimal _Fees = -1;
         private decimal _RetakeTestFees = 0;
-        private decimal _TotalFees =-1;
+        private decimal _TotalFees = -1;
 
         bool Crash = false;
 
@@ -58,7 +59,7 @@ namespace DVLD.Controls.Tests
 
         private void PrepareScheduleTestScreen()
         {
-            if (clsTestAppointments.GetDataForScheduleTest(_LDLAppID, (int)_TestType, ref _ClassName, ref _FullName, ref _Fees, ref _Trial))
+            if (clsTestAppointments.GetDataForScheduleTest(_LDLAppID, (int)_TestType, ref _ClassName, ref _FullName, ref _PersonID, ref _Fees, ref _Trial))
             {
                 Crash = false;
                 lblD_L_AppID.Text = _LDLAppID.ToString();
@@ -87,9 +88,9 @@ namespace DVLD.Controls.Tests
                     {
                         lblHeader.Text = "Schedule ReTake Test";
                         gbReTakeTest.Enabled = true;
-                        _ReTakeTestAppID = _TestAppointmentID;
+                        _ReTakeTestAppID = -1;
                         dtpTestDate.Value = DateTime.Now;
-                        _RetakeTestFees = clsApplicationType.GetApplicationFees((int)clsGeneral.enApplicationType.RenewDrivingLicenseService);
+                        _RetakeTestFees = clsApplicationType.GetApplicationFees((int)clsGeneral.enApplicationType.RetakeTest);
                         break;
                     }
                 case enMode.Update:
@@ -98,7 +99,7 @@ namespace DVLD.Controls.Tests
                         {
                             gbReTakeTest.Enabled = true;
                             _ReTakeTestAppID = _TestAppointmentID;
-                            _RetakeTestFees = clsApplicationType.GetApplicationFees((int)clsGeneral.enApplicationType.RenewDrivingLicenseService);
+                            _RetakeTestFees = clsApplicationType.GetApplicationFees((int)clsGeneral.enApplicationType.RetakeTest);
                         }
                         else
                         {
@@ -158,7 +159,7 @@ namespace DVLD.Controls.Tests
             }
         }
 
-        public void SetScheduleTestVariables(int localDrivingLicenseApplicationID, int TestAppointmentID, bool reTake,clsGeneral.enTestTypes TestType)
+        public void SetScheduleTestVariables(int localDrivingLicenseApplicationID, int TestAppointmentID, bool reTake, clsGeneral.enTestTypes TestType)
         {
             _LDLAppID = localDrivingLicenseApplicationID;
             _TestAppointmentID = TestAppointmentID;
@@ -184,15 +185,16 @@ namespace DVLD.Controls.Tests
             _TestAppointment.TestTypeID = (int)_TestType;
             _TestAppointment.LDLAppID = _LDLAppID;
             _TestAppointment.AppointmentDate = dtpTestDate.Value;
-            _TestAppointment.PaidFees = _TotalFees;
-            _TestAppointment.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
+            _TestAppointment.PaidFees = _Fees;
             _TestAppointment.IsLocked = false;
+            if (_Mode == enMode.AddNew || _Mode == enMode.ReTake)
+                _TestAppointment.CreatedByUserID = clsSessionInfo.CurrentUser.UserID;
         }
 
         private void FreezeScreen()
         {
             btnSave.Enabled = false;
-            dtpTestDate.Enabled=false;
+            dtpTestDate.Enabled = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -202,14 +204,21 @@ namespace DVLD.Controls.Tests
 
             _FillTestAppointment();
 
-            if(_TestAppointment.Save())
+            if (_TestAppointment.Save(_reTake ? _PersonID : -1))
             {
                 MessageBox.Show("Test Apointment Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 FreezeScreen();
+
+                if(_reTake)
+                {
+                    _ReTakeTestAppID = _TestAppointment.RetakeTestApplicationID;
+                    lblReTake_Test_App_ID.Text = _ReTakeTestAppID.ToString();
+                }
+
                 DataUpdatedEvent?.Invoke();
             }
             else
-                MessageBox.Show("Person Didn't Saved", "Save Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Test Appointment Didn't Saved", "Save Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

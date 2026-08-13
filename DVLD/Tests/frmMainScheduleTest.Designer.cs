@@ -184,7 +184,7 @@
             this.Name = "frmMainScheduleTest";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmVisionTest";
-            this.Load += new System.EventHandler(this.frmVisionTest_Load);
+            this.Load += new System.EventHandler(this.frmMainScheduleTest_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvManageTestAppointments)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

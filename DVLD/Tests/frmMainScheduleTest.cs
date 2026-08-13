@@ -79,7 +79,7 @@ namespace DVLD.Tests
             }
         }
 
-        private void frmVisionTest_Load(object sender, EventArgs e)
+        private void frmMainScheduleTest_Load(object sender, EventArgs e)
         {
             PrepareForm();
             ctrlApplicationDetails1.FindAppDetails(_LDLAppID);

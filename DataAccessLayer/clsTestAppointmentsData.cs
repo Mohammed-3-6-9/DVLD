@@ -12,7 +12,7 @@ namespace DataAccessLayer
     {
         public static bool GetTestAppointmentInfoByID(int TestAppointmentID, ref int TestTypeID,
             ref int LDLAppID, ref DateTime AppointmentDate,
-            ref decimal PaidFees, ref int CreatedByUserID, ref bool IsLocked)
+            ref decimal PaidFees, ref int CreatedByUserID, ref bool IsLocked,ref int RetakeTestApplicationID)
         {
             bool IsFound = false;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -35,6 +35,7 @@ namespace DataAccessLayer
                     PaidFees = (decimal)reader["PaidFees"];
                     CreatedByUserID = (int)reader["CreatedByUserID"];
                     IsLocked = (bool)reader["IsLocked"];
+                    RetakeTestApplicationID = reader["RetakeTestApplicationID"] == DBNull.Value ? -1 : (int)reader["RetakeTestApplicationID"];
                 }
 
                 reader.Close();
@@ -53,15 +54,15 @@ namespace DataAccessLayer
 
         public static int AddNewTestAppointment(int TestTypeID,
             int LDLAppID, DateTime AppointmentDate,
-            decimal PaidFees, int CreatedByUserID, bool IsLocked)
+            decimal PaidFees, int CreatedByUserID, bool IsLocked,int RetakeTestApplicationID)
         {
             int ApplicationID = -1;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = @"INSERT INTO TestAppointments (TestTypeID,
                LocalDrivingLicenseApplicationID, AppointmentDate, PaidFees, 
-               CreatedByUserID, IsLocked) VALUES
+               CreatedByUserID, IsLocked,RetakeTestApplicationID) VALUES
                (@TestTypeID, @LDLAppID, @AppointmentDate,
-               @PaidFees, @CreatedByUserID, @IsLocked)
+               @PaidFees, @CreatedByUserID, @IsLocked,@RetakeTestApplicationID)
                  SELECT SCOPE_IDENTITY();";
 
             SqlCommand Command = new SqlCommand(query, Connection);
@@ -71,37 +72,43 @@ namespace DataAccessLayer
             Command.Parameters.AddWithValue("@PaidFees", PaidFees);
             Command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
             Command.Parameters.AddWithValue("@IsLocked", IsLocked);
+            if (RetakeTestApplicationID == -1)
+                Command.Parameters.AddWithValue("@RetakeTestApplicationID", DBNull.Value);
+            else
+                Command.Parameters.AddWithValue("@RetakeTestApplicationID", RetakeTestApplicationID);
+
 
             try
             {
-                Connection.Open();
-                object objID = Command.ExecuteScalar();
+                    Connection.Open();
+                    object objID = Command.ExecuteScalar();
 
-                if (objID != null && int.TryParse(objID.ToString(), out int ID))
-                    ApplicationID = ID;
-            }
-            catch
-            {
-                ApplicationID = -1;
-            }
-            finally
-            {
-                Connection.Close();
-            }
+                    if (objID != null && int.TryParse(objID.ToString(), out int ID))
+                        ApplicationID = ID;
+                }
+                catch
+                {
+                    ApplicationID = -1;
+                }
+                finally
+                {
+                    Connection.Close();
+                }
 
             return ApplicationID;
         }
 
         public static bool UpdateTestAppointment(int TestAppointmentID, int TestTypeID,
             int LDLAppID, DateTime AppointmentDate,
-            decimal PaidFees, int CreatedByUserID, bool IsLocked)
+            decimal PaidFees, int CreatedByUserID, bool IsLocked,int RetakeTestApplicationID)
         {
             int RowsEffected = 0;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = @"UPDATE TestAppointments SET
                TestTypeID = @TestTypeID, LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID,
                AppointmentDate = @AppointmentDate, PaidFees = @PaidFees,
-               CreatedByUserID = @CreatedByUserID, IsLocked = @IsLocked
+               CreatedByUserID = @CreatedByUserID, IsLocked = @IsLocked,
+               RetakeTestApplicationID = @RetakeTestApplicationID
                WHERE TestAppointmentID = @TestAppointmentID;";
 
             SqlCommand Command = new SqlCommand(query, Connection);
@@ -112,6 +119,10 @@ namespace DataAccessLayer
             Command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
             Command.Parameters.AddWithValue("@IsLocked", IsLocked);
             Command.Parameters.AddWithValue("@TestAppointmentID", TestAppointmentID);
+            if (RetakeTestApplicationID == -1)
+                Command.Parameters.AddWithValue("@RetakeTestApplicationID", DBNull.Value);
+            else
+                Command.Parameters.AddWithValue("@RetakeTestApplicationID", RetakeTestApplicationID);
 
             try
             {
@@ -134,7 +145,7 @@ namespace DataAccessLayer
         {
             DataTable dt = new DataTable();
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT TestAppointmentID, AppointmentDate, PaidFees, IsLocked
+            string query = @"SELECT TestAppointmentID, AppointmentDate, TotalFees, IsLocked
                             FROM TestAppointmentsTable_View WHERE 
                             LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID AND TestTypeID = @TestTypeID;";
             SqlCommand Command = new SqlCommand(query, Connection);
@@ -164,11 +175,11 @@ namespace DataAccessLayer
         }
 
         public static bool GetDataForScheduleTest(int LocalDrivingLicenseApplicationID, int TestTypeID, ref string ClassName,
-            ref string FullName, ref decimal Fees,ref int Trials)
+            ref string FullName,ref int PersonID, ref decimal Fees,ref int Trials)
         {
             bool IsFound = false;
             SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT ClassName, FullName FROM ScheduleTest_View WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+            string query = @"SELECT PersonID,ClassName, FullName FROM ScheduleTest_View WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
                              SELECT  COUNT(dbo.TestAppointments.LocalDrivingLicenseApplicationID) AS Trials
                              FROM TestAppointments WHERE TestAppointments.LocalDrivingLicenseApplicationID=@LocalDrivingLicenseApplicationID
                              AND TestAppointments.TestTypeID=@TestTypeID;
@@ -188,6 +199,7 @@ namespace DataAccessLayer
 
                     ClassName = reader["ClassName"].ToString();
                     FullName = reader["FullName"].ToString();
+                    PersonID = (int)reader["PersonID"];
 
                     if (reader.NextResult() && reader.Read())
                         Trials = Convert.ToInt32(reader["Trials"]);

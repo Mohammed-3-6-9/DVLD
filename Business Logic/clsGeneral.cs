@@ -12,7 +12,8 @@ namespace Business_Logic
         {
             NewLocalDrivingLicenseService = 1, RenewDrivingLicenseService = 2,
             ReplacementforaLostDrivingLicense = 3, ReplacementforaDamagedDrivingLicense = 4,
-            ReleaseDetainedDrivingLicsense = 5, NewInternationalLicense = 6
+            ReleaseDetainedDrivingLicsense = 5, NewInternationalLicense = 6,
+            RetakeTest = 7
         }
 
         public enum enApplicationStatus

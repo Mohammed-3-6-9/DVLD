@@ -22,6 +22,7 @@ namespace Business_Logic
         public decimal PaidFees { get; set; }
         public int CreatedByUserID { get; set; }
         public bool IsLocked { get; set; }
+        public int RetakeTestApplicationID { get; set; }
 
         public clsTestAppointments()
         {
@@ -33,11 +34,12 @@ namespace Business_Logic
             PaidFees = -1;
             CreatedByUserID = -1;
             IsLocked = false;
+            RetakeTestApplicationID = -1;
         }
 
         private clsTestAppointments(int TestAppointmentID, int TestTypeID,
             int LDLAppID, DateTime AppointmentDate,
-            decimal PaidFees, int CreatedByUserID, bool IsLocked)
+            decimal PaidFees, int CreatedByUserID, bool IsLocked, int RetakeTestApplicationID)
         {
             _Mode = enMode.Update;
             this.TestAppointmentID = TestAppointmentID;
@@ -47,13 +49,14 @@ namespace Business_Logic
             this.PaidFees = PaidFees;
             this.CreatedByUserID = CreatedByUserID;
             this.IsLocked = IsLocked;
+            this.RetakeTestApplicationID = RetakeTestApplicationID;
         }
 
         private bool _AddNew()
         {
             this.TestAppointmentID = clsTestAppointmentsData.AddNewTestAppointment(
                 TestTypeID, LDLAppID, AppointmentDate,
-                PaidFees, CreatedByUserID, IsLocked);
+                PaidFees, CreatedByUserID, IsLocked, RetakeTestApplicationID);
 
             return (this.TestAppointmentID != -1);
         }
@@ -62,7 +65,7 @@ namespace Business_Logic
         {
             return clsTestAppointmentsData.UpdateTestAppointment(this.TestAppointmentID, this.TestTypeID,
                 this.LDLAppID, this.AppointmentDate,
-                this.PaidFees, this.CreatedByUserID, this.IsLocked);
+                this.PaidFees, this.CreatedByUserID, this.IsLocked,this.RetakeTestApplicationID);
         }
 
         public static clsTestAppointments Find(int ID)
@@ -73,23 +76,34 @@ namespace Business_Logic
             decimal PaidFees = -1;
             int CreatedByUserID = -1;
             bool IsLocked = false;
+            int RetakeTestApplicationID = -1;
 
             if (clsTestAppointmentsData.GetTestAppointmentInfoByID(ID, ref TestTypeID, ref LDLAppID,
-                ref AppointmentDate, ref PaidFees, ref CreatedByUserID, ref IsLocked))
+                ref AppointmentDate, ref PaidFees, ref CreatedByUserID, ref IsLocked, ref RetakeTestApplicationID))
             {
                 return new clsTestAppointments(ID, TestTypeID, LDLAppID, AppointmentDate,
-                PaidFees, CreatedByUserID, IsLocked);
+                PaidFees, CreatedByUserID, IsLocked, RetakeTestApplicationID);
             }
             else
                 return null;
         }
 
-        public bool Save()
+        public bool Save(int PersonID = -1)
         {
             switch (_Mode)
             {
                 case enMode.AddNew:
                     {
+                        if (this.RetakeTestApplicationID == -1 && PersonID != -1)
+                        {
+                            clsApplication app = FillApplicationWithData(PersonID);
+
+                            if (!app.Save())
+                                return false;
+
+                            this.RetakeTestApplicationID = app.ApplicationID;
+                        }
+
                         if (_AddNew())
                         {
                             _Mode = enMode.Update;
@@ -110,11 +124,11 @@ namespace Business_Logic
         }
 
         public static bool GetDataForScheduleTest(int LocalDrivingLicenseApplicationID, int TestTypeID,
-            ref string ClassName, ref string FullName, ref decimal Fees,ref int Trials)
+            ref string ClassName, ref string FullName, ref int PersonID, ref decimal Fees, ref int Trials)
         {
 
             return clsTestAppointmentsData.GetDataForScheduleTest(LocalDrivingLicenseApplicationID,
-                  TestTypeID, ref ClassName, ref FullName, ref Fees, ref Trials);
+                  TestTypeID, ref ClassName, ref FullName, ref PersonID, ref Fees, ref Trials);
         }
 
         public static DataTable GetAllTestAppointmentsForTableView(int LocalDrivingLicenseApplicationID, int TestTypeID)
@@ -136,5 +150,19 @@ namespace Business_Logic
         {
             return clsTestAppointmentsData.LockTestAppointment(TestAppointment);
         }
+
+        private clsApplication FillApplicationWithData(int PersonID)
+        {
+            clsApplication app = new clsApplication();
+            app.ApplicantPersonID = PersonID;
+            app.ApplicationTypeID = (int)clsGeneral.enApplicationType.RetakeTest;
+            app.ApplicationDate = DateTime.Now;
+            app.ApplicationStatus = (int)clsGeneral.enApplicationStatus.Completed;
+            app.LastStatusDate = DateTime.Now;
+            app.PaidFees = clsApplicationType.GetApplicationFees((int)clsGeneral.enApplicationType.RetakeTest);
+            app.CreatedByUserID = this.CreatedByUserID;
+            return app;
+        }
+
     }
 }

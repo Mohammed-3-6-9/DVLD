@@ -200,9 +200,14 @@ namespace DVLD.ApplicationForms
             {
                 showLicenseToolStripMenuItem.Enabled = false;
                 issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+                cancelApplicationToolStripMenuItem.Enabled = true;
+                deleteApplicationToolStripMenuItem.Enabled = true;
             }
             else
             {
+                cancelApplicationToolStripMenuItem.Enabled = false;
+                deleteApplicationToolStripMenuItem.Enabled = false;
+
                 if (clsLicenses.IsPersonHasThisLicense(dgvManageApplications.CurrentRow.Cells["NationalNo"].Value.ToString(),
                     dgvManageApplications.CurrentRow.Cells["ClassName"].Value.ToString()))
                 {
