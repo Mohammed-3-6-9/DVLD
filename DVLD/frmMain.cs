@@ -51,6 +51,7 @@ namespace DVLD
         private void signOutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            clsSessionInfo.CurrentUser = null;
             this.Close();
         }
 
@@ -136,6 +137,11 @@ namespace DVLD
         {
             frmManageApplicatons frm = new frmManageApplicatons();
             frm.ShowDialog();
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            clsSessionInfo.CurrentUser = null;
         }
     }
 }

@@ -28,8 +28,9 @@ namespace DataAccessLayer
                     IsFound = true;
 
                     CountryName = reader["CountryName"].ToString();
-
                 }
+                else
+                    IsFound = false;
 
                 reader.Close();
             }

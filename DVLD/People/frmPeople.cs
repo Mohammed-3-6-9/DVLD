@@ -53,7 +53,7 @@ namespace DVLD
 
         private void tbFilterValue_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(tbFilterValue.Text))
+            if (string.IsNullOrWhiteSpace(tbFilterValue.Text) || tbFilterValue.Text == "None")
             {
                 _DataView.RowFilter = null;
                 lblRecordsNumber.Text = dgvPeople.RowCount.ToString();
@@ -62,10 +62,7 @@ namespace DVLD
 
             if (cbFiltersType.Text == "PersonID")
             {
-                if (tbFilterValue.Text != "")
-                    _DataView.RowFilter = $"{cbFiltersType.Text} = {int.Parse(tbFilterValue.Text)}";
-                else
-                    _DataView.RowFilter = null;
+                _DataView.RowFilter = $"{cbFiltersType.Text} = {int.Parse(tbFilterValue.Text)}";
             }
             else
             {
@@ -81,7 +78,10 @@ namespace DVLD
             if (cbFiltersType.Text == "None")
                 tbFilterValue.Visible = false;
             else
+            {
                 tbFilterValue.Visible = true;
+                tbFilterValue.Focus();
+            }
 
             tbFilterValue.Text = "";
         }
@@ -89,12 +89,7 @@ namespace DVLD
         private void tbFilterValue_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (cbFiltersType.Text == "PersonID")
-            {
-                if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-                {
-                    e.Handled = true;
-                }
-            }
+                e.Handled = (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar));
         }
 
         void DataUpdated()
@@ -116,7 +111,7 @@ namespace DVLD
             {
                 if (clsPerson.DeletePerson(int.Parse(dgvPeople.CurrentRow.Cells["PersonID"].Value.ToString())))
                 {
-                    MessageBox.Show("Person Deleted Successfully");
+                    MessageBox.Show("Person Deleted Successfully", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     _RefreshPeople();
                 }
                 else

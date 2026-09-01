@@ -229,5 +229,15 @@ namespace Business_Logic
 
             return EncyrpitedPassword.ToString();
         }
+
+        public static bool IsUserExistByNationalNumber(string NationalNumber)
+        {
+            return clsUsersData.IsUserExistByNationalNumber(NationalNumber);
+        }
+
+        public static bool IsUserExistByPersonID(int PersonID)
+        {
+            return clsUsersData.IsUserExistByPersonID(PersonID);
+        }
     }
 }

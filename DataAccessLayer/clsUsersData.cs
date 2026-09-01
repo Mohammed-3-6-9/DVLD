@@ -264,5 +264,59 @@ namespace DataAccessLayer
 
             return IsFound;
         }
+
+        public static bool IsUserExistByPersonID(int PersonID)
+        {
+            bool Exists = false;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT 1 FROM Users Where PersonID = @PersonID";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@PersonID", PersonID);
+
+            try
+            {
+                Connection.Open();
+                object obj = Command.ExecuteScalar();
+                if (obj != null)
+                    Exists = true;
+            }
+            catch
+            {
+                Exists = false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return Exists;
+        }
+
+        public static bool IsUserExistByNationalNumber(string NationalNumber)
+        {
+            bool Exists = false;
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT 1 FROM Users Inner Join People ON People.NationalNo = @NationalNumber";
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@NationalNo", NationalNumber);
+
+            try
+            {
+                Connection.Open();
+                object obj = Command.ExecuteScalar();
+                if (obj != null)
+                    Exists = true;
+            }
+            catch
+            {
+                Exists = false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return Exists;
+        }
     }
 }

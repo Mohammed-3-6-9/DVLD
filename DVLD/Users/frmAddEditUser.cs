@@ -117,7 +117,7 @@ namespace DVLD.Users
             {
                 _PersonID = int.Parse(tbFilterValue.Text);
 
-                if (clsPerson.IsPersonHasUser(_PersonID))
+                if (clsUser.IsUserExistByPersonID(_PersonID))
                 {
                     MessageBox.Show("Person is Already a User", "Ops",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -134,7 +134,7 @@ namespace DVLD.Users
             }
             else
             {
-                if (clsPerson.IsPersonHasUser(tbFilterValue.Text))
+                if (clsUser.IsUserExistByNationalNumber(tbFilterValue.Text))
                 {
                     MessageBox.Show("Person is Already a User", "Ops",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

@@ -277,16 +277,6 @@ namespace Business_Logic
             return clsPersonData.IsPersonExist(NationalNumber);
         }
 
-        public static bool IsPersonHasUser(int PersonID)
-        {
-            return clsPersonData.IsPersonHasUser(PersonID);
-        }
-
-        public static bool IsPersonHasUser(string NationalNumber)
-        {
-            return clsPersonData.IsPersonHasUser(NationalNumber);
-        }
-
         public static int GetPersonIDByNationalNo(string NationalNumber)
         {
             return clsPersonData.GetPersonIDByNationalNo(NationalNumber);

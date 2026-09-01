@@ -34,15 +34,27 @@ namespace DataAccessLayer
                     NationalNumber = reader["NationalNo"].ToString();
                     FirstName = reader["FirstName"].ToString();
                     SecondName = reader["SecondName"].ToString();
-                    ThirdName = reader["ThirdName"].ToString();
                     LastName = reader["LastName"].ToString();
                     DateOfBirth = (DateTime)reader["DateOfBirth"];
                     Gendor = (byte)reader["Gendor"];
                     Address = reader["Address"].ToString();
                     Phone = reader["Phone"].ToString();
-                    Email = reader["Email"].ToString();
                     NationalCountryID = (int)reader["NationalCountryID"];
-                    ImagePath = reader["ImagePath"].ToString();
+
+                    if (reader["ThirdName"] != DBNull.Value)
+                        ThirdName = reader["ThirdName"].ToString();
+                    else
+                        ThirdName = "";
+
+                    if (reader["Email"] != DBNull.Value)
+                        Email = reader["Email"].ToString();
+                    else
+                        Email = "";
+
+                    if (reader["ImagePath"] != DBNull.Value)
+                        ImagePath = reader["ImagePath"].ToString();
+                    else
+                        ImagePath = "";
                 }
 
                 reader.Close();
@@ -90,7 +102,21 @@ namespace DataAccessLayer
                     Phone = reader["Phone"].ToString();
                     Email = reader["Email"].ToString();
                     NationalCountryID = (int)reader["NationalCountryID"];
-                    ImagePath = reader["ImagePath"].ToString();
+
+                    if (reader["ThirdName"] != DBNull.Value)
+                        ThirdName = reader["ThirdName"].ToString();
+                    else
+                        ThirdName = "";
+
+                    if (reader["Email"] != DBNull.Value)
+                        Email = reader["Email"].ToString();
+                    else
+                        Email = "";
+
+                    if (reader["ImagePath"] != DBNull.Value)
+                        ImagePath = reader["ImagePath"].ToString();
+                    else
+                        ImagePath = "";
                 }
 
                 reader.Close();
@@ -296,7 +322,7 @@ namespace DataAccessLayer
                 Connection.Open();
                 object obj = Command.ExecuteScalar();
 
-                if (obj != null)
+                if (obj != null || obj != DBNull.Value)
                     Exists = true;
             }
             catch
@@ -323,61 +349,7 @@ namespace DataAccessLayer
             {
                 Connection.Open();
                 object obj = Command.ExecuteScalar();
-                if (obj != null)
-                    Exists = true;
-            }
-            catch
-            {
-                Exists = false;
-            }
-            finally
-            {
-                Connection.Close();
-            }
-
-            return Exists;
-        }
-
-        public static bool IsPersonHasUser(int PersonID)
-        {
-            bool Exists = false;
-            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT 1 FROM Users Where PersonID = @PersonID";
-            SqlCommand Command = new SqlCommand(query, Connection);
-            Command.Parameters.AddWithValue("@PersonID", PersonID);
-
-            try
-            {
-                Connection.Open();
-                object obj = Command.ExecuteScalar();
-                if (obj != null)
-                    Exists = true;
-            }
-            catch
-            {
-                Exists = false;
-            }
-            finally
-            {
-                Connection.Close();
-            }
-
-            return Exists;
-        }
-
-        public static bool IsPersonHasUser(string NationalNumber)
-        {
-            bool Exists = false;
-            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = @"SELECT 1 FROM Users Inner Join People ON People.NationalNo = @NationalNumber";
-            SqlCommand Command = new SqlCommand(query, Connection);
-            Command.Parameters.AddWithValue("@NationalNo", NationalNumber);
-
-            try
-            {
-                Connection.Open();
-                object obj = Command.ExecuteScalar();
-                if (obj != null)
+                if (obj != null || obj != DBNull.Value)
                     Exists = true;
             }
             catch
