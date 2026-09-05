@@ -1,34 +1,78 @@
-# DVLD
-## DVLD - Driving & Vehicles Licensing Department
+# DVLD - Driving & Vehicles Licensing Department
 
-### 🚧 Status: Work In Progress
-This project is currently under development as part of my learning journey to master Backend development and Desktop applications using C#.
+## 📌 Project Overview
 
-### 📝 Project Overview
-**DVLD** is a comprehensive system designed to manage driving licenses, applications, and tests. The main goal of this project is to implement a real-world business logic scenario using professional software engineering practices.
+**DVLD** is a desktop application designed to manage people, users, driving license applications, tests, licenses, renewals, replacements, and license status.
 
-### 🏗️ Architecture & Technologies
-The project follows a **3-Layer Architecture** to ensure clean code and separation of concerns:
-* **Presentation Layer:** WinForms (C#) - Handling User Interface.
-* **Business Logic Layer:** C# Class Library - Core logic and validation.
-* **Data Access Layer:** C# Class Library (ADO.NET) - Database communication.
-* **Database:** SQL Server.
+The project simulates a real-world driving license management system and focuses on implementing business logic using a structured and maintainable software architecture.
 
-### 🛠️ Technical Features Implemented
-- **Decoupled Configuration:** Connection strings are managed via `App.config` for better flexibility and security.
-- **Database Scalability:** Uses SQL scripts for easy deployment and database recreation.
-- **Modular Design:** Each layer is independent, making it easier to switch to Web or Mobile in the future.
+## 🏗️ Architecture
 
-### 🚀 How to Setup
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/Mohammed-3-6-9/DVLD.git]
-Database Setup:
-Open SQL Server Management Studio (SSMS).
-Execute the DVLD_DataSetup.sql script found in the project root to build the database schema.
+The application follows a **3-Tier Architecture** to separate responsibilities and improve maintainability:
 
-Connection:
-The project is configured to use Windows Authentication.
-Ensure your local SQL Server instance is running. You can modify settings in the App.config file within the DVLD (Presentation) project if needed.
+* **Presentation Layer:** C# Windows Forms — Handles the user interface and user interactions.
+* **Business Logic Layer:** C# Class Library — Contains business rules, validation, and application logic.
+* **Data Access Layer:** C# Class Library using ADO.NET — Handles communication with the database.
+* **Database:** Microsoft SQL Server
 
-Developed with ❤️ by Mohammed Tawfiq
+## 🛠️ Technologies
+
+* C#
+* .NET Framework
+* Windows Forms
+* ADO.NET
+* Microsoft SQL Server
+* T-SQL
+
+## ✨ Key Features
+
+* Manage people and users.
+* Manage driving license applications.
+* Manage different types of driving tests.
+* Issue and manage driving licenses.
+* Renew and replace licenses.
+* Manage license status and related workflows.
+* Implement reusable User Controls and shared components.
+* Maintain separation of concerns through a 3-Tier Architecture.
+* Use SQL Server to manage relational data and interconnected entities.
+
+## ⚙️ Technical Highlights
+
+* **Layered Architecture:** Separates Presentation, Business Logic, and Data Access responsibilities.
+* **Reusable Components:** Uses shared User Controls and components to improve code reuse and maintainability.
+* **Database Integration:** Uses ADO.NET for database communication with SQL Server.
+* **Configuration:** Connection settings are managed through `App.config`.
+* **Database Setup:** Includes SQL scripts to recreate and configure the required database.
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Mohammed-3-6-9/DVLD.git
+```
+
+### 2. Setup the Database
+
+Open **SQL Server Management Studio (SSMS)** and execute the `DVLD_DataSetup.sql` script located in the project root.
+
+### 3. Configure the Connection
+
+The application uses **Windows Authentication** by default.
+
+If necessary, update the connection string in the `App.config` file of the Presentation project to match your local SQL Server instance.
+
+### 4. Run the Application
+
+Open the solution in **Visual Studio**, build the solution, and run the Presentation project.
+
+## 📚 Related Repository
+
+A separate repository contains the ongoing **refactoring and improvement** of this project, focusing on code quality, maintainability, reusability, and cleaner design.
+
+**DVLD-Refactoring:**
+https://github.com/Mohammed-3-6-9/DVLD-Refactoring
+
+---
+
+Developed by **Mohammed Tawfiq**
