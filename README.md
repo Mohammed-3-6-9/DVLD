@@ -1,78 +1,159 @@
 # DVLD - Driving & Vehicles Licensing Department
 
-## 📌 Project Overview
+A desktop Driving License Management System built with **C#**, **.NET Framework**, **Windows Forms**, **ADO.NET**, and **Microsoft SQL Server**. The application manages people, users, driving license applications, tests, licenses, renewals, replacements, and related licensing workflows using a **3-Tier Architecture**.
 
-**DVLD** is a desktop application designed to manage people, users, driving license applications, tests, licenses, renewals, replacements, and license status.
+## Features
 
-The project simulates a real-world driving license management system and focuses on implementing business logic using a structured and maintainable software architecture.
+### 👤 People & User Management
 
-## 🏗️ Architecture
+* Add, update, delete, and search people.
+* Manage user accounts and user information.
+* Manage user accounts, activation status, and login credentials.
+* Reuse shared User Controls and components across the application.
+
+### 📋 License Applications
+
+* Manage driving license applications.
+* Handle different application types.
+* Manage new local driving license applications.
+* Track application status and related information.
+
+### 🪪 Driving Licenses
+
+* Issue and manage driving licenses.
+* Manage different license classes.
+* Renew existing licenses.
+* Replace lost or damaged licenses.
+* Manage international driving licenses.
+* Handle license detention and release workflows.
+
+### 📝 Tests & Appointments
+
+* Manage different driving test types.
+* Schedule and manage test appointments.
+* Record test results.
+* Support the testing workflow required for driving license applications.
+
+## Architecture
 
 The application follows a **3-Tier Architecture** to separate responsibilities and improve maintainability:
 
-* **Presentation Layer:** C# Windows Forms — Handles the user interface and user interactions.
-* **Business Logic Layer:** C# Class Library — Contains business rules, validation, and application logic.
-* **Data Access Layer:** C# Class Library using ADO.NET — Handles communication with the database.
+```text
+Presentation Layer
+       ↓
+Business Logic Layer
+       ↓
+Data Access Layer
+       ↓
+SQL Server Database
+```
+
+### Presentation Layer
+
+Built with **C# Windows Forms**, responsible for:
+
+* User interface
+* User interaction
+* Application screens
+* Reusable User Controls
+
+### Business Logic Layer
+
+Contains the application's business rules and domain logic for:
+
+* People
+* Users
+* Applications
+* Drivers
+* Licenses
+* License classes
+* Tests
+* Test appointments
+* International licenses
+* License detention and release
+
+### Data Access Layer
+
+Uses **ADO.NET** to communicate with Microsoft SQL Server and provides data-access operations for the application's entities.
+
+## Project Structure
+
+The repository is organized into three main layers:
+
+* `DVLD` — Presentation layer containing Windows Forms screens, User Controls, resources, and application configuration.
+* `Business Logic` — Business and domain logic implemented through dedicated classes.
+* `DataAccessLayer` — Database access classes using ADO.NET.
+* `DVLD_DataSetup.sql` — SQL script for creating and configuring the required database and data.
+
+### Main Business Logic Classes
+
+Some of the main domain classes include:
+
+* `clsPerson`
+* `clsUser`
+* `clsApplication`
+* `clsApplicationTypes`
+* `clsNewLocalDrivingLicenceApplication`
+* `clsDrivers`
+* `clsLicenses`
+* `clsLicenceClass`
+* `clsInternationalLicenses`
+* `clsTests`
+* `clsTestAppointments`
+* `clsTestType`
+* `clsDetainReleaseLicense`
+
+## Tech Stack
+
+* **Language:** C#
+* **Framework:** .NET Framework
+* **UI:** Windows Forms (WinForms)
 * **Database:** Microsoft SQL Server
+* **Data Access:** ADO.NET
+* **Database Scripting:** T-SQL
+* **Architecture:** 3-Tier Architecture
+* **IDE:** Visual Studio
 
-## 🛠️ Technologies
+## Getting Started
 
-* C#
-* .NET Framework
-* Windows Forms
-* ADO.NET
+### Prerequisites
+
+* Windows OS
+* Visual Studio with .NET Framework and Windows Forms development support
 * Microsoft SQL Server
-* T-SQL
+* SQL Server Management Studio (SSMS)
 
-## ✨ Key Features
+### Running the Project
 
-* Manage people and users.
-* Manage driving license applications.
-* Manage different types of driving tests.
-* Issue and manage driving licenses.
-* Renew and replace licenses.
-* Manage license status and related workflows.
-* Implement reusable User Controls and shared components.
-* Maintain separation of concerns through a 3-Tier Architecture.
-* Use SQL Server to manage relational data and interconnected entities.
-
-## ⚙️ Technical Highlights
-
-* **Layered Architecture:** Separates Presentation, Business Logic, and Data Access responsibilities.
-* **Reusable Components:** Uses shared User Controls and components to improve code reuse and maintainability.
-* **Database Integration:** Uses ADO.NET for database communication with SQL Server.
-* **Configuration:** Connection settings are managed through `App.config`.
-* **Database Setup:** Includes SQL scripts to recreate and configure the required database.
-
-## 🚀 Getting Started
-
-### 1. Clone the Repository
+1. Clone the repository:
 
 ```bash
 git clone https://github.com/Mohammed-3-6-9/DVLD.git
 ```
 
-### 2. Setup the Database
+2. Open `DVLD.sln` in Visual Studio.
 
-Open **SQL Server Management Studio (SSMS)** and execute the `DVLD_DataSetup.sql` script located in the project root.
+3. Open **SQL Server Management Studio** and execute:
 
-### 3. Configure the Connection
+```text
+DVLD_DataSetup.sql
+```
 
-The application uses **Windows Authentication** by default.
+4. Configure the database connection in the application's `App.config` file if your SQL Server instance differs from the configured connection.
 
-If necessary, update the connection string in the `App.config` file of the Presentation project to match your local SQL Server instance.
+5. Build the solution in Visual Studio.
 
-### 4. Run the Application
+6. Run the **DVLD** project.
 
-Open the solution in **Visual Studio**, build the solution, and run the Presentation project.
+## Related Repository
 
-## 📚 Related Repository
-
-A separate repository contains the ongoing **refactoring and improvement** of this project, focusing on code quality, maintainability, reusability, and cleaner design.
+A separate repository contains the ongoing refactoring and improvement of this project, focusing on code quality, maintainability, reusability, and cleaner design.
 
 **DVLD-Refactoring:**
 https://github.com/Mohammed-3-6-9/DVLD-Refactoring
 
----
+## Author
 
-Developed by **Mohammed Tawfiq**
+**Mohammed Tawfiq**
+
+[GitHub](https://github.com/Mohammed-3-6-9) | [LinkedIn](https://www.linkedin.com/in/mohammed-tawfiq1)
